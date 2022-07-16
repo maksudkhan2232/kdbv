@@ -1,0 +1,26 @@
+# For security reasons, Option followsymlinks cannot be overridden.
+#Options +FollowSymLinks
+
+Options +SymLinksIfOwnerMatch
+RewriteEngine on
+
+RewriteBase /kdbv/
+
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteCond %{REQUEST_FILENAME} !-d
+
+
+
+
+# FOR LIVE
+
+	#RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
+
+
+
+# FOR LOCAL
+
+	RewriteRule ^(.*)$ index.php?/$1 [QSA,L]
+
+
