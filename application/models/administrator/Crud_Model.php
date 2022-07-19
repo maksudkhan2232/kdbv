@@ -209,13 +209,16 @@ class crud_model extends CI_Model{
         }else{
             $this->db->where('p.status','1');    
         }
+        $this->db->where('p.isdelete','0');
         if(isset($data['OrderBy']) and $data['OrderBy']!=''){
             $this->db->order_by($data['OrderBy'], $data['order']);
         }else{
              $this->db->order_by('p.id','DESC');
         }
-        $this->db->group_by('p.id');
-        $this->db->where('p.isdelete','0');
+        $this->db->group_by('p.id');        
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
         $query=$this->db->get();
         return $query->result_array();
     } 	

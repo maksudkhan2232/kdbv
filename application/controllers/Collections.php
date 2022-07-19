@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Collections extends CI_Controller {
+class Collections extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		
@@ -9,7 +9,7 @@ class Collections extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = "Collections";
-		$this->load->view('collections',$data);
+		$this->data['title'] = "Collections";
+		$this->load->view('collections',$this->data);
 	}
 }

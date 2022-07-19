@@ -20,6 +20,8 @@ class MY_Controller extends CI_Controller
 		$this->data['WebsiteInformation'] =WebsiteInformation();
 		$this->data['CollectionDetails'] =CollectionDetails();
 		$this->data['CategoryDetails'] =CategoryDetails();
+		$this->data['GenderDetails'] =GenderDetails();
+		$this->data['TestimonialDetails'] =TestimonialDetails();
 	}
 	public function is_admin_logged_in()
 	{

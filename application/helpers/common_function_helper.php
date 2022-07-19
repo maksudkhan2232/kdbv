@@ -354,6 +354,22 @@ function CategoryDetails()
     $res = $ci->db->from('sub_category')->get()->result_array();
     return  $res;
 }
+function GenderDetails()
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->where("status",1);
+    $res = $ci->db->from('gender')->get()->result_array();
+    return  $res;
+}
+function TestimonialDetails()
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->where("status",1);
+    $res = $ci->db->from('testimonial')->get()->result_array();
+    return  $res;
+}
 
 
 

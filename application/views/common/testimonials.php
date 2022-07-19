@@ -3,44 +3,28 @@
       <div class="section-heading pb-30">
         <h3>our happy <span>clients</span></h3>
       </div>
-      <!-- /.section-heading-->
       <div class="row">
         <div class="col-xl-12">
           <div class="testimonial-carousel owl-carousel owl-theme">
+            <?php
+              if(!empty($TestimonialDetails)){
+                foreach($TestimonialDetails as $tkey=>$tval){
+            ?>
             <div class="single-testimonial">
-              <div class="tes-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/tes3.jpg" alt=""> </div>
+              <div class="tes-img"> 
+                <img src="<?php echo  base_url(); ?>uploads/testimonial/<?php echo $tval['image'];?>" alt="<?php echo ucwords($tval['name']);?>"> 
+              </div>
               <div class="tes-content">
-                <p>Autem vel eum iriure dolor in hendrerit ivulputate velit esse molestie consequat vel illum dolore eu olestie consequat feugiat nulla eros.</p>
-                <span>Kavita Joshi</span> </div>
+                <p><?php echo $tval['desc'];?></p>
+                <span><?php echo ucwords($tval['name']);?></span> 
+              </div>
             </div>
-            <!-- /.single-testimonial -->
-            <div class="single-testimonial">
-              <div class="tes-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/tes2.png" alt=""> </div>
-              <div class="tes-content">
-                <p>Autem vel eum iriure dolor in hendrerit ivulputate velit esse molestie consequat vel illum dolore eu olestie consequat feugiat nulla eros.</p>
-                <span>Nandkishorbhai Doshi</span> </div>
-            </div>
-            <!-- /.single-testimonial -->
-            <div class="single-testimonial">
-              <div class="tes-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/tes1.jpg" alt=""> </div>
-              <div class="tes-content">
-                <p>Autem vel eum iriure dolor in hendrerit ivulputate velit esse molestie consequat vel illum dolore eu olestie consequat feugiat nulla eros.</p>
-                <span>Sanjay Timba</span> </div>
-            </div>
-            <!-- /.single-testimonial -->
-            <div class="single-testimonial">
-              <div class="tes-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/tes2.png" alt=""> </div>
-              <div class="tes-content">
-                <p>Autem vel eum iriure dolor in hendrerit ivulputate velit esse molestie consequat vel illum dolore eu olestie consequat feugiat nulla eros.</p>
-                <span>Sureshbhai Devani</span> </div>
-            </div>
-            <!-- /.single-testimonial -->
+            <?php
+                }
+              }
+            ?>
           </div>
-          <!-- /.testimonial-carousel -->
         </div>
-        <!-- /.col-xl-12  -->
       </div>
-      <!-- /.row -->
     </div>
-    <!-- /.container -->
   </section>

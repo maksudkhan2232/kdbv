@@ -8,10 +8,13 @@
           if(!empty($CategoryDetails)){
               foreach($CategoryDetails as $ckey=>$cval){
         ?>
-              <div class="sin-category"> <img src="<?php echo  base_url(); ?>uploads/category/<?php echo $cval['image'];?>" alt="<?php echo ucwords($cval['name']);?>">
-                <div class="cat-name"> <a href="javascript:void(0);">
-                  <h5><?php echo ucwords($cval['name']);?></h5>
-                  </a> </div>
+              <div class="sin-category">
+                <img src="<?php echo  base_url(); ?>uploads/category/<?php echo $cval['image'];?>" alt="<?php echo ucwords($cval['name']);?>">
+                <div class="cat-name"> 
+                  <a href="<?php echo  base_url(); ?>shopby/category/<?php echo $cval['slug'];?>">
+                    <h5><?php echo ucwords($cval['name']);?></h5>
+                  </a> 
+                </div>
               </div>
         <?php
               }

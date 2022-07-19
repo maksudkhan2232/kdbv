@@ -74,7 +74,7 @@
                       <div class="mega-product">
                         <div class="sin-product">
                           <div class="pro-img"> <img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>"> </div>
-                          <div class="text-center"> <a href="<?php echo base_url(); ?>collections/products"><?php echo ucwords($cvalue['name']);?></a> </div>
+                          <div class="text-center"> <a href="<?php echo base_url(); ?>collections/products"><?php echo ucwords($cvalue['shortname']);?></a> </div>
                         </div>
                       </div>
                   <?php

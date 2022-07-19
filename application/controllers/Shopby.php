@@ -1,15 +1,15 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Products extends MY_Controller {
+class Shopby extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		
     }
     public function index()
 	{
-		$data['title'] = "Products";
-		$this->load->view('products',$data);
+		$this->data['title'] = "Shop By";
+		$this->load->view('shopby',$this->data);
 	}
 	// public function index()
 	// {

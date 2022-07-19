@@ -5,11 +5,11 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Collections |  KD Bhindi Jewellers</title>
+<title>Shop By |  KD Bhindi Jewellers</title>
 <?php $this->load->view('common/common_css');?> 
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
-<div class="site-content">
+	<div class="site-content">
 		 <?php $this->load->view('common/header');?> 
 		<!--=========================-->
 		<!--=        Breadcrumb         =-->
@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="bc-inner">
-							<p><a href="<?php echo base_url(); ?>">Home  |</a> Collections</p>
+							<p><a href="<?php echo base_url(); ?>">Home  |</a> Shop By</p>
 						</div>
 					</div>
 					<!-- /.col-xl-12 -->
@@ -28,10 +28,8 @@
 			</div>
 			<!-- /.container -->
 		</section>
-  <!--=========================-->
-     
-     <?php $this->load->view('common/categories');?> 
-    <section class="main-product bg-two">
+    	<?php $this->load->view('common/categories');?> 
+		<section class="main-product bg-two">
 			<div class="container container-two">
 				<div class="section-heading">
 					<h3>Our <span>Collectons</span></h3>
@@ -122,33 +120,16 @@
 				</div>
 				<!-- Row End -->
 			</div>
-			<!-- Container End -->
 		</section>
-     <?php $this->load->view('common/gender-collections');?> 
-     <?php $this->load->view('common/testimonials');?> 
-
-
-  <!--=========================-->
-  <!--=   Subscribe area      =-->
-
-         <?php $this->load->view('common/subscribe');?> 
-              <?php $this->load->view('common/footer');?> 
-  <!-- footer-widget-area -->
-  <!-- Back to top
-  ============================================= -->
-  <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-  <!--=========================-->
-  <!--=   Popup 2 area      =-->
-  <!--=========================-->
-  <!-- Popup area
-  ============================================= -->
-  <!--=========================-->
-              <?php $this->load->view('common/quick-view');?> 
-
-</div>
-              <?php $this->load->view('common/main-search');?> 
-
-              <?php $this->load->view('common/common_js');?> 
-
+	    <?php $this->load->view('common/gender-collections');?> 
+	    <?php $this->load->view('common/testimonials');?> 
+		<?php $this->load->view('common/subscribe');?> 
+    	<?php $this->load->view('common/footer');?> 
+		<!-- Back to top -->
+		<div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
+  		<?php $this->load->view('common/quick-view');?> 
+	</div>
+	<?php $this->load->view('common/main-search');?>
+	<?php $this->load->view('common/common_js');?> 
 </body>
 </html>

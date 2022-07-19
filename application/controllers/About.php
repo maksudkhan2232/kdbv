@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class About extends CI_Controller {
+class About extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		
@@ -9,7 +9,7 @@ class About extends CI_Controller {
 
 	public function index()
 	{
-		$data['title'] = "About Us";
-		$this->load->view('about_us',$data);
+		$this->data['title'] = "About Us";
+		$this->load->view('about_us',$this->data);
 	}
 }
