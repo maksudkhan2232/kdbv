@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 16, 2022 at 02:12 PM
+-- Generation Time: Jul 19, 2022 at 08:07 AM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -117,6 +117,7 @@ CREATE TABLE `category` (
   `id` int(11) NOT NULL COMMENT 'collections id',
   `name` varchar(55) NOT NULL,
   `slug` varchar(55) NOT NULL,
+  `shortname` varchar(55) NOT NULL,
   `image` text NOT NULL,
   `description` text NOT NULL,
   `displayorder` int(11) NOT NULL COMMENT 'collections rank for ordering',
@@ -131,11 +132,11 @@ CREATE TABLE `category` (
 -- Dumping data for table `category`
 --
 
-INSERT INTO `category` (`id`, `name`, `slug`, `image`, `description`, `displayorder`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
-(1, 'Gold Collection', 'gold-collection', 'gold-collection.png', '', 1, 1, 0, '2022-07-08 17:07:29', '2022-07-08 17:11:07', '::1'),
-(2, 'Silver Collection', 'silver-collection', 'silver-collection.png', '', 2, 1, 0, '2022-07-08 17:07:52', '2022-07-08 17:13:04', '::1'),
-(3, 'Real Diamonds Collection', 'real-diamonds-collection', 'real-diamonds-collection.png', '', 3, 1, 0, '2022-07-08 17:08:20', '2022-07-08 17:12:59', '::1'),
-(4, 'Platinum Collection', 'platinum-collection', 'platinum-collection.png', '', 4, 1, 0, '2022-07-08 17:08:48', '2022-07-08 17:12:54', '::1');
+INSERT INTO `category` (`id`, `name`, `slug`, `shortname`, `image`, `description`, `displayorder`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
+(1, 'Gold Collection', 'gold-collection', 'Gold', 'gold-collection.png', '', 1, 1, 0, '2022-07-08 17:07:29', '2022-07-08 17:11:07', '::1'),
+(2, 'Silver Collection', 'silver-collection', 'Silver', 'silver-collection.png', '', 2, 1, 0, '2022-07-08 17:07:52', '2022-07-08 17:13:04', '::1'),
+(3, 'Real Diamonds Collection', 'real-diamonds-collection', 'Real Dimonds', 'real-diamonds-collection.png', '', 3, 1, 0, '2022-07-08 17:08:20', '2022-07-08 17:12:59', '::1'),
+(4, 'Platinum Collection', 'platinum-collection', 'Platinum', 'platinum-collection.png', '', 4, 1, 0, '2022-07-08 17:08:48', '2022-07-08 17:12:54', '::1');
 
 -- --------------------------------------------------------
 
@@ -600,8 +601,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `collectiontype`, `categoryid`, `name`, `productcode`, `price`, `description`, `gender`, `size`, `highlight`, `displayorder`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
-(1, 1, 2, 'gold-jewellery_rings_SKO12', 'SKO12', 251, 'sdsad', NULL, NULL, NULL, NULL, 1, 0, '2022-07-14 18:49:37', '0000-00-00 00:00:00', '::1'),
-(2, 1, 4, 'gold-jewellery_pendants_SK0123', 'SK0123', 52, 'Tehisd sakd', 'WOMEN,KIDS', NULL, 'NEW ARRIVAL', NULL, 1, 0, '2022-07-15 19:25:39', '0000-00-00 00:00:00', '::1');
+(1, 1, 7, 'gold-collection_bracelet_Helix', 'Helix', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(2, 2, 9, 'silver-collection_pendant_Heart Younger', 'Heart Younger', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'MEN,WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:20:59', '0000-00-00 00:00:00', '::1'),
+(3, 3, 5, 'real-diamonds-collection_nose-pins_Elesh', 'Elesh', 562, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:27:10', '0000-00-00 00:00:00', '::1'),
+(4, 4, 6, 'platinum-collection_mangalsutra_Magal', 'Magal', 658, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
 
 -- --------------------------------------------------------
 
@@ -627,10 +630,19 @@ CREATE TABLE `product_extra` (
 --
 
 INSERT INTO `product_extra` (`id`, `product_id`, `ename`, `evalue`, `status`, `displayorder`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
-(1, 1, 'Test', 'Test', 1, 0, 0, '2022-07-14 18:49:38', '0000-00-00 00:00:00', '::1'),
-(4, 2, 'Height', '123', 1, 0, 0, '2022-07-15 18:42:32', '0000-00-00 00:00:00', '::1'),
-(5, 2, 'Width', '150', 1, 0, 0, '2022-07-15 19:25:41', '0000-00-00 00:00:00', '::1'),
-(6, 2, 'Size', '62', 1, 0, 0, '2022-07-15 19:25:41', '0000-00-00 00:00:00', '::1');
+(7, 1, 'Height', '20.86 ', 1, 0, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(8, 1, 'Width', '7.86', 1, 0, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(9, 1, 'Product Weight (Approx.)', '3.53 gram', 1, 0, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(10, 1, 'Type', '18Kt Gold', 1, 0, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(11, 2, 'Height', '20.86 ', 1, 0, 0, '2022-07-19 11:21:00', '0000-00-00 00:00:00', '::1'),
+(12, 2, 'Width', '65.5', 1, 0, 0, '2022-07-19 11:21:00', '0000-00-00 00:00:00', '::1'),
+(13, 2, 'Product Weight (Approx.)', '3.56', 1, 0, 0, '2022-07-19 11:21:00', '0000-00-00 00:00:00', '::1'),
+(14, 2, 'Type', '18k', 1, 0, 0, '2022-07-19 11:21:00', '0000-00-00 00:00:00', '::1'),
+(15, 3, 'Width', '20.86 ', 1, 0, 0, '2022-07-19 11:27:11', '0000-00-00 00:00:00', '::1'),
+(16, 3, 'Height', '65', 1, 0, 0, '2022-07-19 11:27:11', '0000-00-00 00:00:00', '::1'),
+(17, 3, 'Size', '56', 1, 0, 0, '2022-07-19 11:27:11', '0000-00-00 00:00:00', '::1'),
+(18, 4, 'Width', '20.86 ', 1, 0, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1'),
+(19, 4, 'Height', '65', 1, 0, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
 
 -- --------------------------------------------------------
 
@@ -671,9 +683,20 @@ CREATE TABLE `product_image` (
 --
 
 INSERT INTO `product_image` (`id`, `product_id`, `image_name`, `created_at`, `updated_at`) VALUES
-(1, 2, '84915.jpg', '2022-07-15 18:42:30', '2022-07-15 18:42:30'),
-(4, 2, '47098.png', '2022-07-15 19:25:39', '2022-07-15 19:25:39'),
-(5, 2, '73440.png', '2022-07-15 19:25:41', '2022-07-15 19:25:41');
+(6, 1, '65210.jpg', '2022-07-19 11:17:45', '2022-07-19 11:17:45'),
+(7, 2, '78322.jpg', '2022-07-19 11:20:59', '2022-07-19 11:20:59'),
+(8, 2, '60349.jpg', '2022-07-19 11:20:59', '2022-07-19 11:20:59'),
+(9, 2, '18846.jpg', '2022-07-19 11:20:59', '2022-07-19 11:20:59'),
+(10, 2, '42092.jpg', '2022-07-19 11:21:00', '2022-07-19 11:21:00'),
+(11, 2, '65851.jpg', '2022-07-19 11:21:00', '2022-07-19 11:21:00'),
+(12, 3, '61597.jpg', '2022-07-19 11:27:10', '2022-07-19 11:27:10'),
+(13, 3, '30245.jpg', '2022-07-19 11:27:11', '2022-07-19 11:27:11'),
+(14, 3, '60979.jpg', '2022-07-19 11:27:11', '2022-07-19 11:27:11'),
+(15, 3, '48560.jpg', '2022-07-19 11:27:11', '2022-07-19 11:27:11'),
+(16, 4, '91477.jpg', '2022-07-19 11:28:30', '2022-07-19 11:28:30'),
+(17, 4, '96237.jpg', '2022-07-19 11:28:30', '2022-07-19 11:28:30'),
+(18, 4, '28584.jpg', '2022-07-19 11:28:30', '2022-07-19 11:28:30'),
+(19, 4, '23505.jpg', '2022-07-19 11:28:30', '2022-07-19 11:28:30');
 
 -- --------------------------------------------------------
 
@@ -738,7 +761,7 @@ INSERT INTO `subscription` (`id`, `email`, `created_at`) VALUES
 CREATE TABLE `sub_category` (
   `id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `category_id` varchar(55) NOT NULL,
   `name` text NOT NULL,
   `status` int(11) NOT NULL DEFAULT 1,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
@@ -750,12 +773,15 @@ CREATE TABLE `sub_category` (
 --
 
 INSERT INTO `sub_category` (`id`, `image`, `category_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Earrings.jpg', 1, 'Earrings', 1, '2022-07-12 11:40:17', '2022-07-16 17:25:42'),
-(2, 'Bangles.jpg', 1, 'Bangles', 1, '2022-07-12 11:40:27', '2022-07-16 17:26:10'),
-(3, 'DiamondChains.jpg', 1, 'Diamond Chains', 0, '2022-07-12 11:40:48', '2022-07-16 17:26:21'),
-(4, 'Necklaces.jpg', 1, 'Necklaces', 1, '2022-07-12 11:41:00', '2022-07-16 17:26:27'),
-(5, 'NosePins.jpg', 1, 'Nose Pins', 1, '2022-07-12 11:41:00', '2022-07-16 17:26:36'),
-(6, 'Mangalsutra.jpg', 1, 'Mangalsutra', 1, '2022-07-12 11:41:00', '2022-07-16 17:26:42');
+(1, 'Earrings.jpg', '1,2,3,4', 'Earrings', 1, '2022-07-12 11:40:17', '2022-07-19 11:10:51'),
+(2, 'Bangles.jpg', '1,2,3,4', 'Bangles', 1, '2022-07-12 11:40:27', '2022-07-19 11:10:56'),
+(3, 'DiamondChains.jpg', '1,2,3,4', 'Diamond Chains', 0, '2022-07-12 11:40:48', '2022-07-19 11:10:58'),
+(4, 'Necklaces.jpg', '1,2,3,4', 'Necklaces', 1, '2022-07-12 11:41:00', '2022-07-19 11:11:01'),
+(5, 'NosePins.jpg', '1,2,3,4', 'Nose Pins', 1, '2022-07-12 11:41:00', '2022-07-19 11:11:03'),
+(6, 'Mangalsutra.jpg', '1,2,3,4', 'Mangalsutra', 1, '2022-07-12 11:41:00', '2022-07-19 11:11:06'),
+(7, 'Bracelet.jpg', '1,2,3,4', 'Bracelet', 1, '2022-07-12 11:41:00', '2022-07-19 11:11:08'),
+(8, 'Necklace.jpg', '1,2,3,4', 'Necklace', 1, '2022-07-12 11:41:00', '2022-07-19 11:11:10'),
+(9, 'Pendant.jpg', '1,2,3,4', 'Pendant', 1, '2022-07-12 11:41:00', '2022-07-19 11:14:07');
 
 -- --------------------------------------------------------
 
@@ -1140,13 +1166,13 @@ ALTER TABLE `photo_gallery_detail`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_extra`
 --
 ALTER TABLE `product_extra`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `product_highlights`
@@ -1158,7 +1184,7 @@ ALTER TABLE `product_highlights`
 -- AUTO_INCREMENT for table `product_image`
 --
 ALTER TABLE `product_image`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `slider`
@@ -1176,7 +1202,7 @@ ALTER TABLE `subscription`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `testimonial`
