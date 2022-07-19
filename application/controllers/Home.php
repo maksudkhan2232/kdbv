@@ -12,6 +12,11 @@ class Home extends MY_Controller {
 	{
 		
 		$this->data['SliderDetails']=$this->Crud_Model->getDatafromtablewhere('slider',array('status'=>1),'DESC');
+		$trending=array('highlight'=>"TRENDING COLLECTIONS");
+		$this->data['TrendingCollectionDetails']=$this->Crud_Model->GetProductDetails($trending);
+		// echo "<pre>";
+		// print_r($this->data['TrendingCollectionDetails']);
+		// exit;
 
 		$this->data['title'] = "Home";
 		// echo "<pre>";

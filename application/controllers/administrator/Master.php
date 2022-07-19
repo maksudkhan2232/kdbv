@@ -120,7 +120,7 @@ class Master extends MY_Controller  {
 		
 		$SubcategoryDetailsHtml='';
 		if($collectionid!=''){
-            $SubcategoryDetails=$this->Crud_Model->getDatafromtablewhere('sub_category',array('status'=>1,'category_id'=>$collectionid),'ASC');            
+            $SubcategoryDetails=$this->Crud_Model->getDatafromtablelike('sub_category',array('status'=>1,'category_id'=>$collectionid),'ASC');            
             if(!empty($SubcategoryDetails)){
              	foreach ($SubcategoryDetails as $sckey => $scvalue) {
                     $SubcategoryDetailsHtml .='<option value="'.$scvalue['id'].'">'.ucwords($scvalue['name']).'</option>'; 

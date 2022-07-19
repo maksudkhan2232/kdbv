@@ -34,6 +34,14 @@ class crud_model extends CI_Model{
 		return $query->result_array();
     	
 	}
+    public function getDatafromtablelike($table,$where,$order_by='ASC'){
+        
+        $this->db->like($where);
+        $this->db->order_by('id',$order_by);
+        $query = $this->db->get($table);
+        return $query->result_array();
+        
+    }
 	public function DeletData($id,$fieldName,$table){
 		$this->db->where($fieldName,$id);
 		return $this->db->delete($table);		
@@ -176,7 +184,7 @@ class crud_model extends CI_Model{
         }
     }  
     function GetProductDetails($data=''){ 
-        $this->db->select('p.*,c.name as collectionname,sc.name as categoryname,pi.image_name');
+        $this->db->select('p.*,c.name as collectionname,c.shortname as collectionshortname,sc.name as categoryname,pi.image_name');
         $this->db->from('product as p');
         $this->db->join('category as c','c.id=p.collectiontype','LEFT');
         $this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
