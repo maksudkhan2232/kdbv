@@ -370,6 +370,14 @@ function TestimonialDetails()
     $res = $ci->db->from('testimonial')->get()->result_array();
     return  $res;
 }
+function PriceRangeDetails()
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->where("status",1);
+    $res = $ci->db->from('product_pricerange')->get()->result_array();
+    return  $res;
+}
 
 
 

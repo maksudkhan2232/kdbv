@@ -52,8 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'home';
 $route['404_override'] = 'error_404';
 $route['translate_uri_dashes'] = FALSE;
-
+$route['shopby/(:any)'] = 'shopby/index/$1';
+$route['shopby/(:any)/(:any)'] = 'shopby/index/$1';
 $route['gallery/(:num)'] = 'gallery';
 $route['publication/(:num)'] = 'shradhanjali';
-
 $route['print_view/(:any)'] = 'print_view/index/$1';

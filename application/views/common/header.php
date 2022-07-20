@@ -59,11 +59,11 @@
               <li class="has-child"><a href="<?php echo base_url(); ?>collections">Collections</a>
                 <div class="mega-menu five-col">
                   <div class="mega-product">
-                    <h4><a class="font-red" href="javascript:void(0);">Jewellery Collection</a></h4>
+                    <h4><a class="font-red" href="<?php echo base_url(); ?>shopby/collections">Jewellery Collection</a></h4>
                     <ul class="mega-button">
                       <?php
                         foreach ($CollectionDetails as $ckey => $cvalue) {
-                          echo '<li><a href="'.base_url().'collections/products">'.ucwords($cvalue['name']).'</a></li>';
+                          echo '<li><a href="'.base_url().'shopby/collections/'.$cvalue['slug'].'">'.ucwords($cvalue['name']).'</a></li>';
                         }
                       ?>
                     </ul>
@@ -74,7 +74,7 @@
                       <div class="mega-product">
                         <div class="sin-product">
                           <div class="pro-img"> <img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>"> </div>
-                          <div class="text-center"> <a href="<?php echo base_url(); ?>collections/products"><?php echo ucwords($cvalue['shortname']);?></a> </div>
+                          <div class="text-center"> <a href="<?php echo base_url(); ?>shopby/collections/<?php echo $cvalue['slug'];?>"><?php echo ucwords($cvalue['shortname']);?></a> </div>
                         </div>
                       </div>
                   <?php
@@ -85,48 +85,77 @@
               <li class="has-child"><a href="javascript:void(0);">Best Sellers</a>
                 <div class="mega-menu">
                   <div class="mega-catagory per-20">
-                    <h4><a class="font-red" href="<?php echo base_url(); ?>collections/products">By Category</a></h4>
+                    <h4><a class="font-red" href="<?php echo base_url(); ?>shopby/category/">By Category</a></h4>
                     <ul class="mega-button">
-                      <li><a href="javascript:void(0);">Rings</a></li>
-                      <li><a href="javascript:void(0);">Earrings</a></li>
-                      <li><a href="javascript:void(0);">Pendants</a></li>
-                      <li><a href="javascript:void(0);">Nose Pin</a></li>
-                      <li><a href="javascript:void(0);">Bracelet</a></li>
+                        <?php
+                          foreach ($CategoryDetails as $ctkey => $ctvalue) {
+                        ?>
+                            <li>
+                              <a href="<?php echo  base_url(); ?>shopby/category/<?php echo $ctvalue['slug'];?>"><?php echo ucwords($ctvalue['name']);?></a>
+                            </li>
+                        <?php
+                          }
+                        ?>
                     </ul>
                   </div>
                   <div class="mega-catagory per-20">
                     <h4><a class="font-red" href="javascript:void(0);">By Price Range</a></h4>
                     <ul class="mega-button">
-                      <li><a href="javascript:void(0);">Below 10K</a></li>
-                      <li><a href="javascript:void(0);">10K - 20K</a></li>
-                      <li><a href="javascript:void(0);">20K - 30K</a></li>
-                      <li><a href="javascript:void(0);">30K - 50K</a></li>
-                      <li><a href="javascript:void(0);">Above 50K</a></li>
+                      <?php
+                        foreach ($PriceRangeDetails as $prtkey => $prvalue) {
+                      ?>
+                          <li>
+                            <a href="<?php echo  base_url(); ?>shopby/price/<?php echo $prvalue['slug'];?>">
+                              <?php echo ucwords($prvalue['name']);?>
+                            </a>
+                          </li>
+                      <?php
+                        }
+                      ?>
                     </ul>
                   </div>
                   <div class="mega-catagory per-20">
                     <h4><a class="font-red" href="javascript:void(0);">By Gender</a></h4>
                     <ul class="mega-button">
-                      <li><a href="javascript:void(0);">Men</a></li>
-                      <li><a href="javascript:void(0);">Women</a></li>
-                      <li><a href="javascript:void(0);">Kids</a></li>
+                      <?php
+                        foreach ($GenderDetails as $gkey => $gvalue) {
+                      ?>
+                          <li>
+                            <a href="<?php echo  base_url(); ?>shopby/gender/<?php echo $gvalue['slug'];?>">
+                              <?php echo ucwords($gvalue['name']);?>
+                            </a>
+                          </li>
+                      <?php
+                        }
+                      ?>
                     </ul>
                   </div>
                   <div class="mega-catagory per-20">
                     <h4><a class="font-red" href="javascript:void(0);">By Metal</a></h4>
                     <ul class="mega-button">
-                      <li><a href="javascript:void(0);">Gold</a></li>
-                      <li><a href="javascript:void(0);">Real Diamond</a></li>
-                      <li><a href="javascript:void(0);">Silver</a></li>
-                      <li><a href="javascript:void(0);">Platinum</a></li>
+                       <?php
+                        foreach ($CollectionDetails as $ckey => $cvalue) {
+                      ?>
+                          <li>
+                            <a href="<?php echo  base_url(); ?>shopby/collections/<?php echo $cvalue['slug'];?>">
+                              <?php echo ucwords($cvalue['name']);?>
+                            </a>
+                          </li>
+                      <?php
+                        }
+                      ?>
                     </ul>
                   </div>
-                  <div class="mega-catagory mega-img per-20"> <a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/menu.jpg" alt=""></a> </div>
+                  <div class="mega-catagory mega-img per-20"> 
+                    <a href="javascript:void(0);">
+                      <img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/menu.jpg" alt="">
+                    </a> 
+                  </div>
                 </div>
               </li>
               <li><a href="<?php echo base_url(); ?>about">About US</a></li>
-              <li><a href="javascript:void(0);">Gallery</a></li>
-              <li><a href="<?php echo base_url(); ?>contact">CONTACT</a></li>
+              <li><a href="<?php echo base_url(); ?>gallery">Gallery</a></li>
+              <li><a href="<?php echo base_url(); ?>contact">Contact Us</a></li>
             </ul>
           </div>
         </div>
@@ -197,7 +226,11 @@
           <div class="accordion-wrapper"> <a href="javascript:void(0);" class="mobile-open"><i class="flaticon-menu-1"></i></a> </div>
         </div>
         <div class="col-4">
-          <div class="logo"> <a href="javascript:void(0);"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="55" width="150" alt=""> </a> </div>
+          <div class="logo"> 
+            <a href="javascript:void(0);">
+              <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="55" width="150" alt=""> 
+            </a> 
+          </div>
         </div>
         <div class="col-4">
           <div class="top-cart"> <a href="javascript:void(0)"><i class="fa fa-shopping-cart" aria-hidden="true"></i> (2)</a>
@@ -233,43 +266,61 @@
     <!-- /.container end -->
   </header>
   <div class="accordion-wrapper">
-    <!-- Mobile Menu Navigation
-        ============================================= -->
+    <!-- Mobile Menu Navigation -->
     <div id="mobilemenu" class="accordion">
       <ul>
-        <li class="mob-logo text-center"><a href="javascript:void(0);"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="120" width="400" alt=""> </a></li>
+        <li class="mob-logo text-center">
+          <a href="javascript:void(0);"> 
+            <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="120" width="400" alt=""> 
+          </a>
+        </li>
         <li><a href="javascript:void(0);" class="closeme"><i class="flaticon-close"></i></a></li>
-        <li> <a href="javascript:void(0);" class="out-link">Home</a> </li>
+        <li> <a href="<?php echo  base_url(); ?>" class="out-link">Home</a> </li>
         <li> <a href="javascript:void(0);" class="link">Collections<i class="fa fa-chevron-down"></i></a>
           <ul class="submenu">
-            <li><a href="javascript:void(0);">Gold Collection</a></li>
-            <li><a href="javascript:void(0);">Silver Collection</a></li>
-            <li><a href="javascript:void(0);">Real Diamonds Collection</a></li>
-            <li><a href="javascript:void(0);">Platinum Collection</a></li>
+            <?php
+              foreach ($CollectionDetails as $ckey => $cvalue) {
+                echo '<li><a href="'.base_url().'shopby/collections/'.$cvalue['slug'].'">'.ucwords($cvalue['name']).'</a></li>';
+              }
+            ?>
           </ul>
         </li>
         <li> <a href="javascript:void(0);" class="link">By Category<i class="fa fa-chevron-down"></i></a>
           <ul class="submenu">
-            <li><a href="javascript:void(0);">Rings</a></li>
-            <li><a href="javascript:void(0);">Earrings</a></li>
-            <li><a href="javascript:void(0);">Pendants</a></li>
-            <li><a href="javascript:void(0);">Nose Pin</a></li>
-            <li><a href="javascript:void(0);">Bracelet</a></li>
+            <?php
+              foreach ($CategoryDetails as $ctkey => $ctvalue) {
+            ?>
+                <li>
+                  <a href="<?php echo  base_url(); ?>shopby/category/<?php echo $cval['slug'];?>"><?php echo ucwords($cval['name']);?></a>
+                </li>
+            <?php
+              }
+            ?>
           </ul>
         </li>
-        <li> <a href="javascript:void(0);" class="link">By Gender<i class="fa fa-chevron-down"></i></a>
+        <li> 
+          <a href="javascript:void(0);" class="link">By Gender<i class="fa fa-chevron-down"></i></a>
           <ul class="submenu">
-            <li><a href="javascript:void(0);">Men</a></li>
-            <li><a href="javascript:void(0);">Women</a></li>
-            <li><a href="javascript:void(0);">Kids</a></li>            
+            <?php
+              foreach ($GenderDetails as $gkey => $gvalue) {
+            ?>
+                <li>
+                  <a href="<?php echo  base_url(); ?>shopby/gender/<?php echo $gvalue['slug'];?>">
+                    <?php echo ucwords($gvalue['name']);?>
+                  </a>
+                </li>
+            <?php
+              }
+            ?>        
           </ul>
         </li>
-         <li> <a href="javascript:void(0);" class="out-link">About US</a> </li>       
-         <li> <a href="javascript:void(0);" class="out-link">Gallery</a> </li>
-         <li> <a href="javascript:void(0);" class="out-link">Contact Us</a> </li>       
-        
+        <li><a href="<?php echo base_url(); ?>about" class="out-link">About US</a></li>
+        <li><a href="<?php echo base_url(); ?>gallery" class="out-link">Gallery</a></li>
+        <li><a href="<?php echo base_url(); ?>contact" class="out-link">Contact Us</a></li>
       </ul>
-      <div class="mobile-login"> <a href="javascript:void(0);">Log in</a> | <a href="create-javascript:void(0);">Create Account</a> </div>
+      <div class="mobile-login"> 
+          <a href="javascript:void(0);">Log in</a> | <a href="create-javascript:void(0);">Create Account</a> 
+      </div>
       <form action="javascript:void(0);" id="moble-search">
         <input placeholder="Search...." type="text">
         <button type="submit"><i class="fa fa-search"></i></button>

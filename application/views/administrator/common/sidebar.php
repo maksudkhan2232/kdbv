@@ -25,7 +25,9 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
       <div class="collapse" id="page-layouts">
         <ul class="nav flex-column sub-menu">
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/category">Collections</a></li>
-           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/sub_category">Category</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/sub_category">Category</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/sub_category">Gender</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/sub_category">Price Range</a></li>
         </ul>
       </div>
     </li>

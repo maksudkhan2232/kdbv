@@ -7,8 +7,8 @@ class MY_Controller extends CI_Controller
 		$this->load->helper('url');
 		$this->load->helper('common_function_helper');  
 		$this->load->library('image_lib'); //load library
-		$this->load->helper('url');
 		$this->load->helper('file');
+		$this->load->library("cart");
 		$this->data['base_url'] 		= $this->config->item('base_url');
 		$this->data['base_assets'] 		= $this->config->item('base_assets');
 		$this->data['base_uploads'] 		= $this->config->item('base_uploads');
@@ -22,6 +22,8 @@ class MY_Controller extends CI_Controller
 		$this->data['CategoryDetails'] =CategoryDetails();
 		$this->data['GenderDetails'] =GenderDetails();
 		$this->data['TestimonialDetails'] =TestimonialDetails();
+		$this->data['PriceRangeDetails'] =PriceRangeDetails();
+		
 	}
 	public function is_admin_logged_in()
 	{
