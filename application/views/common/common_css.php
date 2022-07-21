@@ -15,3 +15,6 @@
 <!-- Site Stylesheet -->
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/css/app.css" type="text/css">
  <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/css/fontawesome.min.css"> 
+ <script type="text/javascript">
+    var base_url = "<?php echo  base_url(); ?>";    
+</script> 

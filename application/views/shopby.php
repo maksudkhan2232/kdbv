@@ -254,7 +254,7 @@
 					                      		<div class="col-sm-6 col-xl-3">
 						                            <div class="sin-product style-two">
 						                               <div class="pro-img">
-						                                  <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $pvalue['image_name'];?>" alt="<?php echo $tcval['productcode'];?>">
+						                                  <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $pvalue['image_name'];?>" alt="<?php echo $pvalue['productcode'];?>">
 						                               </div>
 						                                <?php 
 									                        if (strpos($pvalue['highlight'], 'NEW ARRIVAL') !== false) {
@@ -284,7 +284,7 @@
 						                                  <div class="pro-icon">
 						                                     <ul>
 						                                        <li><a href="#"><i class="flaticon-valentines-heart"></i></a></li>
-						                                        <li><a href="#" class="trigger"><i class="flaticon-eye"></i></a></li>
+						                                        <li><a href="javascript:void(0);" class="triggers" data-id="<?php echo $pvalue['id'];?>" id="productquickview" onClick="productquickview(<?php echo $pvalue['id'];?>);"><i class="flaticon-eye"></i></a></li>
 						                                     </ul>
 						                                  </div>
 						                                  <div class="add-to-cart">
