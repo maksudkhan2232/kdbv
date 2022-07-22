@@ -15,5 +15,6 @@
 <script src="<?php echo  base_url(); ?>assest/frontend/js/app.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/marquee.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/main.js"></script>
+<script src="<?php echo  base_url(); ?>assest/frontend/js/sweetalert2@10.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/general.js"></script>
 <!--<script src="assets/js/right.js"></script>-->

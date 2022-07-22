@@ -4,6 +4,7 @@
       <div class="col-12"> <span class="close-qv"> <i class="flaticon-close"></i> </span> </div>
       <div class="col-md-6">
         <!-- Product View Slider -->
+        <span id="slider-js"></span>
         <div class="quickview-sliders">
           <div class="slider-for" id="slider-for">
             <div class=""> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/single/b1.jpg" alt="Thumb"> </div>

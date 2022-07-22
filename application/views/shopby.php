@@ -288,7 +288,7 @@
 						                                     </ul>
 						                                  </div>
 						                                  <div class="add-to-cart">
-						                                     <a href="#">add to cart</a>
+						                                     <a href="javascript:void(0);"  onclick="return addtocart(<?php echo $pvalue['id'];?>);">add to cart</a>
 						                                  </div>
 						                               </div>
 						                            </div>

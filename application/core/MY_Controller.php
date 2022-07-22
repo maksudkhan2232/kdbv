@@ -23,7 +23,19 @@ class MY_Controller extends CI_Controller
 		$this->data['GenderDetails'] =GenderDetails();
 		$this->data['TestimonialDetails'] =TestimonialDetails();
 		$this->data['PriceRangeDetails'] =PriceRangeDetails();
+		$this->data['PriceRangeDetails'] =PriceRangeDetails();
+		if ($this->cart->contents()) { 
+			$this->data['carttotal'] = $this->cart->total();
+	        $this->data['carttotalqty'] = $this->cart->total_items();
+	        $this->data['carttotalproduct'] = count($this->cart->contents());	
+		}else{
+			$this->data['carttotal'] = 0;
+	        $this->data['carttotalqty'] = 0;
+	        $this->data['carttotalproduct'] = 0;	
+		}
 		
+		
+		//$this->cart->destroy();
 	}
 	public function is_admin_logged_in()
 	{

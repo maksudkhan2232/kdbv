@@ -101,6 +101,16 @@ class products extends MY_Controller {
 					// $ProductDetailsHtml .='</div>';
      //        	$ProductDetailsHtml .='</div>';
             	$ReturnDetails['status']='success';
+//             	$ProductDetailsHtml='</script><script src="'.base_url().'assest/frontend/dependencies/jquery/jquery.min.js"></script>
+// <script src="'.base_url().'assest/frontend/dependencies/popper.js/popper.min.js"></script>
+// <script src="'.base_url().'assest/frontend/dependencies/bootstrap/js/bootstrap.min.js"></script>
+// <script src="'.base_url().'assest/frontend/dependencies/slick-carousel/js/slick.js"></script>
+// <script src="'.base_url().'assest/frontend/js/app-demo.js"></script>';
+
+    //         	$ProductDetailsHtml .="$('.slider-for').slick({ slidesToShow: 1,slidesToScroll: 1,arrows: false,fade: true, asNavFor: '.slider-nav', swipe: false, });";
+				// $ProductDetailsHtml .=" $('.slider-nav').slick({ slidesToShow: 4, slidesToScroll: 1, asNavFor: '.slider-for', focusOnSelect: true, swipe: false, infinite: false, arrows: true, });";
+				// $ProductDetailsHtml .='</script>';
+      			//$ReturnDetails['sliderjs']=$ProductDetailsHtml;
 				$ProductDetailsHtml ='';					
 	  			if(!empty($ProductImageDetail)){
 	  				foreach ($ProductImageDetail as $pikey => $pivalue) {
@@ -138,19 +148,14 @@ class products extends MY_Controller {
 					if($ProductDetail['price']!='0'){
 						$ProductDetailsHtml .='<span class="price">₹ '.$ProductDetail['price'].'</span>';	
 					}				          	
-				  	$ProductDetailsHtml .='<div class="size-variation"> <span>size :</span>';
-				        $ProductDetailsHtml .='<select name="size-value">';
-				          $ProductDetailsHtml .='<option value="">1</option>';
-				          $ProductDetailsHtml .='<option value="">2</option>';
-				          $ProductDetailsHtml .='<option value="">3</option>';
-				          $ProductDetailsHtml .='<option value="">4</option>';
-				        $ProductDetailsHtml .='</select>';
-				    $ProductDetailsHtml .='</div>';
+				  	
 				    $ProductDetailsHtml .='<div class="cart-subtotal" style="background-color:#ffffff;padding:10px;">';
 				  		$ProductDetailsHtml .='<ul style="padding-left:0px;list-style:none;">';
 				  			if(!empty($ProductExtraDetail)){
 				  				foreach ($ProductExtraDetail as $pekey => $pevalue) {
-				  					$ProductDetailsHtml .='<li><span>'.ucwords($pevalue['ename']).'</span>'.ucwords($pevalue['evalue']).'</li>';
+				  					if($pekey<4){
+				  						$ProductDetailsHtml .='<li><span>'.ucwords($pevalue['ename']).'</span>'.ucwords($pevalue['evalue']).'</li>';
+				  					}
 				  				}
 				  			}
 				      	$ProductDetailsHtml .='</ul>';
@@ -159,7 +164,7 @@ class products extends MY_Controller {
 				    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
 				      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus">';
 				    	$ProductDetailsHtml .='</div>';
-				    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;">';
+				    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$ProductDetail['id'].');">';
 				    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
 				    		$ProductDetailsHtml .=' Add to Cart';
 				    	$ProductDetailsHtml .='</a>';

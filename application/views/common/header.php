@@ -163,46 +163,79 @@
         <div class="col-lg-6 col-xl-2 order-lg-2 order-xl-3">
           <div class="header-right-menu">
             <ul>
-              <li class="top-search searchBoxToggler"><a href="javascript:void(0)"><i class="flaticon-magnifying-glass"></i></a>                
+              <li class="top-search searchBoxToggler">
+                <a href="javascript:void(0)"><i class="flaticon-magnifying-glass"></i></a>                
               </li>
               <li><a href="<?php echo base_url(); ?>customer"><i class="fa fa-user"></i></a></li>
-              <li class="top-cart"><a href="javascript:void(0)"><i class="flaticon-bag"></i><span>2</span></a>
-                <div class="cart-drop">
-                  <div class="single-cart">
-                    <div class="cart-img"> <img alt="" src="<?php echo  base_url(); ?>assest/frontend/media/images/product/car1.jpg"> </div>
-                    <div class="cart-title">
-                      <p><a href="javascript:void(0);">The Orion Pendant</a></p>
-                    </div>
-                    <div class="cart-price">
-                      <p>1 x 500</p>
-                    </div>
-                    <a href="javascript:void(0);"><i class="fa fa-times"></i></a> </div>
-                  <div class="single-cart">
-                    <div class="cart-img"> <img alt="" src="<?php echo  base_url(); ?>assest/frontend/media/images/product/car2.jpg"> </div>
-                    <div class="cart-title">
-                      <p><a href="javascript:void(0);">The Helix Bracelet</a></p>
-                    </div>
-                    <div class="cart-price">
-                      <p>1 x 200</p>
-                    </div>
-                    <a href="javascript:void(0);"><i class="fa fa-times"></i></a> </div>
-                  <div class="cart-bottom">
-                    <!--<div class="cart-sub-total">
-                        <p>Sub-Total <span>$700</span></p>
+              <li class="top-cart">
+                
+                <a href="javascript:void(0)" onclick="return viewheadercart();">
+                  <i class="flaticon-bag"></i><span id="totalcartproduct"><?php echo $carttotalproduct;?></span>
+                </a>
+                <?php 
+                    if($carttotalproduct!='' and $carttotalproduct!='0'){
+                ?>
+                <div class="cart-drop" id="viewheadercart">
+                    <?php
+                      foreach ($this->cart->contents() as $cartkey => $cartvalue) {
+                    ?>
+                        <div class="single-cart">
+                          <div class="cart-img"> 
+                            <img alt="<?php echo $cartvalue['options']['product_code'];?>" src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $cartvalue['options']['product_image'];?>" height="100" width="100"> 
+                          </div>
+                          <div class="cart-title">
+                            <p><a href="javascript:void(0);"><?php echo $cartvalue['options']['product_code'];?></a></p>
+                          </div>
+                          <div class="cart-price">
+                            <p>
+                              <?php 
+                                echo $cartvalue['qty'];
+                                if($cartvalue['price']!='' && $cartvalue['price']!='0'){
+                                  echo 'X' .$cartvalue['price'];
+                                }
+                              ?> 
+                            </p>
+                          </div>
+                          <a href="javascript:void(0);" onclick="return removetocart('<?php echo $cartvalue['rowid'];?>');"><i class="fa fa-times"></i></a> 
+                        </div>
+                    <?php
+                      }
+                    ?>
+                    <div class="cart-bottom">
+                      <!--<div class="cart-sub-total">
+                          <p>Sub-Total <span>$700</span></p>
+                        </div>
+                        <div class="cart-sub-total">
+                          <p>Eco Tax (-2.00)<span>$7.00</span></p>
+                        </div>
+                        <div class="cart-sub-total">
+                          <p>VAT (20%) <span>$40.00</span></p>
+                        </div>
+                        <div class="cart-sub-total">
+                          <p>Total <span>$244.00</span></p>
+                        </div>
+                      -->
+                      <div class="cart-checkout">
+                        <a href="javascript:void(0);"><i class="fa fa-shopping-cart"></i>View Cart</a>
                       </div>
-                      <div class="cart-sub-total">
-                        <p>Eco Tax (-2.00)<span>$7.00</span></p>
+                      <div class="cart-share">
+                        <a href="javascript:void(0);"><i class="fa fa-share"></i>Checkout</a> 
                       </div>
-                      <div class="cart-sub-total">
-                        <p>VAT (20%) <span>$40.00</span></p>
-                      </div>
-                      <div class="cart-sub-total">
-                        <p>Total <span>$244.00</span></p>
-                      </div>-->
-                    <div class="cart-checkout"> <a href="javascript:void(0);"><i class="fa fa-shopping-cart"></i>View Cart</a> </div>
-                    <div class="cart-share"> <a href="javascript:void(0);"><i class="fa fa-share"></i>Checkout</a> </div>
-                  </div>
+                    </div>
                 </div>
+                <?php 
+                    }else{
+                ?>
+                 <div class="cart-drop" id="viewheadercart">
+                    <div class="single-cart">
+                      <div class="cart-title">
+                        <p>Cart Empty</p>
+                      </div>
+                    </div>                    
+                </div>
+                <?php
+                    }
+                ?>
               </li>
             </ul>
           </div>
