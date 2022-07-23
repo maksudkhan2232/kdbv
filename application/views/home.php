@@ -123,7 +123,7 @@
                             <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
                           </ul>
                         </div>
-                        <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
+                        <div class="add-to-cart"> <a href="javascript:void(0);" onclick="return addtocart(<?php echo $tcval['id'];?>);">add to cart</a> </div>
                       </div>
                     </div>
                 <?php 
@@ -193,7 +193,7 @@
                             <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
                           </ul>
                         </div>
-                        <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
+                        <div class="add-to-cart"> <a href="javascript:void(0);" onclick="return addtocart(<?php echo $navalue['id'];?>);">add to cart</a> </div>
                       </div>
                     </div>
                   </div>

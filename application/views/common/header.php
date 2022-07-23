@@ -216,10 +216,10 @@
                         </div>
                       -->
                       <div class="cart-checkout">
-                        <a href="javascript:void(0);"><i class="fa fa-shopping-cart"></i>View Cart</a>
+                        <a href="<?php echo  base_url(); ?>order"><i class="fa fa-shopping-cart"></i>View Cart</a>
                       </div>
                       <div class="cart-share">
-                        <a href="javascript:void(0);"><i class="fa fa-share"></i>Checkout</a> 
+                        <a href="<?php echo  base_url(); ?>order/checkout"><i class="fa fa-share"></i>Checkout</a> 
                       </div>
                     </div>
                 </div>

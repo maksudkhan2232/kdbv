@@ -324,76 +324,9 @@
 			<?php $this->load->view('common/footer');?> 
 		 	<!-- Back to top -->
 		 	<div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-			<?php //$this->load->view('common/quick-view');?> 
+			<?php $this->load->view('common/quick-view');?> 
 		</div>
       	<?php $this->load->view('common/main-search');?> 
       	<?php $this->load->view('common/common_js');?> 
    </body>
 </html>
-
-<?php
-foreach ($ProductDetails as $pkey => $pvalue) {
-?>
- <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
-	  <div class="quickview">
-	     <div class="row">
-	      <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
-	      <div class="col-md-6">
-	        <span id="slider-js"></span>
-	        <div class="quickview-sliders">
-	          <div class="slider-for" id="slider-for<?php echo $pvalue['id'];?>">
-	            <?php echo $pvalue['sliderfor']; ?>
-	          </div>
-	          <div class="slider-nav" id="slider-nav<?php echo $pvalue['id'];?>">
-	           	<?php echo $pvalue['slidernav']; ?>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="col-md-6" id="product-details">
-	      	<?php echo $pvalue['productdetails']; ?>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<script type="text/javascript">
-		 $('.slider-for<?php echo $pvalue['id'];?>').slick({
-	        slidesToShow: 4,
-	        slidesToScroll: 1,
-	        arrows: false,
-	        fade: true,
-	        asNavFor: '.slider-nav',
-	        swipe: false,
-	      });
-
-	      $('.slider-nav<?php echo $pvalue['id'];?>').slick({
-	        slidesToShow: 4,
-	        slidesToScroll: 1,
-	        asNavFor: '.slider-for',
-	        focusOnSelect: true,
-	        swipe: false,
-	        infinite: false,
-	        arrows: true,
-	      });
-	</script>
-<?php } ?>
-
-
-<script type="text/javascript">
-
-
-
-function productquickview(productid)
-{
-	   var mask = '<div class="mask-overlay">';
-	        $('#pmodel'+productid).toggleClass('open');
-	        $(mask).hide().appendTo('body').fadeIn('fast');
-	        
-	        $('.mask-overlay, .close-qv').on('click', function() {
-	          $('.quickview-wrapper').removeClass('open');
-	          $('.mask-overlay').remove();
-	        });
-
-}
-
-
-</script>

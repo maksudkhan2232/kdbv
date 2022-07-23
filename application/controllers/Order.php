@@ -10,19 +10,9 @@ class order extends MY_Controller{
     }    
     //load home  
     function index(){
-        redirect($this->data['base_url']);
-        $data = array(
-                'id'      => 'sku_123ABC',
-                'qty'     => 1,
-                'price'   => 39.95,
-                'name'    => 'T-Shirt',
-                'options' => array('Size' => 'L', 'Color' => 'Red')
-        );
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['breadcrumb'] = 'Order us';
-        $this->data['tpl_name']= "order.tpl";
-        $this->smarty->assign('data', $this->data);
-        $this->smarty->view('template.tpl'); 
+        
+        $this->data['title'] = "Cart";
+        $this->load->view('order_cart',$this->data);
     }
     function addtocartproduct()
     {
@@ -126,6 +116,38 @@ class order extends MY_Controller{
         } 
         echo json_encode($returnarray);exit;      
     }
+    function updatetocartproduct(){
+        
+        $rowid = $this->input->post('rowid');
+        $quantity = $this->input->post('quantity');
+        $returnarray = array();        
+        if($rowid!='' && $quantity!=''){            
+            if (!empty($this->cart->contents())) {
+                $dat = array(
+                    'rowid'=>$rowid,
+                    'qty'     => $quantity,
+                );  
+                $this->cart->update($dat);
+                $cartdetails=$this->cart->contents();
+                if($cartdetails[$rowid]['price']!='' && $cartvalue[$rowid]['price']!='0'){
+                  $returnarray['price'] = '₹ '.$cartdetails[$rowid]['price'].' X '.$cartdetails[$rowid]['qty'];
+                  $returnarray['pricetotal'] = '₹ '.($cartdetails[$rowid]['price']*$cartdetails[$rowid]['qty']);
+                }else{
+                   $returnarray['price'] = ' - ';
+                   $returnarray['pricetotal'] = ' - ';
+                }
+                $returnarray['msg'] = 'cartupdate';
+                $returnarray['ftotal'] = $this->cart->total();
+                $returnarray['ftotalqty'] = $this->cart->total_items();
+                $returnarray['ftotalproduct'] = count($this->cart->contents());
+            }else{
+                $returnarray['msg'] = 'error';
+            }          
+        }else{
+            $returnarray['msg'] = 'error';
+        } 
+        echo json_encode($returnarray);exit;      
+    }
     function viewheadercart(){
         
         $returnarray = array(); 
@@ -168,10 +190,10 @@ class order extends MY_Controller{
                  //      <p>Total <span>$244.00</span></p>
                  //    </div>
                 $carthtml .='<div class="cart-checkout">';
-                    $carthtml .='<a href="javascript:void(0);"><i class="fa fa-shopping-cart"></i>View Cart</a>';
+                    $carthtml .='<a href="'.base_url().'/order"><i class="fa fa-shopping-cart"></i>View Cart</a>';
                 $carthtml .='</div>';
                 $carthtml .='<div class="cart-share">';
-                    $carthtml .='<a href="javascript:void(0);"><i class="fa fa-share"></i>Checkout</a> ';
+                    $carthtml .='<a href="'.base_url().'/order/checkout"><i class="fa fa-share"></i>Checkout</a> ';
                 $carthtml .='</div>';
             $carthtml .='</div>';
         }else{
@@ -183,7 +205,24 @@ class order extends MY_Controller{
         }
         echo json_encode($carthtml);exit;      
     }
-   
+    function viewsubtotalcart(){
+        
+        $returnarray = array(); 
+        $carthtml='';
+        if ($this->cart->contents()) {
+            $carttotal= $this->cart->total();
+            if($carttotal!='' and $carttotal!='0'){
+                $carthtml .='<li><span>Sub-Total:</span>₹ '.number_format($carttotal).'</li>';    
+                $carthtml .='<li><span>TOTAL:</span>₹ '.number_format($carttotal).'</li>';
+            }
+            
+            //$carthtml .='<li><span>Tax (-4.00):</span>$11.00</li>';
+            //$carthtml .='<li><span>Shipping Cost:</span>$00.00</li>';
+            
+        }
+        echo json_encode($carthtml);exit;      
+    }
+    
     function addToCartsWithAddons()
     {
         $returnarray = array();        
