@@ -11,6 +11,11 @@ class order extends MY_Controller{
     //load home  
     function index(){
         
+        if(!empty($this->session->userdata('ordernote'))){
+                $this->data['ordernote']=$this->session->userdata('ordernote');
+        }else{
+            $this->data['ordernote']='';
+        }
         $this->data['title'] = "Cart";
         $this->load->view('order_cart',$this->data);
     }
@@ -222,7 +227,259 @@ class order extends MY_Controller{
         }
         echo json_encode($carthtml);exit;      
     }
-    
+    function orderspecialnote(){
+        $returnarray =array();
+        $ordernote = $this->input->post('ordernote');
+        if($ordernote!=''){  
+            $this->session->set_userdata("ordernote",$ordernote);
+            $returnarray['msg']='success';
+            $returnarray['message']='Special Order Note Successfully Applied.';
+        }else{
+            $returnarray['msg']='error';
+            $returnarray['message']='Something Wrong.';
+        }
+        echo json_encode($returnarray);exit;        
+    }
+    function checkout(){
+        if(!empty($this->session->userdata('ordernote'))){
+                $this->data['ordernote']=$this->session->userdata('ordernote');
+        }else{
+            $this->data['ordernote']='';
+        }
+        $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        $this->data['title'] = "Cart";
+        $this->load->view('order_checkout',$this->data);
+
+        // $CartTmpDate = $this->cart->contents();
+        // $cart_total =0;
+        // $cartdetails = '';
+        // if(!empty($CartTmpDate)){
+        //     $cartitemarray =array();
+        //     $ispletter = 0;
+        //     $totalplatter = 0;
+        //     foreach ($CartTmpDate as $cdkey => $cdvalue) {
+        //         $categoryid = $cdvalue['options']['category_id'];
+        //         if($categoryid!='794456'){
+        //             $ispletter ='1';
+        //             $totalplatter = ($totalplatter+$cdvalue['qty']);
+        //         }
+        //         $cartitemarray[]=$cdvalue['id'];
+        //         $item_total =0;
+        //         if (isset($cdvalue['options']['isvariation'])) {
+        //             $cart_total += $cdvalue['options']['extra_costs_total'];
+        //             $item_total += $cdvalue['options']['extra_costs_total'];
+                    
+        //         }else if(isset($cdvalue['options']['isaddons']) && !isset($cdvalue['options']['isvariation'])){
+        //             $cart_total += $cdvalue['subtotal'];
+        //             $cart_total += $cdvalue['options']['extra_costs_total'];
+        //             $item_total += $cdvalue['subtotal'];
+        //         }else{                    
+        //             $cart_total += $cdvalue['subtotal'];
+        //             $item_total += $cdvalue['subtotal'];
+        //         }
+        //         $cartdetails .='<div class="item-container-single d-flex gold-members align-items-center justify-content-between px-3 py-2 border-bottom row ml-0 mr-0 align-items-center">';
+        //             $cartdetails .='<div class="media align-items-center addon-grp-checkout col-7 pl-0 pr-0">';
+        //                 //$cartdetails .='<div class="mr-2 text-success">&middot;</div>';
+        //                 $cartdetails .='<div class="media-body addon-option-name">';
+        //                     $cartdetails .='<div class="d-flex"><p class="m-0"><div class="mr-2 text-success">&middot;</div><div class="txt-sizing">'.$cdvalue['options']['item_name'].'</div></p></div>';
+        //                     //$cartdetails .='<p class="m-0 small">'.$cdvalue['options']['description'].'</p>';
+        //                     $variation_details ='';
+        //                     if(isset($cdvalue['options']['isvariation']) && $cdvalue['options']['isvariation']!='0') {
+        //                         $variation = $cdvalue['options']['variation'];
+        //                         foreach ($variation as $variationkey => $variationvalue) {
+        //                             $vtotal=($variationvalue['variationquantity']*$variationvalue['variation_price']);
+        //                             $variation_details .='<span class="addon-item-checkout small d-flex pr-2">'.$variationvalue['variation_name'].'(Qty. '.$variationvalue['variationquantity'].') ₹'.$vtotal."</span>";
+        //                         }
+        //                         $cartdetails .='<p class="m-0 small variation-det">';
+        //                         $cartdetails .=$variation_details;
+        //                         $cartdetails .='</p>';
+        //                     }
+        //                     $addons_details ='';
+        //                     if(isset($cdvalue['options']['isaddons']) && $cdvalue['options']['isaddons']!='0') {
+        //                         $addons = $cdvalue['options']['addons'];
+        //                         foreach ($addons as $addonskey => $addonsvalue) {
+        //                             $atotal=($addonsvalue['addon_qty']*$addonsvalue['addonitemprice']);
+        //                             //$addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].'(Qty. '.$addonsvalue['addon_qty'].') ₹ '.$atotal."</span>";
+        //                             $addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].', </span>';
+        //                         }
+        //                         $cartdetails .='<p class="m-0 small addon-det"> Choice : ';
+        //                         $cartdetails .=$addons_details;
+        //                         $cartdetails .='</p>';
+        //                     }
+        //                 $cartdetails .='</div>';
+        //             $cartdetails .='</div>';
+        //             $cartdetails .='<div class="d-flex justify-content-end align-items-center btns-grp-checkout col-5 pl-0 pr-0">';
+        //                     if (isset($cdvalue['options']['isvariation'])) {
+        //                         if ($cdvalue['options']['isvariation']!='0') {
+        //                             $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
+        //                                 $cartdetails .='<button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
+        //                                     $cartdetails .="'".$cdvalue['id']."',";   
+        //                                     $cartdetails .="'".$cdvalue['rowid']."'";   
+        //                                     $cartdetails .=')">';   
+        //                                     $cartdetails .='Customize';
+        //                                 $cartdetails .='</button>';
+        //                             $cartdetails .='</span></div>';
+        //                         }
+        //                     }else if(isset($cdvalue['options']['isaddons']) || isset($cdvalue['options']['isvariation'])){
+        //                         // if ($cdvalue['options']['isaddons']!='0' ||  $cdvalue['options']['isvariation']=='0') {
+        //                         //     $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
+        //                         //         $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
+        //                         //         $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                         //         $cartdetails .="'decr',";   
+        //                         //         $cartdetails .="'onlyitem'";   
+        //                         //         $cartdetails .=')">';   
+        //                         //             $cartdetails .='<i class="feather-minus"></i>';
+        //                         //         $cartdetails .='</button>';
+        //                         //         $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
+        //                         //         $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
+        //                         //         $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                         //         $cartdetails .="'incr',";   
+        //                         //         $cartdetails .="'onlyitem'";   
+        //                         //         $cartdetails .=')">';   
+        //                         //             $cartdetails .='<i class="feather-plus"></i>';
+        //                         //         $cartdetails .='</button>';
+        //                         //     $cartdetails .='</span>';
+        //                         //     $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
+        //                         //     $cartdetails .='<div class="btn-customise count-number"><button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
+        //                         //         $cartdetails .="'".$cdvalue['id']."',";   
+        //                         //         $cartdetails .="'".$cdvalue['rowid']."'";   
+        //                         //         $cartdetails .=')">';   
+        //                         //         $cartdetails .='Customize';
+        //                         //     $cartdetails .='</button></div>';
+        //                         // }
+        //                         $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
+        //                             $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
+        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                             $cartdetails .="'decr',";   
+        //                             $cartdetails .="'onlyitem'";   
+        //                             $cartdetails .=')">';   
+        //                                 $cartdetails .='<i class="feather-minus"></i>';
+        //                             $cartdetails .='</button>';
+        //                             $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
+        //                             $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
+        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                             $cartdetails .="'incr',";   
+        //                             $cartdetails .="'onlyitem'";   
+        //                             $cartdetails .=')">';   
+        //                                 $cartdetails .='<i class="feather-plus"></i>';
+        //                             $cartdetails .='</button>';
+        //                         $cartdetails .='</span>';
+        //                         $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
+        //                     }else{                    
+        //                         $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
+        //                             $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
+        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                             $cartdetails .="'decr',";   
+        //                             $cartdetails .="'onlyitem'";   
+        //                             $cartdetails .=')">';   
+        //                                 $cartdetails .='<i class="feather-minus"></i>';
+        //                             $cartdetails .='</button>';
+        //                             $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
+        //                             $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
+        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
+        //                             $cartdetails .="'incr',";   
+        //                             $cartdetails .="'onlyitem'";   
+        //                             $cartdetails .=')">';   
+        //                                 $cartdetails .='<i class="feather-plus"></i>';
+        //                             $cartdetails .='</button>';
+        //                         $cartdetails .='</span>';
+        //                         $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
+        //                     }
+                            
+        //             $cartdetails .='</div>';
+        //         $cartdetails .='</div>';
+        //     }
+        //     if($ispletter=='0'){
+        //         $this->session->set_flashdata('message',"Please Select Any One Platter");
+        //         redirect($this->data['base_url']);
+        //     }
+            
+        //     $cartdetails .='<div class="bg-primary item-container-single gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom"><p class="w-100 text-gray mb-0 text-right ml-2 large text-success">₹ '.$cart_total.'</p></div>';             
+        //     $SpecialInstructions=$this->session->userdata('SpecialInstructions');
+        //     if(isset($SpecialInstructions)){
+        //         $SpecialInstructions = $SpecialInstructions;
+        //     }else{
+        //         $SpecialInstructions = '';
+        //     }
+        //     $sp .='<div class="mb-0 input-group pl-3 pr-3 pt-4 pb-4">';
+        //         $sp .='<div class="input-group-prepend">';
+        //             $sp .='<span class="input-group-text">';
+        //                 $sp .='<i class="feather-message-square"></i>';
+        //             $sp .='</span>';
+        //         $sp .='</div>';
+        //         $sp .='<textarea placeholder="Add any Special Instructions" aria-label="With textarea" class="form-control" name="SpecialInstructions" id="SpecialInstructions" onblur="return SpecialInstructions();">'.$SpecialInstructions.'</textarea>';
+        //     $sp .='</div><br>';
+        //     $cartdetails .=$sp;
+        //     // Addons Start
+        //     $CategoryWiseItem=$this->order_model->GetCategoryWiseItem('794456');
+        //     $cwi ='';
+        //     if(!empty($CategoryWiseItem)){
+        //          $cwi .='<div class="">';
+        //              $cwi .='<div class="px-3 pt-3 title d-flex align-items-center pb-3">';
+        //                  $cwi .='<h5 class="m-0">Addons</h5>';
+        //              $cwi .='</div>';
+        //          $cwi .='</div>';
+        //         $cwi .='<div class="Addons-slider">';
+        //             foreach ($CategoryWiseItem as $CategoryWiseItemkey => $cwiv) {
+        //                 if (!in_array($cwiv['itemid'], $cartitemarray)){
+        //                     $cwi .='<div class="osahan-slider-item py-1 px-1">';
+        //                         $cwi .='<div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">';
+        //                             $cwi .='<div class="list-card-image">';
+        //                                 $cwi .='<img src="'.$this->data['base_assets'].'uploads/itemimages/'.$cwiv['image'].'" class="img-fluid item-img w-100">';
+        //                             $cwi .='</div>';
+        //                             $cwi .='<div class="p-2 position-relative">';
+        //                                 $cwi .='<div class="list-card-body">';
+        //                                     $cwi .='<div class="dish-contents d-flex">';
+        //                                         $cwi .='<h6 class="mb-1 col-12 pl-0 pr-0">';
+        //                                             $cwi .='<div class="text-black item-nm small">'.$cwiv['name'].'</div>';
+        //                                             $cwi .='<p class="size-of-addon small text-gray mb-3">'.$cwiv['description'].'</p>';
+        //                                         $cwi .='</h6>';
+                                                
+        //                                         $cwi .='<div class="col-12 pl-0 pr-0 pb-2">';
+        //                                             $cwi .='<p class="text-gray mb-0 time">';
+        //                                                 $cwi .='<span class="float-left text-black-50 w-100 pb-2"> ₹ '.$cwiv['price'].'/-</span> ';
+        //                                             $cwi .='</p>';                                                
+        //                                         $cwi .='</div>';
+        //                                         if($cwiv['itemallowvariation']!='0' || $cwiv['itemallowaddon']!='0'){
+        //                                             $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return get_item_selection_addons('.$cwiv['itemid'].');">';
+        //                                                 $cwi .='Add';
+        //                                             $cwi .='</button><span class="small float-right pt-1">customisable</span>';
+        //                                         }else{
+        //                                             $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return addtocartaddonse('.$cwiv['itemid'].');">';
+        //                                                 $cwi .='Add';
+        //                                             $cwi .='</button>';
+        //                                         }
+        //                                     $cwi .='</div>';
+        //                                 $cwi .='</div>';
+        //                             $cwi .='</div>';
+        //                         $cwi .='</div>';
+        //                     $cwi .='</div>';
+        //                 }
+        //             }                
+        //         $cwi .='</div>';
+        //     }
+        //     $cartdetails .=$cwi;
+        //     // Addons Edn
+        // }else{
+        //     redirect($this->data['base_url']);
+        // }
+        // $discount_div =$this->load_discount_div($cart_total);
+        // $this->data['discount_div'] = $discount_div;
+        // $final_pay_div =$this->load_final_pay_div($cart_total,$totalplatter);
+        // $this->data['final_pay_div'] = $final_pay_div;
+        // $this->data['cartdetails'] = $cartdetails;
+        // // Coupon Details
+        // $coupons_details=$this->session->userdata('coupons_details_session');
+        // $this->data['coupons_details'] = $coupons_details;
+        
+        // $this->data['message'] = $this->session->flashdata('message');
+        // $this->data['breadcrumb'] = 'Check Out';
+        // $this->data['tpl_name']= "checkout.tpl";
+        // $this->smarty->assign('data', $this->data);
+        // $this->smarty->view('template.tpl'); 
+    }
+
+
     function addToCartsWithAddons()
     {
         $returnarray = array();        
@@ -344,235 +601,7 @@ class order extends MY_Controller{
         }
         echo json_encode($returnarray);exit;        
     }
-    function checkout(){
-        $CartTmpDate = $this->cart->contents();
-        $cart_total =0;
-        $cartdetails = '';
-        if(!empty($CartTmpDate)){
-            $cartitemarray =array();
-            $ispletter = 0;
-            $totalplatter = 0;
-            foreach ($CartTmpDate as $cdkey => $cdvalue) {
-                $categoryid = $cdvalue['options']['category_id'];
-                if($categoryid!='794456'){
-                    $ispletter ='1';
-                    $totalplatter = ($totalplatter+$cdvalue['qty']);
-                }
-                $cartitemarray[]=$cdvalue['id'];
-                $item_total =0;
-                if (isset($cdvalue['options']['isvariation'])) {
-                    $cart_total += $cdvalue['options']['extra_costs_total'];
-                    $item_total += $cdvalue['options']['extra_costs_total'];
-                    
-                }else if(isset($cdvalue['options']['isaddons']) && !isset($cdvalue['options']['isvariation'])){
-                    $cart_total += $cdvalue['subtotal'];
-                    $cart_total += $cdvalue['options']['extra_costs_total'];
-                    $item_total += $cdvalue['subtotal'];
-                }else{                    
-                    $cart_total += $cdvalue['subtotal'];
-                    $item_total += $cdvalue['subtotal'];
-                }
-                $cartdetails .='<div class="item-container-single d-flex gold-members align-items-center justify-content-between px-3 py-2 border-bottom row ml-0 mr-0 align-items-center">';
-                    $cartdetails .='<div class="media align-items-center addon-grp-checkout col-7 pl-0 pr-0">';
-                        //$cartdetails .='<div class="mr-2 text-success">&middot;</div>';
-                        $cartdetails .='<div class="media-body addon-option-name">';
-                            $cartdetails .='<div class="d-flex"><p class="m-0"><div class="mr-2 text-success">&middot;</div><div class="txt-sizing">'.$cdvalue['options']['item_name'].'</div></p></div>';
-                            //$cartdetails .='<p class="m-0 small">'.$cdvalue['options']['description'].'</p>';
-                            $variation_details ='';
-                            if(isset($cdvalue['options']['isvariation']) && $cdvalue['options']['isvariation']!='0') {
-                                $variation = $cdvalue['options']['variation'];
-                                foreach ($variation as $variationkey => $variationvalue) {
-                                    $vtotal=($variationvalue['variationquantity']*$variationvalue['variation_price']);
-                                    $variation_details .='<span class="addon-item-checkout small d-flex pr-2">'.$variationvalue['variation_name'].'(Qty. '.$variationvalue['variationquantity'].') ₹'.$vtotal."</span>";
-                                }
-                                $cartdetails .='<p class="m-0 small variation-det">';
-                                $cartdetails .=$variation_details;
-                                $cartdetails .='</p>';
-                            }
-                            $addons_details ='';
-                            if(isset($cdvalue['options']['isaddons']) && $cdvalue['options']['isaddons']!='0') {
-                                $addons = $cdvalue['options']['addons'];
-                                foreach ($addons as $addonskey => $addonsvalue) {
-                                    $atotal=($addonsvalue['addon_qty']*$addonsvalue['addonitemprice']);
-                                    //$addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].'(Qty. '.$addonsvalue['addon_qty'].') ₹ '.$atotal."</span>";
-                                    $addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].', </span>';
-                                }
-                                $cartdetails .='<p class="m-0 small addon-det"> Choice : ';
-                                $cartdetails .=$addons_details;
-                                $cartdetails .='</p>';
-                            }
-                        $cartdetails .='</div>';
-                    $cartdetails .='</div>';
-                    $cartdetails .='<div class="d-flex justify-content-end align-items-center btns-grp-checkout col-5 pl-0 pr-0">';
-                            if (isset($cdvalue['options']['isvariation'])) {
-                                if ($cdvalue['options']['isvariation']!='0') {
-                                    $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-                                        $cartdetails .='<button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
-                                            $cartdetails .="'".$cdvalue['id']."',";   
-                                            $cartdetails .="'".$cdvalue['rowid']."'";   
-                                            $cartdetails .=')">';   
-                                            $cartdetails .='Customize';
-                                        $cartdetails .='</button>';
-                                    $cartdetails .='</span></div>';
-                                }
-                            }else if(isset($cdvalue['options']['isaddons']) || isset($cdvalue['options']['isvariation'])){
-                                // if ($cdvalue['options']['isaddons']!='0' ||  $cdvalue['options']['isvariation']=='0') {
-                                //     $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-                                //         $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-                                //         $cartdetails .="'".$cdvalue['rowid']."',";   
-                                //         $cartdetails .="'decr',";   
-                                //         $cartdetails .="'onlyitem'";   
-                                //         $cartdetails .=')">';   
-                                //             $cartdetails .='<i class="feather-minus"></i>';
-                                //         $cartdetails .='</button>';
-                                //         $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-                                //         $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-                                //         $cartdetails .="'".$cdvalue['rowid']."',";   
-                                //         $cartdetails .="'incr',";   
-                                //         $cartdetails .="'onlyitem'";   
-                                //         $cartdetails .=')">';   
-                                //             $cartdetails .='<i class="feather-plus"></i>';
-                                //         $cartdetails .='</button>';
-                                //     $cartdetails .='</span>';
-                                //     $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-                                //     $cartdetails .='<div class="btn-customise count-number"><button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
-                                //         $cartdetails .="'".$cdvalue['id']."',";   
-                                //         $cartdetails .="'".$cdvalue['rowid']."'";   
-                                //         $cartdetails .=')">';   
-                                //         $cartdetails .='Customize';
-                                //     $cartdetails .='</button></div>';
-                                // }
-                                $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-                                    $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-                                    $cartdetails .="'".$cdvalue['rowid']."',";   
-                                    $cartdetails .="'decr',";   
-                                    $cartdetails .="'onlyitem'";   
-                                    $cartdetails .=')">';   
-                                        $cartdetails .='<i class="feather-minus"></i>';
-                                    $cartdetails .='</button>';
-                                    $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-                                    $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-                                    $cartdetails .="'".$cdvalue['rowid']."',";   
-                                    $cartdetails .="'incr',";   
-                                    $cartdetails .="'onlyitem'";   
-                                    $cartdetails .=')">';   
-                                        $cartdetails .='<i class="feather-plus"></i>';
-                                    $cartdetails .='</button>';
-                                $cartdetails .='</span>';
-                                $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-                            }else{                    
-                                $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-                                    $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-                                    $cartdetails .="'".$cdvalue['rowid']."',";   
-                                    $cartdetails .="'decr',";   
-                                    $cartdetails .="'onlyitem'";   
-                                    $cartdetails .=')">';   
-                                        $cartdetails .='<i class="feather-minus"></i>';
-                                    $cartdetails .='</button>';
-                                    $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-                                    $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-                                    $cartdetails .="'".$cdvalue['rowid']."',";   
-                                    $cartdetails .="'incr',";   
-                                    $cartdetails .="'onlyitem'";   
-                                    $cartdetails .=')">';   
-                                        $cartdetails .='<i class="feather-plus"></i>';
-                                    $cartdetails .='</button>';
-                                $cartdetails .='</span>';
-                                $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-                            }
-                            
-                    $cartdetails .='</div>';
-                $cartdetails .='</div>';
-            }
-            if($ispletter=='0'){
-                $this->session->set_flashdata('message',"Please Select Any One Platter");
-                redirect($this->data['base_url']);
-            }
-            
-            $cartdetails .='<div class="bg-primary item-container-single gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom"><p class="w-100 text-gray mb-0 text-right ml-2 large text-success">₹ '.$cart_total.'</p></div>';             
-            $SpecialInstructions=$this->session->userdata('SpecialInstructions');
-            if(isset($SpecialInstructions)){
-                $SpecialInstructions = $SpecialInstructions;
-            }else{
-                $SpecialInstructions = '';
-            }
-            $sp .='<div class="mb-0 input-group pl-3 pr-3 pt-4 pb-4">';
-                $sp .='<div class="input-group-prepend">';
-                    $sp .='<span class="input-group-text">';
-                        $sp .='<i class="feather-message-square"></i>';
-                    $sp .='</span>';
-                $sp .='</div>';
-                $sp .='<textarea placeholder="Add any Special Instructions" aria-label="With textarea" class="form-control" name="SpecialInstructions" id="SpecialInstructions" onblur="return SpecialInstructions();">'.$SpecialInstructions.'</textarea>';
-            $sp .='</div><br>';
-            $cartdetails .=$sp;
-            // Addons Start
-            $CategoryWiseItem=$this->order_model->GetCategoryWiseItem('794456');
-            $cwi ='';
-            if(!empty($CategoryWiseItem)){
-                 $cwi .='<div class="">';
-                     $cwi .='<div class="px-3 pt-3 title d-flex align-items-center pb-3">';
-                         $cwi .='<h5 class="m-0">Addons</h5>';
-                     $cwi .='</div>';
-                 $cwi .='</div>';
-                $cwi .='<div class="Addons-slider">';
-                    foreach ($CategoryWiseItem as $CategoryWiseItemkey => $cwiv) {
-                        if (!in_array($cwiv['itemid'], $cartitemarray)){
-                            $cwi .='<div class="osahan-slider-item py-1 px-1">';
-                                $cwi .='<div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">';
-                                    $cwi .='<div class="list-card-image">';
-                                        $cwi .='<img src="'.$this->data['base_assets'].'uploads/itemimages/'.$cwiv['image'].'" class="img-fluid item-img w-100">';
-                                    $cwi .='</div>';
-                                    $cwi .='<div class="p-2 position-relative">';
-                                        $cwi .='<div class="list-card-body">';
-                                            $cwi .='<div class="dish-contents d-flex">';
-                                                $cwi .='<h6 class="mb-1 col-12 pl-0 pr-0">';
-                                                    $cwi .='<div class="text-black item-nm small">'.$cwiv['name'].'</div>';
-                                                    $cwi .='<p class="size-of-addon small text-gray mb-3">'.$cwiv['description'].'</p>';
-                                                $cwi .='</h6>';
-                                                
-                                                $cwi .='<div class="col-12 pl-0 pr-0 pb-2">';
-                                                    $cwi .='<p class="text-gray mb-0 time">';
-                                                        $cwi .='<span class="float-left text-black-50 w-100 pb-2"> ₹ '.$cwiv['price'].'/-</span> ';
-                                                    $cwi .='</p>';                                                
-                                                $cwi .='</div>';
-                                                if($cwiv['itemallowvariation']!='0' || $cwiv['itemallowaddon']!='0'){
-                                                    $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return get_item_selection_addons('.$cwiv['itemid'].');">';
-                                                        $cwi .='Add';
-                                                    $cwi .='</button><span class="small float-right pt-1">customisable</span>';
-                                                }else{
-                                                    $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return addtocartaddonse('.$cwiv['itemid'].');">';
-                                                        $cwi .='Add';
-                                                    $cwi .='</button>';
-                                                }
-                                            $cwi .='</div>';
-                                        $cwi .='</div>';
-                                    $cwi .='</div>';
-                                $cwi .='</div>';
-                            $cwi .='</div>';
-                        }
-                    }                
-                $cwi .='</div>';
-            }
-            $cartdetails .=$cwi;
-            // Addons Edn
-        }else{
-            redirect($this->data['base_url']);
-        }
-        $discount_div =$this->load_discount_div($cart_total);
-        $this->data['discount_div'] = $discount_div;
-        $final_pay_div =$this->load_final_pay_div($cart_total,$totalplatter);
-        $this->data['final_pay_div'] = $final_pay_div;
-        $this->data['cartdetails'] = $cartdetails;
-        // Coupon Details
-        $coupons_details=$this->session->userdata('coupons_details_session');
-        $this->data['coupons_details'] = $coupons_details;
-        
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['breadcrumb'] = 'Check Out';
-        $this->data['tpl_name']= "checkout.tpl";
-        $this->smarty->assign('data', $this->data);
-        $this->smarty->view('template.tpl'); 
-    }
+   
     
     function load_cart_div(){
         $CartTmpDate = $this->cart->contents();
@@ -3625,290 +3654,9 @@ class order extends MY_Controller{
             redirect($this->data['base_url']); 
         }
     }
-    function get_map_live_location_track_script($delivery_boy_latitude,$delivery_boy_longitude,$delivery_boy_name,$customerlatitude,$customerlongtitude,$customername){
-        $html ='';
-        $html .="<script>";
-            $html .="var mymap = new GMaps({";
-                $html .=" el: '#GMap',";
-                $html .=" lat: ".$delivery_boy_latitude.",";
-                $html .=" lng: ".$delivery_boy_longitude.",";
-                $html .=" zoom:13";
-            $html .=" });";
-            $html .=" mymap.addMarker({";
-                $html .=" lat: ".$delivery_boy_latitude.",";
-                $html .=" lng: ".$delivery_boy_longitude.",";
-                  $html .=" title: '".$delivery_boy_name."',";
-                 $html .=" icon: {";
-                    $html .=" url: 'http://raivatkitchen.com/assets/img/ordermessageicon/bike.png',";
-                  $html .="},";
-                $html .=" click: function(e) {";
-                  $html .=" alert('".$delivery_boy_name.", is here.');";
-                $html .=" }";
-            $html .="});";
-            $html .=" mymap.addMarker({";
-                   $html .=" lat: ".$customerlatitude.",";
-                   $html .=" lng: ".$customerlongtitude.",";
-                     $html .=" title: '".$customername."',";
-                     $html .=" icon: {";
-                       $html .=" url: 'http://raivatkitchen.com/assets/img/ordermessageicon/home.png',";
-                     $html .=" },";
-                    $html .=" click: function(e) {";
-                      $html .=" alert('".$customername.", is here.');";
-                    $html .=" }";
-                $html .=" });";
-        $html .=" </script>";
-        return $html;exit;
-    }
     
     
     
-    
-    // Feedback
-    function viewfeedbackform($order_id,$order_no){
-        $html='';
-        $OrderDetails = $this->order_model->GetSingelOrderForFeedback($order_id,$order_no);
-        $customerid = $OrderDetails['customerid'];
-        $order_status=$OrderDetails['order_status'];
-        $customername=$OrderDetails['customername'];
-        $phone_number=$OrderDetails['customermobileno'];
-        $email='';
-        $deliveryby=$OrderDetails['deliveryby'];
-
-        $GetOrderFeedbackRatingCount=$this->order_model->GetOrderFeedbackRatingCount($order_no,$order_id,$customerid);
-        
-        if($GetOrderFeedbackRatingCount=='0' and $order_status=='Delivered'){
-            
-            $star_details = $this->order_model->star_details();
-            $OrderItemDetails = $this->order_model->GetOrderItemDetailsForFeedback($order_no,$order_id,$customerid);
-            if ($OrderItemDetails != false) {
-                $qniqueid = 1;
-                $html .= '<input type="hidden" name="cname" value="'.$customername.'">';
-                $html .= '<input type="hidden" name="cphonenumber" value="'.$phone_number.'">';
-                $html .= '<input type="hidden" name="cemail" value="'.$email.'">';
-                $html .= '<input type="hidden" name="customerid" value="'.$customerid.'">';
-                $html .= '<input type="hidden" name="order_no" value="'.$order_no.'">';
-                $html .= '<input type="hidden" name="order_id" value="'.$order_id.'">';
-                foreach ($OrderItemDetails as $qkey => $qdetails) {
-                    $html .= '<div class="card col-lg-12 mb-2">';
-                        $html .= '<div class="card-body">';
-                            $html .= '<h5 class="card-title text-center">'.ucwords(str_replace("-", " ", $qdetails['item_name'])).'</h5>';
-                            $html .= '<input type="hidden" name="item_id[]" value="'.$qdetails['item_id'].'">';
-                            $html .= '<div class="voting-count">';
-                                $html .= '<div class="rating" id="input-grp">';
-                                    foreach ($star_details as $skey => $sdetails) {
-                                        $html .= '<input type="radio" name="ratingforitem'.$qdetails['item_id'].'" value="'.$sdetails['star'].'" id="'.$qniqueid.'">';
-                                        $html .= '<label for="'.$qniqueid.'">☆</label>';
-                                        $qniqueid = ($qniqueid+1); 
-                                    }
-                                $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '<div class="form-group">';
-                                $html .= '<textarea name="reviewforitem'.$qdetails['item_id'].'" placeholder="Write your Review" class="form-control"></textarea>';
-                            $html .= '</div>';
-                            $html .= '<span id="ERROR"></span> ';
-                        $html .= '</div>';
-                    $html .= '</div>';
-                }
-                if($deliveryby!='' and $deliveryby!='0'){
-                    $html .= '<div class="card col-lg-12 mb-2">';
-                        $html .= '<div class="card-body">';
-                            $html .= '<h5 class="card-title text-center">For Delivery</h5>';
-                            $html .= '<input type="hidden" name="deliveryboyid" value="'.$deliveryby.'">';
-                            $html .= '<div class="voting-count">';
-                                $html .= '<div class="rating" id="input-grp">';
-                                    foreach ($star_details as $skey => $sdetails) {
-                                        $html .= '<input type="radio" name="ratingfordeliveryboy'.$deliveryby.'" value="'.$sdetails['star'].'" id="'.$qniqueid.'">';
-                                        $html .= '<label for="'.$qniqueid.'">☆</label>';
-                                        $qniqueid = ($qniqueid+1); 
-                                    }
-                                $html .= '</div>';
-                            $html .= '</div>';
-                            $html .= '<div class="form-group">';
-                                $html .= '<textarea name="reviewfordeliveryboy'.$deliveryby.'" placeholder="Write your Review" class="form-control"></textarea>';
-                            $html .= '</div>';
-                            $html .= '<span id="ERROR"></span> ';
-                        $html .= '</div>'; 
-                    $html .= '</div>'; 
-                }
-                
-            }
-        } 
-        return $html;
-    }  
-    function orderfeedback(){
-        if($this->input->post()){  
-            $name =$this->input->post('cname');
-            $phone_number =$this->input->post('cphonenumber');
-            $email =$this->input->post('cemail');
-            $customerid =$this->input->post('customerid');
-            $order_no =$this->input->post('order_no');
-            $order_id =$this->input->post('order_id');
-            $item_id=$this->input->post('item_id');
-            $deliveryboyid=$this->input->post('deliveryboyid');
-            
-            foreach ($item_id as $ikey => $ivalue) {                
-                $vdata=array();
-                $ratingforitem = $this->input->post('ratingforitem'.$ivalue);
-                $reviewforitem = $this->input->post('reviewforitem'.$ivalue);
-                if($ivalue!='' and $ratingforitem!=''){
-                    $vdata['name'] =$name;
-                    $vdata['phone_number'] =$phone_number;
-                    $vdata['email'] =$email;
-                    $vdata['customerid'] =$customerid;
-                    $vdata['order_no'] =$order_no;
-                    $vdata['order_id'] =$order_id;
-                    $vdata['ordered_item']=$ivalue;
-                    $vdata['order_item_rating']=$ratingforitem;
-                    $vdata['order_item_review']=$reviewforitem;
-                    $vdata['status']='1';
-                    $vdata['isdelete']='0';
-                    $vdata['created_datetime']=date('Y-m-d H:i:s');
-                    $vdata['createdip']=$_SERVER['REMOTE_ADDR'];
-                    $voteid = $this->order_model->AddOrderRatingDetails($vdata);
-                    
-                    // Item Rating Update
-                    $GetItemRatingDetails = $this->order_model->GetItemRatingDetails($ivalue);
-                    $ItemRating = ($GetItemRatingDetails['itemtotalrating']+$ratingforitem);
-                    $itemtotalreviews = ($GetItemRatingDetails['itemtotalreviews']+1);
-                    $idata=array();
-                    $idata['itemid'] =$ivalue;
-                    $idata['itemtotalrating']=$ItemRating;
-                    $idata['itemtotalreviews']=$itemtotalreviews;
-                    $UpdateItemRatingDetails = $this->order_model->UpdateItems($idata);
-                }       
-            }
-            if($deliveryboyid!=''){
-                // Delivery Boy Rating Update
-
-                $ratingfordeliveryboy=$this->input->post('ratingfordeliveryboy'.$deliveryboyid);
-                $GetDeliveryBoyRatingDetails = $this->order_model->GetDeliveryBoyRatingDetails($deliveryboyid);
-                $DeliveryBoyRating = ($GetDeliveryBoyRatingDetails['rating']+$ratingfordeliveryboy);
-                $reviewfordeliveryboy=$this->input->post('reviewfordeliveryboy'.$deliveryboyid);
-                $vdata=array();
-                $vdata['name'] =$name;
-                $vdata['phone_number'] =$phone_number;
-                $vdata['email'] =$email;
-                $vdata['customerid'] =$customerid;
-                $vdata['order_no'] =$order_no;
-                $vdata['order_id'] =$order_id;
-                $vdata['deliveryboyid']=$deliveryboyid;
-                $vdata['delivery_rating']=$ratingfordeliveryboy;
-                $vdata['delivery_review']=$reviewfordeliveryboy;
-                $vdata['status']='1';
-                $vdata['isdelete']='0';
-                $vdata['created_datetime']=date('Y-m-d H:i:s');
-                $vdata['createdip']=$_SERVER['REMOTE_ADDR'];
-                $AddOrderDeliveryBoyRatingId = $this->order_model->AddOrderDeliveryBoyRatingDetails($vdata);
-
-                $ddata=array();
-                $ddata['id'] =$deliveryboyid;
-                $ddata['rating']=$DeliveryBoyRating;
-                $UpdateDeliveryBoyRatingDetails = $this->order_model->UpdateDeliveryBoyRating($ddata);                
-                
-            }
-            $this->session->set_flashdata('message',"Thank you for your valuable feedback.");
-            redirect($this->data['base_url'].'order/vieworder/'.$order_no);
-        }else{
-            redirect($this->data['base_url']);
-        }
-    }
-    function SingleProductRating(){
-        $returnarray = array();     
-        if($this->input->post()){
-            $reviewslist='';
-            $reviewsrating='';
-            $itemid = $this->input->post('itemid');
-            if ($itemid > 0) {
-                $item_details = $this->order_model->single_item_details($itemid);     
-                //get item_record
-                if (!empty($item_details)) {
-                    $item_name = $item_details['name'];
-                    $returnarray['msg'] = 'success';
-                    $returnarray['SingleProductRatingPlatterName'] = $item_name;
-                    $totalrating = ($item_details['itemtotalrating']/$item_details['itemtotalreviews']);
-                    //$reviewsrating .='<div class="rating-wrap d-flex align-items-center">';
-                        $reviewsrating .='<div class="voting-count"><div class="rating ratings-highlight">';
-                            //$reviewsrating .='<li>';
-                               for ($r=1; $r<=5;$r++) { 
-                                    if($r<=round($totalrating)){
-                                        $reviewsrating .='<label class="fillstar">☆</label>';
-                                    }else{
-                                       $reviewsrating .='<label>☆</label>'; 
-                                    }
-                                }
-                            //$reviewsrating .='</li>';
-                        //$reviewsrating .='</ul>';
-                        $reviewsrating .='<p class="label-rating text-muted ml-2 mb-0 small"> ('.$item_details['itemtotalrating'].' Reviews)</p>';
-                    //$reviewsrating .='</div>';
-                    $returnarray['reviewsrating'] = $reviewsrating;                    
-
-                    $GetItemFeedbackRatingDetails = $this->order_model->GetItemFeedbackRatingDetails($itemid);    
-                    foreach ($GetItemFeedbackRatingDetails as $ifkey => $ifrvalue) {
-                        $rating = $ifrvalue['order_item_rating'];
-                        if($rating!='' and $rating!='0'){
-                            $reviewslist .='<div class="review-item shadow bg-white p-3 pl-4 pr-4 mb-2" >';
-                              $reviewslist .='<div class="row"><div class="reviwer-name col-6">'.ucwords($ifrvalue['name']).'</div>';
-                              $reviewslist .='<div class="reviwer-name d-none pt-0 col-6 text-right" style="font-size: 10px"><i class="feather-clock"></i> '.date('d/m/Y - h:i A',strtotime($ifrvalue['datetime'])).'</div></div>';
-                                //$reviewslist .='<div class="rating-wrap d-flex align-items-center mt-2">';
-                                 $reviewslist .='<div class="voting-count"><div class="rating ratings-highlight single-person-rating" >';
-                                    //$reviewslist .='<li>';
-                                        for ($i=1; $i<=5;$i++) { 
-                                            if($i<=$rating){
-                                                $reviewslist .='<label class="fillstar">☆</label>';
-                                            }else{
-                                               $reviewslist .='<label>☆</label>'; 
-                                            }
-                                        }
-                                    //$reviewslist .='</li>';
-                                 //$reviewslist .='</ul>';
-                               $reviewslist .='</div></div>';
-                               
-                              $reviewslist .='<div class="review-text">';
-                                $reviewslist .=ucwords($ifrvalue['order_item_review']);
-                              $reviewslist .='</div>';
-                            $reviewslist .='</div>';
-                        }                        
-                    }
-                    $returnarray['reviewslist'] = $reviewslist;
-                } else {
-                    $returnarray['msg'] = 'notfound';
-                }
-            }else{
-                $returnarray['msg'] = 'notfound';
-            }
-        }
-        echo json_encode($returnarray);exit; 
-    }
-    function vieworderbk(){
-        $transaction_id=$this->uri->segment(3);
-        $vdata = array();
-        $vdata['transaction_id'] = 'pay_'.$transaction_id;
-        $SingelOrderDetails = $this->order_model->GetSingelOrderDetails($vdata);
-        if(!empty($SingelOrderDetails)){
-            $this->data['SingelOrderDetails'] = $SingelOrderDetails;
-        }else{
-          redirect($this->data['base_url']); 
-        }
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['breadcrumb'] = 'Order us';
-        $this->data['tpl_name']= "vieworder.tpl";
-        $this->smarty->assign('data', $this->data);
-        $this->smarty->view('template.tpl'); 
-    }
-    function SpecialInstructions(){
-        $returnarray =array();
-        $SpecialInstructions = $this->input->post('SpecialInstructions');
-        if($SpecialInstructions!=''){  
-            $this->session->set_userdata("SpecialInstructions",$SpecialInstructions);
-            $returnarray['msg']='success';
-            $returnarray['message']='Special Instructions Successfully Applied.';
-        }else{
-            $this->session->set_userdata("SpecialInstructions",$SpecialInstructions);
-            $returnarray['msg']='error';
-            $returnarray['message']='Something Wrong.';
-        }
-        echo json_encode($returnarray);exit;        
-    }
     function RemoveSpecialChar($str) { 
         // Using str_replace() function  
         // to replace the word  

@@ -186,9 +186,29 @@
 							</ul>
 							<div class="note">
 								<span>Order Note :</span>
-								<textarea></textarea>
+								<textarea name="ordernote" id="ordernote" onblur="return orderspecialnote();" placeholder="Please Enter Order Special Note."><?php echo $ordernote;?></textarea>
 							</div>
 							<a href="<?php echo  base_url(); ?>order/checkout">Proceed To Checkout</a>
+						</div>
+					</div>
+				</div>
+				<?php 
+					}else{
+				?>
+				<div class="row">
+					<div class="col-xl-12">
+						<div class="row cart-btn-section">
+							<div class="col-12 col-sm-8 col-lg-6">
+								<div class="cart-btn-left">
+									
+									Your Cart is Empty 
+								</div>
+							</div>
+							<div class="col-12 col-sm-4 col-lg-6">
+								<div class="cart-btn-right" >
+									<a href="<?php echo base_url(); ?>" style="width: 100% !important;">Continue Shopping</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

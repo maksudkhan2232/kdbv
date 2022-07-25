@@ -3,8 +3,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="<?php echo  base_url(); ?>assest/frontend/img/fav-icons/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="<?php echo  base_url(); ?>assest/frontend/img/fav-icons/favicon-16x16.png">
 <!-- Dependency Styles -->
-<link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/bootstrap/css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/fontawesome/css/fontawesome-all.min.css" type="text/css">
+<link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/bootstrap/css/bootstrap.min.css" type="text/css">
+
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/owl.carousel/css/owl.carousel.min.css" type="text/css">
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/owl.carousel/css/owl.theme.default.min.css" type="text/css">
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/dependencies/flaticon/css/flaticon.css" type="text/css">

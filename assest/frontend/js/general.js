@@ -196,28 +196,24 @@ function viewsubtotalcart(){
     }
   });  
 }
-function ordernotestore(){  
-  var qty = 0;    
-  var data = 'rowid='+rowid;
-  if(rowid!=''){
+function orderspecialnote(){  
+  var ordernote = $("#ordernote").val();    
+  var data = 'ordernote='+ordernote;
+  if(ordernote!=''){
     $.ajax({
       type:'POST',
-      url:base_url+'order/removetocartproduct/',
+      url:base_url+'order/orderspecialnote/',
       data:data,
       dataType: "json",
       success:function(result){
         var msg = result.msg;
-        if(msg=='cartremove'){
+        if(msg=='success'){
           Swal.fire({
             icon: 'success',
-            title: 'Poduct successfully remove to your cart',
+            title: result.message,
             showConfirmButton: false,
             timer: 500
           })
-          $("#totalcartproduct").html(result.ftotalproduct);
-          $("#cart"+rowid).remove();
-          viewheadercart();
-          viewsubtotalcart();
         }else{
           Swal.fire({
             icon: 'error',
