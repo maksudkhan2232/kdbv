@@ -7617,7 +7617,7 @@ p.sub-title {
 }
 
 .checkout-area #open2 {
-  display: block;
+  display: none;
 }
 
 .checkout-area #open3 {
@@ -7633,7 +7633,7 @@ p.sub-title {
 }
 
 .checkout-area .create-account {
-  display: none;
+  display: block;
   padding: 20px;
 }
 

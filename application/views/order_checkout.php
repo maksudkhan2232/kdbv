@@ -78,18 +78,18 @@
 				    	<div class="container-fluid custom-container">
 				    		<div class="checkout-area section-padding">
 				                <div class="container">
-				                    <form>
+				                    
 				                        <div class="checkout-wrap">
 				                            <div class="row">
 				                                <div class="col-lg-8 col-12">
-				                                    <div class="caupon-wrap s1">
+				                                    <div class="caupon-wrap s1 active-border" id="loginpanel">
 				                                        <div class="coupon coupon-active">
 				                                            <label id="toggle1">Already Registered. Login Now</label>
 				                                        </div>
 				                                        <div class="create-account">
 				                                            <div class="contact-form form-style text-left">
 				                                                <div class="row d-flex justify-content-center">
-				                		                            <div class="col-lg-8 col-12">
+				                		                            	<div class="col-lg-8 col-12">
 				                        		                        <form action="#">
 						                                                    <div class="row">
 						                                                        <div class="col-xl-12">
@@ -104,66 +104,148 @@
 						                                                    </div>
 						                                                </form>
 				                                               		</div>
+				                                               		<div class="col-lg-12 col-12">
+					                                               		<div class="login-now">
+																							<div class="container-fluid custom-container">
+																								<div class="col-lg-12 col-12">
+																									<span>Dont have account</span>
+																									<a href="javascript:void(0)" class="btn-two" id="opencreateaccount">Create Account</a>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
 				                                                </div>     
 				                                            </div>
 				                                        </div>
 				                                    </div>
-				                                    <div class="caupon-wrap s2">
+				                                    <div class="caupon-wrap s2" id="newregisterpanel">
+				                                       <div class="biling-item">
+				                                          <div class="coupon coupon-3">
+				                                             <label id="toggle2">New User Register Now</label>
+				                                          </div>
+				                                          <form action="<?php echo base_url(); ?>order/registrationwithplaceorder/" id="myForm" enctype="multipart/form-data" method="post" accept-charset="utf-8" onSubmit="return registrationwithplaceorder();">
+					                                          <div class="billing-adress" id="open2">
+					                                                <div class="contact-form form-style text-left" id="newuserregistrationform">
+					                                                    <div class="row">
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="name">Name <span class="text-danger">*</span></label>
+					                                                            <input type="text" placeholder="Enter Your Name." id="name" name="data[name]">
+					                                                        </div>
+					                                                        <div class="col-lg-12 col-md-12 col-12">
+					                                                            <label for="address">Address <span class="text-danger">*</span></label>
+					                                                            <input type="text" placeholder="Enter Your Name." id="address" name="data[address]">
+					                                                        </div>
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="country">Country <span class="text-danger">*</span></label>
+					                                                            <select name="data[country]" id="country" class="form-control">
+					                                                               <option value="India" selected>India</option>
+					                                                            </select>
+					                                                        </div>
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="state">State <span class="text-danger">*</span></label>
+					                                                            <select name="data[state]" id="state" class="form-control">
+					                                                            	<option value="">Select State</option>
+					                                                            	<?php
+																					                foreach ($StateDetails as $skey => $svalue) {
+																					                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
+																					                }
+																					               ?>
+					                                                            </select>
+					                                                        </div>                                                  
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="city">City <span class="text-danger">*</span></label>
+					                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="data[city]">
+					                                                        </div>
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
+					                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="data[pincode]">
+					                                                        </div>                                                    
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
+					                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]">
+					                                                        </div>
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
+					                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="data[email]">
+					                                                        </div>
+					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                            <label for="email">Password<span class="text-danger">*</span></label>
+					                                                            <input type="password" placeholder="Enter Your Password."  id="password" name="data[password]">
+					                                                        </div>                                                  
+					                                                    </div>
+					                                                </div>
+					                                                <div class="biling-item-2" id="shippingaddressform">
+					                                                    <input id="toggle3" type="checkbox" name="differentshipaddress" id="differentshipaddress">
+					                                                    <label class="fontsize" for="toggle3">Ship to a different
+					                                                        address?</label>
+					                                                    <div class="billing-adress" id="open3">
+					                                                        <div class="contact-form form-style">
+					                                                           <div class="row text-left">
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="name">Name <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Name." id="sdata[name]" name="name">
+							                                                        </div>
+							                                                        <div class="col-lg-12 col-md-12 col-12">
+							                                                            <label for="address">Address <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Name." id="address" name="sdata[address]">
+							                                                        </div>
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="country">Country <span class="text-danger">*</span></label>
+							                                                            <select name="sdata[country]" id="country" class="form-control">
+							                                                               <option value="India" selected>India</option>
+							                                                            </select>
+							                                                        </div>
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="state">State <span class="text-danger">*</span></label>
+							                                                            <select name="sdata[state]" id="state" class="form-control">
+							                                                            	<option value="">Select State</option>
+							                                                            	<?php
+																							                foreach ($StateDetails as $skey => $svalue) {
+																							                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
+																							                }
+																							               ?>
+							                                                            </select>
+							                                                        </div>                                                  
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="city">City <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="sdata[city]">
+							                                                        </div>
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="sdata[pincode]">
+							                                                        </div>                                                    
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="sdata[mobileno]">
+							                                                        </div>
+							                                                        <div class="col-lg-6 col-md-12 col-12">
+							                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
+							                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="sdata[email]">
+							                                                        </div>                                                  
+							                                                    </div>
+					                                                        </div>
+					                                                    </div>
+					                                                     <div class="note-area">
+					                                                        <p>Order Notes </p>
+					                                                        <textarea name="ordernote" id="ordernote" onblur="return orderspecialnote();" placeholder="Please Enter Note About Your Order."><?php echo $ordernote;?></textarea>
+					                                                     </div>
+					                                                    	<p class="form-submit m-5 text-center">
+					                                                        <input value="Place Order" class="submit" type="submit">
+					                                                      </p>                                                
+					                                                </div>
+					                                          </div>
+				                                          <form>
+				                                       </div>
+				                                    </div>	
+				                                    <div class="caupon-wrap s2"  id="shippingaddresspanel">
 				                                        <div class="biling-item">
 				                                            <div class="coupon coupon-3">
-				                                                <label id="toggle2">New User Register Now</label>
+				                                                <label id="toggle2">Shiping Address</label>
 				                                            </div>
-				                                            <div class="billing-adress" id="open2">
-				                                                <div class="contact-form form-style text-left" id="newuserregistrationform">
-				                                                    <div class="row">
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="name">Name <span class="text-danger">*</span></label>
-				                                                            <input type="text" placeholder="Enter Your Name." id="data[name]" name="name">
-				                                                        </div>
-				                                                        <div class="col-lg-12 col-md-12 col-12">
-				                                                            <label for="address">Address <span class="text-danger">*</span></label>
-				                                                            <input type="text" placeholder="Enter Your Name." id="address" name="data[address]">
-				                                                        </div>
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="country">Country <span class="text-danger">*</span></label>
-				                                                            <select name="data[country]" id="country" class="form-control">
-				                                                               <option value="India" selected>India</option>
-				                                                            </select>
-				                                                        </div>
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="state">State <span class="text-danger">*</span></label>
-				                                                            <select name="data[state]" id="state" class="form-control">
-				                                                            	<option value="">Select State</option>
-				                                                            	<?php
-																				                foreach ($StateDetails as $skey => $svalue) {
-																				                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
-																				                }
-																				               ?>
-				                                                            </select>
-				                                                        </div>                                                  
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="city">City <span class="text-danger">*</span></label>
-				                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="data[city]">
-				                                                        </div>
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
-				                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="data[pincode]">
-				                                                        </div>                                                    
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-				                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]">
-				                                                        </div>
-				                                                        <div class="col-lg-6 col-md-12 col-12">
-				                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
-				                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="data[email]">
-				                                                        </div>                                                  
-				                                                    </div>
-				                                                </div>
+				                                            <div class="billing-adress">
 				                                                <div class="biling-item-2" id="shippingaddressform">
 				                                                    <input id="toggle3" type="checkbox">
-				                                                    <label class="fontsize" for="toggle3">Ship to a different
-				                                                        address?</label>
-				                                                    <div class="billing-adress" id="open3">
+				                                                   <div class="billing-adress" id="open3">
 				                                                        <div class="contact-form form-style">
 				                                                           <div class="row text-left">
 						                                                        <div class="col-lg-6 col-md-12 col-12">
