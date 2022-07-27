@@ -264,6 +264,15 @@ class crud_model extends CI_Model{
         $query=$this->db->get();
         return $query->row_array();
     } 	
+    function CheckAlreadyCustomer($email){
+        $this->db->select('*');
+        $this->db->from('billing_customer');
+        $this->db->where('email', $email);
+        $this->db->where('status','1');
+        $this->db->where('isdelete','0');
+        $query = $this->db->get();        
+        return $query->row_array();
+    }
 	
 }
 ?>

@@ -246,237 +246,10 @@ class order extends MY_Controller{
         }else{
             $this->data['ordernote']='';
         }
-        //$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Cart";
         $this->load->view('order_checkout',$this->data);
-
-        // $CartTmpDate = $this->cart->contents();
-        // $cart_total =0;
-        // $cartdetails = '';
-        // if(!empty($CartTmpDate)){
-        //     $cartitemarray =array();
-        //     $ispletter = 0;
-        //     $totalplatter = 0;
-        //     foreach ($CartTmpDate as $cdkey => $cdvalue) {
-        //         $categoryid = $cdvalue['options']['category_id'];
-        //         if($categoryid!='794456'){
-        //             $ispletter ='1';
-        //             $totalplatter = ($totalplatter+$cdvalue['qty']);
-        //         }
-        //         $cartitemarray[]=$cdvalue['id'];
-        //         $item_total =0;
-        //         if (isset($cdvalue['options']['isvariation'])) {
-        //             $cart_total += $cdvalue['options']['extra_costs_total'];
-        //             $item_total += $cdvalue['options']['extra_costs_total'];
-                    
-        //         }else if(isset($cdvalue['options']['isaddons']) && !isset($cdvalue['options']['isvariation'])){
-        //             $cart_total += $cdvalue['subtotal'];
-        //             $cart_total += $cdvalue['options']['extra_costs_total'];
-        //             $item_total += $cdvalue['subtotal'];
-        //         }else{                    
-        //             $cart_total += $cdvalue['subtotal'];
-        //             $item_total += $cdvalue['subtotal'];
-        //         }
-        //         $cartdetails .='<div class="item-container-single d-flex gold-members align-items-center justify-content-between px-3 py-2 border-bottom row ml-0 mr-0 align-items-center">';
-        //             $cartdetails .='<div class="media align-items-center addon-grp-checkout col-7 pl-0 pr-0">';
-        //                 //$cartdetails .='<div class="mr-2 text-success">&middot;</div>';
-        //                 $cartdetails .='<div class="media-body addon-option-name">';
-        //                     $cartdetails .='<div class="d-flex"><p class="m-0"><div class="mr-2 text-success">&middot;</div><div class="txt-sizing">'.$cdvalue['options']['item_name'].'</div></p></div>';
-        //                     //$cartdetails .='<p class="m-0 small">'.$cdvalue['options']['description'].'</p>';
-        //                     $variation_details ='';
-        //                     if(isset($cdvalue['options']['isvariation']) && $cdvalue['options']['isvariation']!='0') {
-        //                         $variation = $cdvalue['options']['variation'];
-        //                         foreach ($variation as $variationkey => $variationvalue) {
-        //                             $vtotal=($variationvalue['variationquantity']*$variationvalue['variation_price']);
-        //                             $variation_details .='<span class="addon-item-checkout small d-flex pr-2">'.$variationvalue['variation_name'].'(Qty. '.$variationvalue['variationquantity'].') ₹'.$vtotal."</span>";
-        //                         }
-        //                         $cartdetails .='<p class="m-0 small variation-det">';
-        //                         $cartdetails .=$variation_details;
-        //                         $cartdetails .='</p>';
-        //                     }
-        //                     $addons_details ='';
-        //                     if(isset($cdvalue['options']['isaddons']) && $cdvalue['options']['isaddons']!='0') {
-        //                         $addons = $cdvalue['options']['addons'];
-        //                         foreach ($addons as $addonskey => $addonsvalue) {
-        //                             $atotal=($addonsvalue['addon_qty']*$addonsvalue['addonitemprice']);
-        //                             //$addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].'(Qty. '.$addonsvalue['addon_qty'].') ₹ '.$atotal."</span>";
-        //                             $addons_details .='<span class="addon-item-checkout small d-flex pr-2">'.$addonsvalue['addonitemname'].', </span>';
-        //                         }
-        //                         $cartdetails .='<p class="m-0 small addon-det"> Choice : ';
-        //                         $cartdetails .=$addons_details;
-        //                         $cartdetails .='</p>';
-        //                     }
-        //                 $cartdetails .='</div>';
-        //             $cartdetails .='</div>';
-        //             $cartdetails .='<div class="d-flex justify-content-end align-items-center btns-grp-checkout col-5 pl-0 pr-0">';
-        //                     if (isset($cdvalue['options']['isvariation'])) {
-        //                         if ($cdvalue['options']['isvariation']!='0') {
-        //                             $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-        //                                 $cartdetails .='<button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
-        //                                     $cartdetails .="'".$cdvalue['id']."',";   
-        //                                     $cartdetails .="'".$cdvalue['rowid']."'";   
-        //                                     $cartdetails .=')">';   
-        //                                     $cartdetails .='Customize';
-        //                                 $cartdetails .='</button>';
-        //                             $cartdetails .='</span></div>';
-        //                         }
-        //                     }else if(isset($cdvalue['options']['isaddons']) || isset($cdvalue['options']['isvariation'])){
-        //                         // if ($cdvalue['options']['isaddons']!='0' ||  $cdvalue['options']['isvariation']=='0') {
-        //                         //     $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-        //                         //         $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-        //                         //         $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                         //         $cartdetails .="'decr',";   
-        //                         //         $cartdetails .="'onlyitem'";   
-        //                         //         $cartdetails .=')">';   
-        //                         //             $cartdetails .='<i class="feather-minus"></i>';
-        //                         //         $cartdetails .='</button>';
-        //                         //         $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-        //                         //         $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-        //                         //         $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                         //         $cartdetails .="'incr',";   
-        //                         //         $cartdetails .="'onlyitem'";   
-        //                         //         $cartdetails .=')">';   
-        //                         //             $cartdetails .='<i class="feather-plus"></i>';
-        //                         //         $cartdetails .='</button>';
-        //                         //     $cartdetails .='</span>';
-        //                         //     $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-        //                         //     $cartdetails .='<div class="btn-customise count-number"><button type="button" class="btn-sm left btn btn-outline-secondary" onclick="get_item_addons_variation_for_customize(';
-        //                         //         $cartdetails .="'".$cdvalue['id']."',";   
-        //                         //         $cartdetails .="'".$cdvalue['rowid']."'";   
-        //                         //         $cartdetails .=')">';   
-        //                         //         $cartdetails .='Customize';
-        //                         //     $cartdetails .='</button></div>';
-        //                         // }
-        //                         $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-        //                             $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                             $cartdetails .="'decr',";   
-        //                             $cartdetails .="'onlyitem'";   
-        //                             $cartdetails .=')">';   
-        //                                 $cartdetails .='<i class="feather-minus"></i>';
-        //                             $cartdetails .='</button>';
-        //                             $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-        //                             $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                             $cartdetails .="'incr',";   
-        //                             $cartdetails .="'onlyitem'";   
-        //                             $cartdetails .=')">';   
-        //                                 $cartdetails .='<i class="feather-plus"></i>';
-        //                             $cartdetails .='</button>';
-        //                         $cartdetails .='</span>';
-        //                         $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-        //                     }else{                    
-        //                         $cartdetails .='<div class="grp-it"><span class="count-number float-right">';
-        //                             $cartdetails .='<button type="button" class="btn-sm left dec btn btn-outline-secondary" onclick="return update_qty(';
-        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                             $cartdetails .="'decr',";   
-        //                             $cartdetails .="'onlyitem'";   
-        //                             $cartdetails .=')">';   
-        //                                 $cartdetails .='<i class="feather-minus"></i>';
-        //                             $cartdetails .='</button>';
-        //                             $cartdetails .='<input class="count-number-input" type="text" name="" readonly="" value="'.$cdvalue['qty'].'">';
-        //                             $cartdetails .='<button type="button" class="btn-sm right inc btn btn-outline-secondary" onclick="return update_qty(';
-        //                             $cartdetails .="'".$cdvalue['rowid']."',";   
-        //                             $cartdetails .="'incr',";   
-        //                             $cartdetails .="'onlyitem'";   
-        //                             $cartdetails .=')">';   
-        //                                 $cartdetails .='<i class="feather-plus"></i>';
-        //                             $cartdetails .='</button>';
-        //                         $cartdetails .='</span>';
-        //                         $cartdetails .='<p class="text-gray mb-0 float-right ml-2 text-muted small price-pop">₹ '.$item_total.'</p></div>';
-        //                     }
-                            
-        //             $cartdetails .='</div>';
-        //         $cartdetails .='</div>';
-        //     }
-        //     if($ispletter=='0'){
-        //         $this->session->set_flashdata('message',"Please Select Any One Platter");
-        //         redirect($this->data['base_url']);
-        //     }
-            
-        //     $cartdetails .='<div class="bg-primary item-container-single gold-members d-flex align-items-center justify-content-between px-3 py-2 border-bottom"><p class="w-100 text-gray mb-0 text-right ml-2 large text-success">₹ '.$cart_total.'</p></div>';             
-        //     $SpecialInstructions=$this->session->userdata('SpecialInstructions');
-        //     if(isset($SpecialInstructions)){
-        //         $SpecialInstructions = $SpecialInstructions;
-        //     }else{
-        //         $SpecialInstructions = '';
-        //     }
-        //     $sp .='<div class="mb-0 input-group pl-3 pr-3 pt-4 pb-4">';
-        //         $sp .='<div class="input-group-prepend">';
-        //             $sp .='<span class="input-group-text">';
-        //                 $sp .='<i class="feather-message-square"></i>';
-        //             $sp .='</span>';
-        //         $sp .='</div>';
-        //         $sp .='<textarea placeholder="Add any Special Instructions" aria-label="With textarea" class="form-control" name="SpecialInstructions" id="SpecialInstructions" onblur="return SpecialInstructions();">'.$SpecialInstructions.'</textarea>';
-        //     $sp .='</div><br>';
-        //     $cartdetails .=$sp;
-        //     // Addons Start
-        //     $CategoryWiseItem=$this->order_model->GetCategoryWiseItem('794456');
-        //     $cwi ='';
-        //     if(!empty($CategoryWiseItem)){
-        //          $cwi .='<div class="">';
-        //              $cwi .='<div class="px-3 pt-3 title d-flex align-items-center pb-3">';
-        //                  $cwi .='<h5 class="m-0">Addons</h5>';
-        //              $cwi .='</div>';
-        //          $cwi .='</div>';
-        //         $cwi .='<div class="Addons-slider">';
-        //             foreach ($CategoryWiseItem as $CategoryWiseItemkey => $cwiv) {
-        //                 if (!in_array($cwiv['itemid'], $cartitemarray)){
-        //                     $cwi .='<div class="osahan-slider-item py-1 px-1">';
-        //                         $cwi .='<div class="list-card bg-white h-100 rounded overflow-hidden position-relative shadow-sm">';
-        //                             $cwi .='<div class="list-card-image">';
-        //                                 $cwi .='<img src="'.$this->data['base_assets'].'uploads/itemimages/'.$cwiv['image'].'" class="img-fluid item-img w-100">';
-        //                             $cwi .='</div>';
-        //                             $cwi .='<div class="p-2 position-relative">';
-        //                                 $cwi .='<div class="list-card-body">';
-        //                                     $cwi .='<div class="dish-contents d-flex">';
-        //                                         $cwi .='<h6 class="mb-1 col-12 pl-0 pr-0">';
-        //                                             $cwi .='<div class="text-black item-nm small">'.$cwiv['name'].'</div>';
-        //                                             $cwi .='<p class="size-of-addon small text-gray mb-3">'.$cwiv['description'].'</p>';
-        //                                         $cwi .='</h6>';
-                                                
-        //                                         $cwi .='<div class="col-12 pl-0 pr-0 pb-2">';
-        //                                             $cwi .='<p class="text-gray mb-0 time">';
-        //                                                 $cwi .='<span class="float-left text-black-50 w-100 pb-2"> ₹ '.$cwiv['price'].'/-</span> ';
-        //                                             $cwi .='</p>';                                                
-        //                                         $cwi .='</div>';
-        //                                         if($cwiv['itemallowvariation']!='0' || $cwiv['itemallowaddon']!='0'){
-        //                                             $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return get_item_selection_addons('.$cwiv['itemid'].');">';
-        //                                                 $cwi .='Add';
-        //                                             $cwi .='</button><span class="small float-right pt-1">customisable</span>';
-        //                                         }else{
-        //                                             $cwi .='<button class="btn btn-primary btn-block btn-sm w-50 m-auto" onclick="return addtocartaddonse('.$cwiv['itemid'].');">';
-        //                                                 $cwi .='Add';
-        //                                             $cwi .='</button>';
-        //                                         }
-        //                                     $cwi .='</div>';
-        //                                 $cwi .='</div>';
-        //                             $cwi .='</div>';
-        //                         $cwi .='</div>';
-        //                     $cwi .='</div>';
-        //                 }
-        //             }                
-        //         $cwi .='</div>';
-        //     }
-        //     $cartdetails .=$cwi;
-        //     // Addons Edn
-        // }else{
-        //     redirect($this->data['base_url']);
-        // }
-        // $discount_div =$this->load_discount_div($cart_total);
-        // $this->data['discount_div'] = $discount_div;
-        // $final_pay_div =$this->load_final_pay_div($cart_total,$totalplatter);
-        // $this->data['final_pay_div'] = $final_pay_div;
-        // $this->data['cartdetails'] = $cartdetails;
-        // // Coupon Details
-        // $coupons_details=$this->session->userdata('coupons_details_session');
-        // $this->data['coupons_details'] = $coupons_details;
-        
-        // $this->data['message'] = $this->session->flashdata('message');
-        // $this->data['breadcrumb'] = 'Check Out';
-        // $this->data['tpl_name']= "checkout.tpl";
-        // $this->smarty->assign('data', $this->data);
-        // $this->smarty->view('template.tpl'); 
     }
     function registrationwithplaceorder(){
         $returnarray = array();        
@@ -485,8 +258,17 @@ class order extends MY_Controller{
 
         $differentshipaddress = ($this->input->post('differentshipaddress')) ? $this->input->post('differentshipaddress'):"No"; 
         if ($this->cart->contents()) {
-               echo 'registered';
-            
+            $email=$data['email'];
+            $CheckAlreadyExist = $this->Crud_Model->CheckAlreadyCustomer($email);
+            if(count($CheckAlreadyExist)!='0'){
+                $this->session->set_flashdata('message','Your Email Id Already Registered.');
+                redirect($this->data['base_url'] . 'order/checkout');
+            }else{
+                
+                echo 'registered';
+                print_r($data);
+                exit;
+            }           
         }else{
             redirect($this->data['base_url'] . 'order/');
         }

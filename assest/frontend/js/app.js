@@ -790,7 +790,7 @@ var THEMEIM = THEMEIM || {};
     })
 
     // toggle3
-    $('#toggle3').on("click", function() {
+    $('#differentshipaddress').on("click", function() {
         $('#open3').slideToggle();
         $('.caupon-wrap.s2').toggleClass('coupon-2')
     })

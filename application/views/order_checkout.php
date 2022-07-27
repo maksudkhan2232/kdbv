@@ -81,7 +81,19 @@
 				                    
 				                        <div class="checkout-wrap">
 				                            <div class="row">
-				                                <div class="col-lg-8 col-12">
+				                            		<div class="col-lg-8 col-12">
+				                            		<?php 
+				                            			if($message!=''){
+				                            		?>
+				                            			<div class="alert alert-danger" role="alert">
+								                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+								                              <?php echo $message;?>
+								                        </div>
+				                            		<?php 
+				                            			}
+				                            		?>
+				                            		</div>
+				                            		<div class="col-lg-8 col-12">
 				                                    <div class="caupon-wrap s1 active-border" id="loginpanel">
 				                                        <div class="coupon coupon-active">
 				                                            <label id="toggle1">Already Registered. Login Now</label>
@@ -127,13 +139,13 @@
 					                                          <div class="billing-adress" id="open2">
 					                                                <div class="contact-form form-style text-left" id="newuserregistrationform">
 					                                                    <div class="row">
-					                                                        <div class="col-lg-6 col-md-12 col-12">
+					                                                        <div class="col-lg-12 col-md-12 col-12">
 					                                                            <label for="name">Name <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Name." id="name" name="data[name]">
+					                                                            <input type="text" placeholder="Enter Your Name." id="name" name="data[name]" maxlength="55">
 					                                                        </div>
 					                                                        <div class="col-lg-12 col-md-12 col-12">
 					                                                            <label for="address">Address <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Name." id="address" name="data[address]">
+					                                                            <input type="text" placeholder="Enter Your Address." id="address" name="data[address]">
 					                                                        </div>
 					                                                        <div class="col-lg-6 col-md-12 col-12">
 					                                                            <label for="country">Country <span class="text-danger">*</span></label>
@@ -147,7 +159,7 @@
 					                                                            	<option value="">Select State</option>
 					                                                            	<?php
 																					                foreach ($StateDetails as $skey => $svalue) {
-																					                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
+																					                  echo '<option value="'.$svalue['id'].'">'.ucwords($svalue['name']).'</option>';
 																					                }
 																					               ?>
 					                                                            </select>
@@ -169,58 +181,58 @@
 					                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="data[email]">
 					                                                        </div>
 					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="email">Password<span class="text-danger">*</span></label>
+					                                                            <label for="password">Password<span class="text-danger">*</span></label>
 					                                                            <input type="password" placeholder="Enter Your Password."  id="password" name="data[password]">
 					                                                        </div>                                                  
 					                                                    </div>
 					                                                </div>
 					                                                <div class="biling-item-2" id="shippingaddressform">
-					                                                    <input id="toggle3" type="checkbox" name="differentshipaddress" id="differentshipaddress">
+					                                                    <input type="checkbox" name="differentshipaddress" id="differentshipaddress" class="differentshipaddress">
 					                                                    <label class="fontsize" for="toggle3">Ship to a different
 					                                                        address?</label>
 					                                                    <div class="billing-adress" id="open3">
 					                                                        <div class="contact-form form-style">
 					                                                           <div class="row text-left">
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="name">Name <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Name." id="sdata[name]" name="name">
+							                                                        <div class="col-lg-12 col-md-12 col-12">
+							                                                            <label for="rsname">Name <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Name." id="rsname" name="rsname">
 							                                                        </div>
 							                                                        <div class="col-lg-12 col-md-12 col-12">
-							                                                            <label for="address">Address <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Name." id="address" name="sdata[address]">
+							                                                            <label for="rsaddress">Address <span class="text-danger">*</span></label>
+							                                                            <input type="text" placeholder="Enter Your Address." id="rsaddress" name="rsaddress">
 							                                                        </div>
 							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="country">Country <span class="text-danger">*</span></label>
-							                                                            <select name="sdata[country]" id="country" class="form-control">
+							                                                            <label for="rscountry">Country <span class="text-danger">*</span></label>
+							                                                            <select name="rscountry" id="rscountry" class="form-control">
 							                                                               <option value="India" selected>India</option>
 							                                                            </select>
 							                                                        </div>
 							                                                        <div class="col-lg-6 col-md-12 col-12">
 							                                                            <label for="state">State <span class="text-danger">*</span></label>
-							                                                            <select name="sdata[state]" id="state" class="form-control">
+							                                                            <select name="rsstate" id="rsstate" class="form-control">
 							                                                            	<option value="">Select State</option>
 							                                                            	<?php
 																							                foreach ($StateDetails as $skey => $svalue) {
-																							                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
+																							                  echo '<option value="'.$svalue['id'].'">'.ucwords($svalue['name']).'</option>';
 																							                }
 																							               ?>
 							                                                            </select>
 							                                                        </div>                                                  
 							                                                        <div class="col-lg-6 col-md-12 col-12">
 							                                                            <label for="city">City <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="sdata[city]">
+							                                                            <input type="text" placeholder="Enter Your City Name."  id="rscity" name="rscity">
 							                                                        </div>
 							                                                        <div class="col-lg-6 col-md-12 col-12">
 							                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="sdata[pincode]">
+							                                                            <input type="text" placeholder="Enter Your Pincode."  id="rspincode" name="rspincode">
 							                                                        </div>                                                    
 							                                                        <div class="col-lg-6 col-md-12 col-12">
 							                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="sdata[mobileno]">
+							                                                            <input type="text" placeholder="Enter Your Mobile No."  id="rsmobileno" name="rsmobileno">
 							                                                        </div>
 							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
-							                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="sdata[email]">
+							                                                            <label for="rsemail">Email Id <span class="text-danger">*</span></label>
+							                                                            <input type="email" placeholder="Enter Your Email."  id="rsemail" name="rsemail">
 							                                                        </div>                                                  
 							                                                    </div>
 					                                                        </div>
@@ -237,7 +249,7 @@
 				                                          <form>
 				                                       </div>
 				                                    </div>	
-				                                    <div class="caupon-wrap s2"  id="shippingaddresspanel">
+				                                    <div class="caupon-wrap s2"  id="shippingaddresspanel" style="display:none;">
 				                                        <div class="biling-item">
 				                                            <div class="coupon coupon-3">
 				                                                <label id="toggle2">Shiping Address</label>
@@ -249,22 +261,22 @@
 				                                                        <div class="contact-form form-style">
 				                                                           <div class="row text-left">
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="name">Name <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Name." id="sdata[name]" name="name">
+						                                                            <label for="sname">Name <span class="text-danger">*</span></label>
+						                                                            <input type="text" placeholder="Enter Your Name." id="sdata[name]" name="sname">
 						                                                        </div>
 						                                                        <div class="col-lg-12 col-md-12 col-12">
-						                                                            <label for="address">Address <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Name." id="address" name="sdata[address]">
+						                                                            <label for="saddress">Address <span class="text-danger">*</span></label>
+						                                                            <input type="text" placeholder="Enter Your Name." id="saddress" name="sdata[address]">
 						                                                        </div>
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="country">Country <span class="text-danger">*</span></label>
-						                                                            <select name="sdata[country]" id="country" class="form-control">
+						                                                            <label for="scountry">Country <span class="text-danger">*</span></label>
+						                                                            <select name="sdata[country]" id="scountry" class="form-control">
 						                                                               <option value="India" selected>India</option>
 						                                                            </select>
 						                                                        </div>
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="state">State <span class="text-danger">*</span></label>
-						                                                            <select name="sdata[state]" id="state" class="form-control">
+						                                                            <label for="sstate">State <span class="text-danger">*</span></label>
+						                                                            <select name="sdata[state]" id="sstate" class="form-control">
 						                                                            	<option value="">Select State</option>
 						                                                            	<?php
 																						                foreach ($StateDetails as $skey => $svalue) {
@@ -274,20 +286,20 @@
 						                                                            </select>
 						                                                        </div>                                                  
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="city">City <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="sdata[city]">
+						                                                            <label for="scity">City <span class="text-danger">*</span></label>
+						                                                            <input type="text" placeholder="Enter Your City Name."  id="scity" name="sdata[city]">
 						                                                        </div>
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="sdata[pincode]">
+						                                                            <label for="spincode">Pincode <span class="text-danger">*</span></label>
+						                                                            <input type="text" placeholder="Enter Your Pincode."  id="spincode" name="sdata[pincode]">
 						                                                        </div>                                                    
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="sdata[mobileno]">
+						                                                            <label for="smobileno">Mobile No. <span class="text-danger">*</span></label>
+						                                                            <input type="text" placeholder="Enter Your Mobile No."  id="smobileno" name="sdata[mobileno]">
 						                                                        </div>
 						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
-						                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="sdata[email]">
+						                                                            <label for="semail">Email Id <span class="text-danger">*</span></label>
+						                                                            <input type="email" placeholder="Enter Your Email."  id="semail" name="sdata[email]">
 						                                                        </div>                                                  
 						                                                    </div>
 				                                                        </div>
