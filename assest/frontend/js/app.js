@@ -800,11 +800,9 @@ var THEMEIM = THEMEIM || {};
         $('.caupon-wrap.s3').toggleClass('coupon-2')
     })
     $('#newregisterpanel').css("display","none");
-    $('#shippingaddresspanel').css("display","none");
     $('#opencreateaccount').on("click", function() {
       $('#newregisterpanel').css("display","block");
       $('#open2').css("display","block");      
       $('#loginpanel').css("display","none");
-      $('#shippingaddresspanel').css("display","none");
     })
     

@@ -234,7 +234,7 @@ function orderspecialnote(){
     })
   }  
 }
-function registrationwithplaceorder(){
+function registration(){
   var name = $('#name').val();
   var address = $('#address').val();
   var country = $('#country').val();
@@ -347,23 +347,23 @@ function registrationwithplaceorder(){
     }) 
     return false;
   }
-  if ($('input.differentshipaddress').is(':checked')) {
-    var name = $('#rsname').val();
-    var address = $('#rsaddress').val();
-    var country = $('#rscountry').val();
-    var state = $('#rsstate').val();
-    var city = $('#rscity').val();
-    var pincode = $('#rspincode').val();
-    var mobileno = $('#rsmobileno').val();
-    var email = $('#rsemail').val();
-    
-
+}
+$(function() {
+  $('#PlaceOrder').click(function(){
+    var name = $('#sname').val();
+    var address = $('#saddress').val();
+    var country = $('#scountry').val();
+    var state = $('#sstate').val();
+    var city = $('#scity').val();
+    var pincode = $('#spincode').val();
+    var mobileno = $('#smobileno').val();
+    var email = $('#semail').val();
     var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-    
+  
     if (name=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Shipping Name.',
+        title: 'Please Enter Your Name.',
         showConfirmButton: false,
         timer: 500
       })
@@ -372,7 +372,7 @@ function registrationwithplaceorder(){
     if (address=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Shipping Address.',
+        title: 'Please Enter Your Address.',
         showConfirmButton: false,
         timer: 500
       })
@@ -381,7 +381,7 @@ function registrationwithplaceorder(){
     if (state=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Select Your Shipping State.',
+        title: 'Please Select Your State.',
         showConfirmButton: false,
         timer: 500
       })
@@ -390,7 +390,7 @@ function registrationwithplaceorder(){
     if (city=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Shipping City Name.',
+        title: 'Please Enter Your City Name.',
         showConfirmButton: false,
         timer: 500
       })
@@ -399,7 +399,7 @@ function registrationwithplaceorder(){
     if (pincode=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Shipping Pincode.',
+        title: 'Please Enter Your Pincode.',
         showConfirmButton: false,
         timer: 500
       })
@@ -408,7 +408,7 @@ function registrationwithplaceorder(){
     if (mobileno=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Valid Shipping Mobile Number.',
+        title: 'Please Enter Valid Mobile Number.',
         showConfirmButton: false,
         timer: 500
       })
@@ -417,7 +417,7 @@ function registrationwithplaceorder(){
     if (mobileno!= '' && !mobileno.match('^[0-9]+$')) { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Valid Shipping Mobile Number.',
+        title: 'Please Enter valid Mobile Number.',
         showConfirmButton: false,
         timer: 500
       })
@@ -427,7 +427,7 @@ function registrationwithplaceorder(){
     if(mobileno_len>10 || mobileno_len<=9) {
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Valid Shipping Mobile Number.',
+        title: 'Please Enter valid Mobile Number.',
         showConfirmButton: false,
         timer: 500
       })
@@ -436,7 +436,7 @@ function registrationwithplaceorder(){
     if (email=='') { 
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Shipping Email Id.',
+        title: 'Please Enter Your Email Id.',
         showConfirmButton: false,
         timer: 500
       })
@@ -445,133 +445,15 @@ function registrationwithplaceorder(){
     if(!emailRegex.test(email)){
       Swal.fire({
         icon: 'error',
-        title: 'Please Enter Your Valid Shipping Email Id.',
+        title: 'Please Enter Your Valid Email Id.',
         showConfirmButton: false,
         timer: 500
       })
       return false;
     }
-  }
-
-
-}
-// $(function() {
-//   $('[name="differentshipaddress"]').change(function(){
-//     if ($(this).is(':checked')) {
-//         var name = $('#name').val();
-//         var address = $('#address').val();
-//         var country = $('#country').val();
-//         var state = $('#state').val();
-//         var city = $('#city').val();
-//         var pincode = $('#pincode').val();
-//         var mobileno = $('#mobileno').val();
-//         var email = $('#email').val();
-//         var password = $('#password').val();
-
-//   var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-  
-//   if (name=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Name.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (address=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Address.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (state=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Select Your State.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (city=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your City Name.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (pincode=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Pincode.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (mobileno=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Valid Mobile Number.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (mobileno!= '' && !mobileno.match('^[0-9]+$')) { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter valid Mobile Number.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   var mobileno_len = $("#mobileno").val().length;
-//   if(mobileno_len>10 || mobileno_len<=9) {
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter valid Mobile Number.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (email=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Email Id.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if(!emailRegex.test(email)){
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Valid Email Id.',
-//       showConfirmButton: false,
-//       timer: 500
-//     })
-//     return false;
-//   }
-//   if (password=='') { 
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Please Enter Your Password.',
-//       showConfirmButton: false,
-//       timer: 500
-//     }) 
-//     return false;
-//   }
-//     };
-//   });
-// });
+    
+    
+  });
+});
 
 

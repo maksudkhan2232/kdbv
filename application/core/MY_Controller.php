@@ -34,6 +34,14 @@ class MY_Controller extends CI_Controller
 	        $this->data['carttotalproduct'] = 0;	
 		}
 		
+		if(!empty($this->session->userdata('customer_info'))){
+			$this->data['customer_info']=$this->session->userdata('customer_info');
+		}else{
+			$this->data['customer_info']=array();;
+    		$this->data['customer_info']['name']='';
+    		$this->data['customer_info']['id']='';
+    		$this->data['customer_info']['email']='';
+		}
 		
 		//$this->cart->destroy();
 	}

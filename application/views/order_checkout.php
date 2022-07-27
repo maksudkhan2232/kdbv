@@ -77,301 +77,151 @@
 					<section class="contact-area">
 				    	<div class="container-fluid custom-container">
 				    		<div class="checkout-area section-padding">
-				                <div class="container">
-				                    
-				                        <div class="checkout-wrap">
-				                            <div class="row">
-				                            		<div class="col-lg-8 col-12">
-				                            		<?php 
-				                            			if($message!=''){
-				                            		?>
-				                            			<div class="alert alert-danger" role="alert">
-								                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-								                              <?php echo $message;?>
-								                        </div>
-				                            		<?php 
-				                            			}
-				                            		?>
-				                            		</div>
-				                            		<div class="col-lg-8 col-12">
-				                                    <div class="caupon-wrap s1 active-border" id="loginpanel">
-				                                        <div class="coupon coupon-active">
-				                                            <label id="toggle1">Already Registered. Login Now</label>
-				                                        </div>
-				                                        <div class="create-account">
-				                                            <div class="contact-form form-style text-left">
-				                                                <div class="row d-flex justify-content-center">
-				                		                            	<div class="col-lg-8 col-12">
-				                        		                        <form action="#">
-						                                                    <div class="row">
-						                                                        <div class="col-xl-12">
-						                                                            <input type="text" placeholder="Email*">
-						                                                        </div>
-						                                                        <div class="col-xl-12">
-						                                                            <input type="text" placeholder="Password*">
-						                                                        </div>
-						                                                        <div class="col-xl-12">
-						                                                            <input type="submit" class="cart-btn" value="LOG IN">
-						                                                        </div>
-						                                                    </div>
-						                                                </form>
-				                                               		</div>
-				                                               		<div class="col-lg-12 col-12">
-					                                               		<div class="login-now">
-																							<div class="container-fluid custom-container">
-																								<div class="col-lg-12 col-12">
-																									<span>Dont have account</span>
-																									<a href="javascript:void(0)" class="btn-two" id="opencreateaccount">Create Account</a>
-																								</div>
-																							</div>
-																						</div>
-																					</div>
-				                                                </div>     
-				                                            </div>
-				                                        </div>
-				                                    </div>
-				                                    <div class="caupon-wrap s2" id="newregisterpanel">
-				                                       <div class="biling-item">
-				                                          <div class="coupon coupon-3">
-				                                             <label id="toggle2">New User Register Now</label>
-				                                          </div>
-				                                          <form action="<?php echo base_url(); ?>order/registrationwithplaceorder/" id="myForm" enctype="multipart/form-data" method="post" accept-charset="utf-8" onSubmit="return registrationwithplaceorder();">
-					                                          <div class="billing-adress" id="open2">
-					                                                <div class="contact-form form-style text-left" id="newuserregistrationform">
-					                                                    <div class="row">
-					                                                        <div class="col-lg-12 col-md-12 col-12">
-					                                                            <label for="name">Name <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Name." id="name" name="data[name]" maxlength="55">
-					                                                        </div>
-					                                                        <div class="col-lg-12 col-md-12 col-12">
-					                                                            <label for="address">Address <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Address." id="address" name="data[address]">
-					                                                        </div>
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="country">Country <span class="text-danger">*</span></label>
-					                                                            <select name="data[country]" id="country" class="form-control">
-					                                                               <option value="India" selected>India</option>
-					                                                            </select>
-					                                                        </div>
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="state">State <span class="text-danger">*</span></label>
-					                                                            <select name="data[state]" id="state" class="form-control">
-					                                                            	<option value="">Select State</option>
-					                                                            	<?php
-																					                foreach ($StateDetails as $skey => $svalue) {
-																					                  echo '<option value="'.$svalue['id'].'">'.ucwords($svalue['name']).'</option>';
-																					                }
-																					               ?>
-					                                                            </select>
-					                                                        </div>                                                  
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="city">City <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your City Name."  id="city" name="data[city]">
-					                                                        </div>
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="data[pincode]">
-					                                                        </div>                                                    
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-					                                                            <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]">
-					                                                        </div>
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="email">Email Id <span class="text-danger">*</span></label>
-					                                                            <input type="email" placeholder="Enter Your Email."  id="email" name="data[email]">
-					                                                        </div>
-					                                                        <div class="col-lg-6 col-md-12 col-12">
-					                                                            <label for="password">Password<span class="text-danger">*</span></label>
-					                                                            <input type="password" placeholder="Enter Your Password."  id="password" name="data[password]">
-					                                                        </div>                                                  
-					                                                    </div>
-					                                                </div>
-					                                                <div class="biling-item-2" id="shippingaddressform">
-					                                                    <input type="checkbox" name="differentshipaddress" id="differentshipaddress" class="differentshipaddress">
-					                                                    <label class="fontsize" for="toggle3">Ship to a different
-					                                                        address?</label>
-					                                                    <div class="billing-adress" id="open3">
-					                                                        <div class="contact-form form-style">
-					                                                           <div class="row text-left">
-							                                                        <div class="col-lg-12 col-md-12 col-12">
-							                                                            <label for="rsname">Name <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Name." id="rsname" name="rsname">
-							                                                        </div>
-							                                                        <div class="col-lg-12 col-md-12 col-12">
-							                                                            <label for="rsaddress">Address <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Address." id="rsaddress" name="rsaddress">
-							                                                        </div>
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="rscountry">Country <span class="text-danger">*</span></label>
-							                                                            <select name="rscountry" id="rscountry" class="form-control">
-							                                                               <option value="India" selected>India</option>
-							                                                            </select>
-							                                                        </div>
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="state">State <span class="text-danger">*</span></label>
-							                                                            <select name="rsstate" id="rsstate" class="form-control">
-							                                                            	<option value="">Select State</option>
-							                                                            	<?php
-																							                foreach ($StateDetails as $skey => $svalue) {
-																							                  echo '<option value="'.$svalue['id'].'">'.ucwords($svalue['name']).'</option>';
-																							                }
-																							               ?>
-							                                                            </select>
-							                                                        </div>                                                  
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="city">City <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your City Name."  id="rscity" name="rscity">
-							                                                        </div>
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="pincode">Pincode <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Pincode."  id="rspincode" name="rspincode">
-							                                                        </div>                                                    
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-							                                                            <input type="text" placeholder="Enter Your Mobile No."  id="rsmobileno" name="rsmobileno">
-							                                                        </div>
-							                                                        <div class="col-lg-6 col-md-12 col-12">
-							                                                            <label for="rsemail">Email Id <span class="text-danger">*</span></label>
-							                                                            <input type="email" placeholder="Enter Your Email."  id="rsemail" name="rsemail">
-							                                                        </div>                                                  
-							                                                    </div>
-					                                                        </div>
-					                                                    </div>
-					                                                     <div class="note-area">
-					                                                        <p>Order Notes </p>
-					                                                        <textarea name="ordernote" id="ordernote" onblur="return orderspecialnote();" placeholder="Please Enter Note About Your Order."><?php echo $ordernote;?></textarea>
-					                                                     </div>
-					                                                    	<p class="form-submit m-5 text-center">
-					                                                        <input value="Place Order" class="submit" type="submit">
-					                                                      </p>                                                
-					                                                </div>
-					                                          </div>
-				                                          <form>
-				                                       </div>
-				                                    </div>	
-				                                    <div class="caupon-wrap s2"  id="shippingaddresspanel" style="display:none;">
-				                                        <div class="biling-item">
-				                                            <div class="coupon coupon-3">
-				                                                <label id="toggle2">Shiping Address</label>
-				                                            </div>
-				                                            <div class="billing-adress">
-				                                                <div class="biling-item-2" id="shippingaddressform">
-				                                                    <input id="toggle3" type="checkbox">
-				                                                   <div class="billing-adress" id="open3">
-				                                                        <div class="contact-form form-style">
-				                                                           <div class="row text-left">
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="sname">Name <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Name." id="sdata[name]" name="sname">
-						                                                        </div>
-						                                                        <div class="col-lg-12 col-md-12 col-12">
-						                                                            <label for="saddress">Address <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Name." id="saddress" name="sdata[address]">
-						                                                        </div>
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="scountry">Country <span class="text-danger">*</span></label>
-						                                                            <select name="sdata[country]" id="scountry" class="form-control">
-						                                                               <option value="India" selected>India</option>
-						                                                            </select>
-						                                                        </div>
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="sstate">State <span class="text-danger">*</span></label>
-						                                                            <select name="sdata[state]" id="sstate" class="form-control">
-						                                                            	<option value="">Select State</option>
-						                                                            	<?php
-																						                foreach ($StateDetails as $skey => $svalue) {
-																						                  echo '<option value="'.$cvalue['StateID'].'">'.ucwords($cvalue['State_Name']).'</option>';
-																						                }
-																						               ?>
-						                                                            </select>
-						                                                        </div>                                                  
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="scity">City <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your City Name."  id="scity" name="sdata[city]">
-						                                                        </div>
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="spincode">Pincode <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Pincode."  id="spincode" name="sdata[pincode]">
-						                                                        </div>                                                    
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="smobileno">Mobile No. <span class="text-danger">*</span></label>
-						                                                            <input type="text" placeholder="Enter Your Mobile No."  id="smobileno" name="sdata[mobileno]">
-						                                                        </div>
-						                                                        <div class="col-lg-6 col-md-12 col-12">
-						                                                            <label for="semail">Email Id <span class="text-danger">*</span></label>
-						                                                            <input type="email" placeholder="Enter Your Email."  id="semail" name="sdata[email]">
-						                                                        </div>                                                  
-						                                                    </div>
+			               <div class="container">
+	                    		<div class="checkout-wrap">
+	                            <div class="row">
+	                            		<div class="col-lg-8 col-12">
+	                            		<?php 
+	                            			if($message!=''){
+	                            		?>
+	                            			<div class="alert alert-danger" role="alert">
+					                            <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					                              <?php echo $message;?>
+					                        </div>
+	                            		<?php 
+	                            			}
+	                            		?>
+	                            		</div>
+	                            		<div class="col-lg-8 col-12">
+	                            			<form action="<?php echo base_url(); ?>order/placeorder/" id="myForm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+		                                    <div class="caupon-wrap s2"  id="shippingaddresspanel">
+		                                        <div class="biling-item">
+		                                            <div class="coupon coupon-3">
+		                                                <label id="toggle2">Shiping Address</label>
+		                                            </div>		                                            
+		                                            <div class="billing-adress">
+		                                                <div class="biling-item-2" id="shippingaddressform">
+		                                                   <div class="billing-adress" id="">
+		                                                        <div class="contact-form form-style">
+		                                                           <div class="row text-left">
+				                                                        <div class="col-lg-12 col-md-12 col-12">
+				                                                            <label for="sname">Name <span class="text-danger">*</span></label>
+				                                                            <input type="text" placeholder="Enter Your Name." name="sdata[name]" id="sname" value="<?php echo $CustomerDetails['name'];?>">
 				                                                        </div>
+				                                                        <div class="col-lg-12 col-md-12 col-12">
+				                                                            <label for="saddress">Address <span class="text-danger">*</span></label>
+				                                                            <input type="text" placeholder="Enter Your Address." id="saddress" name="sdata[address]" value="<?php echo $CustomerDetails['address'];?>">
+				                                                        </div>
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="scountry">Country <span class="text-danger">*</span></label>
+				                                                            <select name="sdata[country]" id="scountry" class="form-control">
+				                                                               <option value="India" selected>India</option>
+				                                                            </select>
+				                                                        </div>
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="sstate">State <span class="text-danger">*</span></label>
+				                                                            <select name="sdata[state]" id="sstate" class="form-control">
+				                                                            	<option value="">Select State</option>
+				                                                            	<?php
+				                                                            	 $sele='';
+																				                foreach ($StateDetails as $skey => $svalue) {
+																				                	if(isset($CustomerDetails['state']) && $CustomerDetails['state']!=''){
+																				                		if($svalue['id']==$CustomerDetails['state']){
+																				                			$sele="selected";
+																				                		}
+																				                	}
+																				                  echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
+																				                }
+																				               ?>
+				                                                            </select>
+				                                                        </div>                                                  
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="scity">City <span class="text-danger">*</span></label>
+				                                                            <input type="text" placeholder="Enter Your City Name."  id="scity" name="sdata[city]" value="<?php echo $CustomerDetails['city'];?>">
+				                                                        </div>
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="spincode">Pincode <span class="text-danger">*</span></label>
+				                                                            <input type="text" placeholder="Enter Your Pincode."  id="spincode" name="sdata[pincode]" value="<?php echo $CustomerDetails['pincode'];?>">
+				                                                        </div>                                                    
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="smobileno">Mobile No. <span class="text-danger">*</span></label>
+				                                                            <input type="text" placeholder="Enter Your Mobile No."  id="smobileno" name="sdata[mobileno]" value="<?php echo $CustomerDetails['mobileno'];?>">
+				                                                        </div>
+				                                                        <div class="col-lg-6 col-md-12 col-12">
+				                                                            <label for="semail">Email Id <span class="text-danger">*</span></label>
+				                                                            <input type="email" placeholder="Enter Your Email."  id="semail" name="sdata[email]" value="<?php echo $CustomerDetails['email'];?>">
+				                                                        </div>                                                  
 				                                                    </div>
-				                                                     <div class="note-area">
-				                                                        <p>Order Notes </p>
-				                                                        <textarea name="ordernote" id="ordernote" onblur="return orderspecialnote();" placeholder="Please Enter Note About Your Order."><?php echo $ordernote;?></textarea>
-				                                                     </div>
-				                                                    	<p class="form-submit m-5 text-center">
-				                                                        <input value="Save &amp; Continue" class="submit" type="submit">
-				                                                      </p>			                                                    
-				                                                </div>
-				                                            </div>
-				                                        </div>
-				                                    </div>				                                    
-				                                </div>
-				                                <div class="col-lg-4 col-12">
-				                                    <div class="cout-order-area">
-				                                        <div class="oreder-item ">
-				                                            <ul>
-				                                            		<?php
-																				if(count($this->cart->contents()) > 0){
-																            ?>
-				                                                	<li class="o-header">Your Order<span>( <?php echo count($this->cart->contents());?> )</span></li>
-				                                                <?php 
-																					foreach ($this->cart->contents() as $cartkey => $cartvalue) {
-																				?>
-																					<li>
-																						<?php echo $cartvalue['options']['product_code'];?> 
-																						<?php 
-												                                if($cartvalue['price']!='' && $cartvalue['price']!='0'){
-												                                  echo '₹ '.$cartvalue['price'];
-												                                  echo ' X '.$cartvalue['qty'];
-												                                }else{
-												                                	 echo $cartvalue['qty'];
-												                                }
-												                              ?> 
-																						<span>
-																						<?php 
-												                                if($cartvalue['price']!='' && $cartvalue['price']!='0'){
-												                                  echo '₹ '.($cartvalue['price']*$cartvalue['qty']);
-												                                }else{
-												                                	 echo ' - ';
-												                                }
-												                              ?> 
-																						</span>
-																					</li>
-																				<?php 
-																					}
-																				}
-																				?>
-																				<?php 
-																					if ($this->cart->contents()) {
-																		            $carttotal= $this->cart->total();
-																		            if($carttotal!='' and $carttotal!='0'){
-																		                echo '<li class="s-total">Sub Total <span>₹ '.number_format($carttotal).'</span></li>';    
-																		                echo '<li class="o-bottom">TOTAL: <span>₹ '.number_format($carttotal).'</span></li>';
-																		            }
-																		            // <li>( + ) VAT<span>100</span></li>
-				                          										//	<li>( + ) Eco Tax <span>100</span></li>
-				                          										//	<li>( - ) Discount Price<span>100</span></li>
-																		         }
-																				?>
-				                                            	</ul>
-				                                        </div>
-				                                    </div>
-				                                </div>
-				                            </div>
-				                        </div>
-				                    </form>
-				                </div>
-				            </div>
+		                                                        </div>
+		                                                    </div>
+		                                                     <div class="note-area">
+		                                                        <p>Order Notes </p>
+		                                                        <textarea name="ordernote" id="ordernote" onblur="return orderspecialnote();" placeholder="Please Enter Note About Your Order."><?php echo $ordernote;?></textarea>
+		                                                     </div>
+		                                                    	<p class="form-submit m-5 text-center">
+		                                                        <input value="Place Order" class="submit" type="submit" id="PlaceOrder">
+		                                                      </p>                                                
+		                                                </div>
+		                                            </div>		                                         		
+		                                        </div>
+		                                    </div>
+		                                 </form>				                                    
+	                                </div>
+	                                <div class="col-lg-4 col-12">
+	                                    <div class="cout-order-area">
+	                                        <div class="oreder-item ">
+	                                            <ul>
+	                                            		<?php
+																	if(count($this->cart->contents()) > 0){
+													            ?>
+	                                                	<li class="o-header">Your Order<span>( <?php echo count($this->cart->contents());?> )</span></li>
+	                                                <?php 
+																		foreach ($this->cart->contents() as $cartkey => $cartvalue) {
+																	?>
+																		<li>
+																			<?php echo $cartvalue['options']['product_code'];?> 
+																			<?php 
+									                                if($cartvalue['price']!='' && $cartvalue['price']!='0'){
+									                                  echo '₹ '.$cartvalue['price'];
+									                                  echo ' X '.$cartvalue['qty'];
+									                                }else{
+									                                	 echo $cartvalue['qty'];
+									                                }
+									                              ?> 
+																			<span>
+																			<?php 
+									                                if($cartvalue['price']!='' && $cartvalue['price']!='0'){
+									                                  echo '₹ '.($cartvalue['price']*$cartvalue['qty']);
+									                                }else{
+									                                	 echo ' - ';
+									                                }
+									                              ?> 
+																			</span>
+																		</li>
+																	<?php 
+																		}
+																	}
+																	?>
+																	<?php 
+																		if ($this->cart->contents()) {
+															            $carttotal= $this->cart->total();
+															            if($carttotal!='' and $carttotal!='0'){
+															                echo '<li class="s-total">Sub Total <span>₹ '.number_format($carttotal).'</span></li>';    
+															                echo '<li class="o-bottom">TOTAL: <span>₹ '.number_format($carttotal).'</span></li>';
+															            }
+															            // <li>( + ) VAT<span>100</span></li>
+	                          										//	<li>( + ) Eco Tax <span>100</span></li>
+	                          										//	<li>( - ) Discount Price<span>100</span></li>
+															         }
+																	?>
+	                                            	</ul>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                        </div>				                    
+			               </div>
+				         </div>
 				    	</div>
 					</section>
 			<?php 
