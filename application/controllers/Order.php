@@ -268,12 +268,216 @@ class order extends MY_Controller{
             if($this->data['customer_info']['id']==''){
                 redirect($this->data['base_url'] . 'customer');
             }
-
+            if(!empty($this->session->userdata('ordernote'))){
+                $ordernote=$this->session->userdata('ordernote');
+            }else{
+                $ordernote='';
+            }
             // Start Order Details Add
                 $ordernote=$this->session->userdata('ordernote');
                 $customerid=$this->data['customer_info']['id'];
                 $CartTmpDate = $this->cart->contents();
-                $GetRandNumberString = $this->get_random_string(5);
+                $OrderNo = $this->get_random_string(5);
+                if($this->data['customer_info']['id']!='' && !empty($CartTmpDate)){
+                    $CartTmpDate = $this->cart->contents();
+                    $cart_total =0;
+                    $cartdetails = '';
+                    if(!empty($CartTmpDate)){
+                        // Order Details Update Order Table in Etry
+                        $orderinfo =array();
+                        $orderinfo['CustomerID']=$customerid;
+                        $orderinfo['OrderNo']=$OrderNo;                        
+                        $orderinfo['OrderDate']=date('Y-m-d');
+                        $orderinfo['OrderTime']=date('H:i:s');                        
+                        $orderinfo['OrderStatus']='Received';
+                        $orderinfo['SubValue']=$this->cart->total();
+                        $orderinfo['ShippingCharges']=0;
+                        $orderinfo['Tax']=0;
+                        $orderinfo['TotalValue']=$this->cart->total();
+                        
+                        // Address
+                        $AddressDetails=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('status'=>1));
+                        if(!empty($AddressDetails)){
+                            $orderinfo['BillingName']=$AddressDetails['name'];
+                            $orderinfo['BillingEmail']=$AddressDetails['email'];
+                            $orderinfo['BillingPhone']=$AddressDetails['mobileno'];
+                            $orderinfo['BillingAddress']=$AddressDetails['address'];
+                            $orderinfo['BillingCity']=$AddressDetails['city'];
+                            $orderinfo['BillingState']=$AddressDetails['state'];
+                            $orderinfo['BillingZipCode']=$AddressDetails['pincode'];
+                            
+                        } 
+                        $orderinfo['BillingNote']=$ordernote;   
+                        $orderinfo['GSTNo']='';      
+                        $orderinfo['isDifferentShipping']='';       
+                        $orderinfo['ShippingName']=$sdata['name'];
+                        $orderinfo['ShippingEmail']=$sdata['email'];
+                        $orderinfo['ShippingAddress']=$sdata['address'];
+                        $orderinfo['ShippingCity']=$sdata['city'];
+                        $orderinfo['ShippingState']=$sdata['state'];
+                        $orderinfo['ShippingCountry']=$sdata['country'];                        
+                        $orderinfo['ShippingZipCode']=$sdata['state'];
+                        $orderinfo['ShippingMobileNo']=$sdata['mobileno'];
+                        $orderinfo['Remark']='';
+                        $orderinfo['status']='0';
+                        $orderinfo['isdelete']='0';
+                        $orderinfo['created_datetime']=date('Y-m-d H:i:s');
+                        $orderinfo['modified_datetime']='0000-00-00 00:00:00';
+                        $orderid=$this->Crud_Model->InsertData('orders',$orderinfo);
+                        foreach ($CartTmpDate as $cdkey => $cdvalue) {
+                            if($cdvalue['qty']!='' && $cdvalue['qty']!='0'){
+                                $products_id = 
+                                $products_price = $cdvalue['price'];
+                                $products_name = $cdvalue['name'];
+                                $category_id = $cdvalue['options']['category_id'];
+                                $products_description = $cdvalue['options']['description'];
+                                $products_qty = $cdvalue['qty'];
+                                $products_extra_note = $cdvalue['options']['products_extra_note'];
+                                $products_total =0;
+                                $isveriation =0;
+                                $isaddons =0;
+                                if (isset($cdvalue['options']['isvariation'])){
+                                    $isveriation =1;
+                                }
+                                if(isset($cdvalue['options']['isaddons'])){
+                                    $isaddons =1;
+                                }
+                                if (isset($cdvalue['options']['isvariation'])) {
+                                    $cart_total += $cdvalue['options']['extra_costs_total'];
+                                    $products_total += $cdvalue['options']['extra_costs_total'];
+                                }else if(isset($cdvalue['options']['isaddons']) && !isset($cdvalue['options']['isvariation'])){
+                                    $cart_total += $cdvalue['subtotal'];
+                                    $cart_total += $cdvalue['options']['extra_costs_total'];
+                                    $products_total += $cdvalue['subtotal'];
+                                }else{                    
+
+                                    $cart_total += $cdvalue['subtotal'];
+                                    $products_total += $cdvalue['subtotal'];
+                                }
+                                
+
+                                // Order products Entry
+                                $productss_data=array();
+                                $productss_data['order_id']=$orderid;
+                                $productss_data['order_no']=$OrderNo;
+                                $productss_data['customer_id']=$customerid;
+                                $productss_data['products_id']=$cdvalue['id'];
+                                $productss_data['products_name']= $cdvalue['name'];
+                                $productss_data['products_price']=$cdvalue['name'];
+                                $productss_data['products_qty']=$products_qty;
+                                $productss_data['products_total_cost']=$products_total;
+                                $productss_data['products_extra_note']=$products_extra_note;
+                                $productss_data['categoryid']=$category_id;
+                                $productss_data['isveriation']=$isveriation;
+                                $productss_data['isaddons']=$isaddons;
+                                $productss_data['status']='0';
+                                $productss_data['isdelete']='0';
+                                $productss_data['created_datetime']=date('Y-m-d H:i:s');
+                                $productss_data['modified_datetime']='0000-00-00 00:00:00';
+                                $OrderproductssId=$this->order_model->AddOrderItemsDetails($items_data);
+
+                                
+
+                               
+                            }
+                        }
+                        $finalpay = $cart_total;
+                        
+                        $orderinfo =array();
+
+                      
+                        
+                        
+                        // Start Delivery Charge
+                            $deliverycharge=0;
+                            $restaurantsdetails = $this->order_model->restaurants_details();
+                            // Packaging Charge As  Internethandling Charge
+                            $packaging_applicable_on = $restaurantsdetails['packaging_applicable_on'];
+                            $packaging_charge = $restaurantsdetails['packaging_charge'];
+                            $packaging_charge_type = $restaurantsdetails['packaging_charge_type'];
+                            $internethandlecharge=0;
+                            if($packaging_charge!='' and $packaging_charge!='0'){
+                                    if($packaging_charge_type=='PERCENTAGE'){
+                                        $internethandlecharge = ($finalpay*$packaging_charge/100);
+                                    }
+                                    if($packaging_charge_type=='FIXED'){
+                                        $internethandlecharge = $packaging_charge;
+                                    }
+                                    $final_pay_div .='<p class="mb-1">Internet Handle Charge<span class="float-right text-dark">₹ '.number_format($internethandlecharge,2).'</span></p>';
+                                    $finalpay =($finalpay+$internethandlecharge);                         
+                                }
+                            
+                            if($this->data['order_type']=='H'){
+                                if(!empty($restaurantsdetails)){
+                                    if($restaurantsdetails['deliverycharge']!='' and $restaurantsdetails['deliverycharge']!='0'){
+                                        $minimumorderamount = $restaurantsdetails['minimumorderamount'];
+                                        if($finalpay<$minimumorderamount){
+                                            $deliverycharge=$restaurantsdetails['deliverycharge'];
+                                            $finalpay =($finalpay+$restaurantsdetails['deliverycharge']);
+                                        }
+                                        // $deliverycharge=$restaurantsdetails['deliverycharge'];
+                                        // $finalpay =($finalpay+$restaurantsdetails['deliverycharge']);
+                                    }
+                                }
+                            }
+                        // End Delivery Charge
+                        
+                        $GetSquereOff = $this->getsquereoff($finalpay);
+                        $customerpaid = $GetSquereOff['roundoffprice'];
+                        $squeroff = $GetSquereOff['squereoff'];
+                        
+                        
+                        $orderinfo['order_id']=$orderid;
+                        $orderinfo['total_cost']=$cart_total;
+                        $orderinfo['no_of_items']=count($CartTmpDate);        
+                        $orderinfo['delivery_fee']=$deliverycharge;
+                        $orderinfo['tax_fee']=$taxes;
+                        $orderinfo['packing_charges']=$internethandlecharge;
+                        // $orderinfo['paid_total']=$finalpay;
+                        $orderinfo['paid_total']=$customerpaid;
+                        $orderinfo['squeroff']=$squeroff;
+                        $orderinfo['paid_date']=date('Y-m-d H:i:s');
+                        $orderinfo['order_type']=$this->data['order_type'];
+                        $orderinfo['payment_types']='ONLINE';
+                        $orderinfo['order_status']='Received';
+                       
+                        
+                        // Customer 
+                        $CustomerDetails = $this->order_model->GetSingleCustomerDetails($customerid);
+                        if(!empty($CustomerDetails)){
+                            $orderinfo['customername']=$CustomerDetails['name'];
+                            $orderinfo['customermobileno']=$CustomerDetails['mobileno'];
+                            if($CustomerDetails['email']=='' || $CustomerDetails['email']=='undefined'){
+                                $orderinfo['customeremail']='';
+                            }else{
+                                $orderinfo['customeremail']=$CustomerDetails['email']; 
+                            }
+                            
+                        }
+                        $SpecialInstructions=$this->session->userdata('SpecialInstructions');
+                        if(isset($SpecialInstructions)){
+                            $SpecialInstructions = $SpecialInstructions;
+                        }else{
+                            $SpecialInstructions = '';
+                        }
+                        $orderinfo['ordernote']=$SpecialInstructions;
+                        $UpdateOrderId=$this->order_model->UpdateOrderDetails($orderinfo);
+
+                        // All cart Remove & Session Remove
+                        // $this->cart->destroy();
+                        // $this->session->unset_userdata("coupons_details_session");
+                        // $this->session->unset_userdata("delivery_address_id");
+
+
+                        $OrderDetailsSession = array('orderid'=>$orderid, 'order_no'=>$order_no);
+                        $this->session->set_userdata('OrderDetailsSession', $OrderDetailsSession);
+                        $returnarray['msg']='success';
+                        
+                    }else{
+                        $returnarray['msg']='error';
+                    }
+                }
+        
                
                 
                 $order_no = sprintf("%04d", $lastorder);   
