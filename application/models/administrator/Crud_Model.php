@@ -273,6 +273,54 @@ class crud_model extends CI_Model{
         $query = $this->db->get();        
         return $query->row_array();
     }
-	
+    function GetLastOrderNo(){ 
+        $this->db->select('count(OrderID) as totalorder');
+        $this->db->from('orders');
+        $this->db->order_by('OrderID ','DESC');
+        $this->db->limit(1);
+        $query=$this->db->get();
+        return $query->row_array();
+    }   
+	function CheckAuth($email,$password){
+        //check if password is working or not 
+        $this->db->select('id');
+        $this->db->from('billing_customer');
+        $this->db->where('email', $email);
+        $this->db->where('password', $password);
+        $this->db->where('status', '1');
+        $query = $this->db->get();
+        $ApExists = $query->row_array();
+
+        if(count($ApExists) > 0 ){
+            //check if user is active or not 
+            $this->db->select('*');
+            $this->db->from('billing_customer');
+            $this->db->where('email', $email);
+            $this->db->where('password', $password);
+            $this->db->where('status', '1');
+            $this->db->where('isdelete', '0');
+            $query = $this->db->get();
+            $AaExists = $query->row_array();
+            if(count($AaExists) > 0){
+                $AaExists["id"] = $AaExists['id'];
+                $AaExists["name"] = $AaExists['name'];
+                $AaExists["mobileno"] = $AaExists['mobileno'];
+                $AaExists["password"] = $AaExists['password'];
+                $AaExists['verifystatus'] ='done';
+                $AaExists['logged_in'] = TRUE;
+                return $AaExists;
+            }else{
+                $AaExists["msg"]="Sorry, Your Account has been deactive , contact to administrator";
+                $AaExists['logged_in'] = FALSE;
+                return $AaExists;
+            }
+
+        }else{
+            //tell user that your password is wrong here.
+            $AaExists["msg"]="Sorry, your password is wrong.";
+            $AaExists['logged_in'] = FALSE;
+            return $AaExists;
+        }
+    } 
 }
 ?>

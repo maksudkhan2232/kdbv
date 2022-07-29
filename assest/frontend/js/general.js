@@ -348,6 +348,39 @@ function registration(){
     return false;
   }
 }
+function login(){
+  var email = $('#email').val();
+  var password = $('#passwords').val();
+  var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  
+  if (email=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Email Id.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if(!emailRegex.test(email)){
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Valid Email Id.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (password=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Password.',
+      showConfirmButton: false,
+      timer: 500
+    }) 
+    return false;
+  }
+}
 $(function() {
   $('#PlaceOrder').click(function(){
     var name = $('#sname').val();

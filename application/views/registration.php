@@ -36,7 +36,7 @@
                 <div class="container">                    
                         <div class="checkout-wrap">
                             <div class="row">
-                                    <div class="col-lg-8 col-12">
+                                <div class="col-lg-12 col-12">
                                     <?php 
                                         if($message!=''){
                                     ?>
@@ -47,8 +47,18 @@
                                     <?php 
                                         }
                                     ?>
-                                    </div>
-                                    <div class="col-lg-8 col-12">
+                                </div>
+                                <?php
+                                if(count($this->cart->contents()) > 0){
+                                ?>
+                                <div class="col-lg-8 col-12">
+                                <?php 
+                                    }else{
+                                ?>
+                                <div class="col-lg-12 col-12">
+                                <?php
+                                    }
+                                ?>
                                     <div class="caupon-wrap s1 active-border" id="loginpanel">
                                         <div class="coupon coupon-active">
                                             <label id="toggle1">Already Registered. Login Now</label>
@@ -57,13 +67,13 @@
                                             <div class="contact-form form-style text-left">
                                                 <div class="row d-flex justify-content-center">
                                                         <div class="col-lg-8 col-12">
-                                                        <form action="#">
+                                                        <form action="<?php echo base_url(); ?>customer/login/" id="LoginForm" enctype="multipart/form-data" method="post" accept-charset="utf-8" onSubmit="return login();">
                                                             <div class="row">
                                                                 <div class="col-xl-12">
-                                                                    <input type="text" placeholder="Email*">
+                                                                    <input type="email" placeholder="Enter Your Email."  id="email" name="email">
                                                                 </div>
                                                                 <div class="col-xl-12">
-                                                                    <input type="text" placeholder="Password*">
+                                                                    <input type="text" placeholder="Enter Your Password*" id="passwords" name="password">
                                                                 </div>
                                                                 <div class="col-xl-12">
                                                                     <input type="submit" class="cart-btn" value="LOG IN">
@@ -149,60 +159,61 @@
                                                 </div>
                                           <form>
                                        </div>
-                                    </div>  
-                                                                              
+                                    </div>                                    
                                 </div>
+                                <?php
+                                    if(count($this->cart->contents()) > 0){
+                                ?>
                                 <div class="col-lg-4 col-12">
                                     <div class="cout-order-area">
                                         <div class="oreder-item ">
                                             <ul>
-                                                    <?php
-                                                                if(count($this->cart->contents()) > 0){
-                                                            ?>
-                                                    <li class="o-header">Your Order<span>( <?php echo count($this->cart->contents());?> )</span></li>
+                                                <li class="o-header">Your Order<span>( <?php echo count($this->cart->contents());?> )</span></li>
                                                 <?php 
-                                                                    foreach ($this->cart->contents() as $cartkey => $cartvalue) {
-                                                                ?>
-                                                                    <li>
-                                                                        <?php echo $cartvalue['options']['product_code'];?> 
-                                                                        <?php 
+                                                    foreach ($this->cart->contents() as $cartkey => $cartvalue) {
+                                                ?>
+                                                        <li>
+                                                            <?php echo $cartvalue['options']['product_code'];?> 
+                                                            <?php 
                                                                 if($cartvalue['price']!='' && $cartvalue['price']!='0'){
                                                                   echo '₹ '.$cartvalue['price'];
                                                                   echo ' X '.$cartvalue['qty'];
                                                                 }else{
                                                                      echo $cartvalue['qty'];
                                                                 }
-                                                              ?> 
-                                                                        <span>
-                                                                        <?php 
+                                                            ?> 
+                                                            <span>
+                                                            <?php 
                                                                 if($cartvalue['price']!='' && $cartvalue['price']!='0'){
                                                                   echo '₹ '.($cartvalue['price']*$cartvalue['qty']);
                                                                 }else{
                                                                      echo ' - ';
                                                                 }
-                                                              ?> 
-                                                                        </span>
-                                                                    </li>
-                                                                <?php 
-                                                                    }
-                                                                }
-                                                                ?>
-                                                                <?php 
-                                                                    if ($this->cart->contents()) {
-                                                                    $carttotal= $this->cart->total();
-                                                                    if($carttotal!='' and $carttotal!='0'){
-                                                                        echo '<li class="s-total">Sub Total <span>₹ '.number_format($carttotal).'</span></li>';    
-                                                                        echo '<li class="o-bottom">TOTAL: <span>₹ '.number_format($carttotal).'</span></li>';
-                                                                    }
-                                                                    // <li>( + ) VAT<span>100</span></li>
-                                                                //  <li>( + ) Eco Tax <span>100</span></li>
-                                                                //  <li>( - ) Discount Price<span>100</span></li>
-                                                                 }
-                                                                ?>
-                                                </ul>
+                                                            ?> 
+                                                            </span>
+                                                        </li>
+                                                <?php 
+                                                        }
+                                                ?>
+                                                <?php 
+                                                    if ($this->cart->contents()) {
+                                                        $carttotal= $this->cart->total();
+                                                        if($carttotal!='' and $carttotal!='0'){
+                                                            echo '<li class="s-total">Sub Total <span>₹ '.number_format($carttotal).'</span></li>';    
+                                                            echo '<li class="o-bottom">TOTAL: <span>₹ '.number_format($carttotal).'</span></li>';
+                                                        }
+                                                        // <li>( + ) VAT<span>100</span></li>
+                                                        //  <li>( + ) Eco Tax <span>100</span></li>
+                                                        //  <li>( - ) Discount Price<span>100</span></li>
+                                                    }
+                                                ?>
+                                            </ul>
                                         </div>
                                     </div>
                                 </div>
+                                <?php 
+                                    }
+                                ?>
                             </div>
                         </div>
                     </form>

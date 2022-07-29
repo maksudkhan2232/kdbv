@@ -10,40 +10,49 @@ class Customer extends MY_Controller {
 
 	public function index()
 	{
+		
 		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
         $this->data['message'] = $this->session->flashdata('message');
-        $this->data['title'] = "Cart";
-        $this->load->view('registration',$this->data);
+        
+        if($this->data['customer_info']['id']==''){
+            $this->data['title'] = "Registration";
+            $this->load->view('registration',$this->data);
+        }else{
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
+            $this->data['title'] = "Order Details";
+            $this->load->view('customer_order',$this->data);
+        }
+       
 	}
 	public function login()
 	{
-		$returnarray = array();        
-        $data   = $this->input->post('data'); // Registration Data
-        $sdata  = $this->input->post('sdata'); // Shiping Data
-
-        $differentshipaddress = ($this->input->post('differentshipaddress')) ? $this->input->post('differentshipaddress'):"No"; 
-        if ($this->cart->contents()) {
-            $email=$data['email'];
-            $CheckAlreadyExist = $this->Crud_Model->CheckAlreadyCustomer($email);
-            if(count($CheckAlreadyExist)!='0'){
-                $this->session->set_flashdata('message','Your Email Id Already Registered.');
-                redirect($this->data['base_url'] . 'order/checkout');
-            }else{
-                
-                echo 'registered';
-                print_r($data);
+		if($this->input->post()){  
+            $email = $this->input->post('email');
+            $password = $this->input->post('password'); 
+            $customer_info = $this->Crud_Model->CheckAuth(stripslashes($email),md5($password));
+            if($customer_info['logged_in'] == TRUE){                
+                $this->session->set_userdata('customer_info', $customer_info);
+                if(count($this->cart->contents() > 0)) {	
+                	echo  count($this->cart->contents());exit;
+		            redirect($this->data['base_url'] . 'order/checkout');
+		        }else{
+		        	redirect($this->data['base_url'] . 'customer');
+		        }
                 exit;
-            }           
-        }else{
-            redirect($this->data['base_url'] . 'order/');
+            }
+            else{
+                $this->session->set_flashdata('message',$customer_info['msg']);
+                redirect($this->data['base_url'] . 'customer/');
+                exit;
+            }
+        }elseif($this->session->userdata('customer_info')!=""){
+            redirect($this->data['base_url'] . 'customer/');
+            exit;
         }
-        $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
-        $this->data['message'] = $this->session->flashdata('message');
-        $this->data['title'] = "Cart";
-        $this->load->view('order_checkout',$this->data);
-		$data['title'] = "Customer Reviews";
-		$this->load->view('registration',$data);
-	}
+        else{
+            redirect($this->data['base_url'] . 'customer/');
+        }
+    }
 	public function registration()
 	{
 		$returnarray = array();        
