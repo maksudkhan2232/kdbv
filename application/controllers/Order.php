@@ -16,6 +16,11 @@ class order extends MY_Controller{
         }else{
             $this->data['ordernote']='';
         }
+        if(count($this->cart->contents()) > 0) {
+
+        }else{
+            redirect($this->data['base_url']);
+        }
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Cart";
         $this->load->view('order_cart',$this->data);
@@ -251,8 +256,8 @@ class order extends MY_Controller{
         if($this->data['customer_info']['id']==''){
             redirect($this->data['base_url'] . 'customer');
         }
-        if(count($this->cart->contents() > 0)) {
-
+        if(count($this->cart->contents()) > 0){
+            
         }else{
             redirect($this->data['base_url'] . 'order');
         }

@@ -201,6 +201,15 @@ class crud_model extends CI_Model{
         if(isset($data['gender']) and $data['gender']!=''){
             $this->db->like('p.gender',$data['gender']);    
         }
+        if(isset($data['pricemin']) and $data['pricemin']!='' and $data['pricemax']!=''){
+            if($data['pricemin']!='' and $data['pricemax']!=''  and $data['pricemax']!='0'){
+                $this->db->where('price >=', $data['pricemin']);
+                $this->db->where('price <=', $data['pricemax']);
+            }
+            if($data['pricemax']!=''  and $data['pricemax']=='0'){
+                $this->db->where('price >=', $data['pricemin']);
+            }
+        }
         if(isset($data['highlight']) and $data['highlight']!=''){
             $this->db->like('p.highlight',$data['highlight']);    
         }

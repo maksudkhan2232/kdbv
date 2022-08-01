@@ -24,8 +24,8 @@ class products extends MY_Controller {
             if(!empty($ProductDetail)){
             	$ProductImageDetail=$this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$productid),'ASC');
             	$ProductExtraDetail=$this->Crud_Model->getDatafromtablewhere('product_extra',array('product_id'=>$productid),'ASC');
-     //        	$ProductDetailsHtml .='<div class="row">';
-     //        		$ProductDetailsHtml .='<div class="col-12">';
+					//        	$ProductDetailsHtml .='<div class="row">';
+					//        		$ProductDetailsHtml .='<div class="col-12">';
 					// 	$ProductDetailsHtml .='<span class="close-qv">';
 					// 		$ProductDetailsHtml .='<i class="flaticon-close"></i>';
 					// 	$ProductDetailsHtml .='</span>';
@@ -99,15 +99,15 @@ class products extends MY_Controller {
 					// 	   	$ProductDetailsHtml .='</div>';
 					// 	$ProductDetailsHtml .='</div>';
 					// $ProductDetailsHtml .='</div>';
-     //        	$ProductDetailsHtml .='</div>';
+     				//        	$ProductDetailsHtml .='</div>';
             	$ReturnDetails['status']='success';
-//             	$ProductDetailsHtml='</script><script src="'.base_url().'assest/frontend/dependencies/jquery/jquery.min.js"></script>
-// <script src="'.base_url().'assest/frontend/dependencies/popper.js/popper.min.js"></script>
-// <script src="'.base_url().'assest/frontend/dependencies/bootstrap/js/bootstrap.min.js"></script>
-// <script src="'.base_url().'assest/frontend/dependencies/slick-carousel/js/slick.js"></script>
-// <script src="'.base_url().'assest/frontend/js/app-demo.js"></script>';
+				//             	$ProductDetailsHtml='</script><script src="'.base_url().'assest/frontend/dependencies/jquery/jquery.min.js"></script>
+				// <script src="'.base_url().'assest/frontend/dependencies/popper.js/popper.min.js"></script>
+				// <script src="'.base_url().'assest/frontend/dependencies/bootstrap/js/bootstrap.min.js"></script>
+				// <script src="'.base_url().'assest/frontend/dependencies/slick-carousel/js/slick.js"></script>
+				// <script src="'.base_url().'assest/frontend/js/app-demo.js"></script>';
 
-    //         	$ProductDetailsHtml .="$('.slider-for').slick({ slidesToShow: 1,slidesToScroll: 1,arrows: false,fade: true, asNavFor: '.slider-nav', swipe: false, });";
+    			//         	$ProductDetailsHtml .="$('.slider-for').slick({ slidesToShow: 1,slidesToScroll: 1,arrows: false,fade: true, asNavFor: '.slider-nav', swipe: false, });";
 				// $ProductDetailsHtml .=" $('.slider-nav').slick({ slidesToShow: 4, slidesToScroll: 1, asNavFor: '.slider-for', focusOnSelect: true, swipe: false, infinite: false, arrows: true, });";
 				// $ProductDetailsHtml .='</script>';
       			//$ReturnDetails['sliderjs']=$ProductDetailsHtml;

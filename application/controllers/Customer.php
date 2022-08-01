@@ -33,7 +33,7 @@ class Customer extends MY_Controller {
             if($customer_info['logged_in'] == TRUE){                
                 $this->session->set_userdata('customer_info', $customer_info);
                 if(count($this->cart->contents() > 0)) {	
-                	echo  count($this->cart->contents());exit;
+                	//echo  count($this->cart->contents());exit;
 		            redirect($this->data['base_url'] . 'order/checkout');
 		        }else{
 		        	redirect($this->data['base_url'] . 'customer');

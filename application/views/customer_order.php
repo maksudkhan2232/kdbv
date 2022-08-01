@@ -69,9 +69,9 @@
                         <table class="tables">
                             <thead>
                                 <tr>
-                                    <th>Order</th>
+                                    <th>Order No</th>
                                     <th>Date</th>
-                                    <th>Payment Status </th>
+                                    <th>Total Product</th>
                                     <th>Fulfillment Status</th>
                                     <th>Total</th>
                                 </tr>

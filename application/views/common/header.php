@@ -248,13 +248,12 @@
   </header>
    <!--Header end-->
   <!--=========================-->
-  <!--=        Mobile Header         =-->
+  <!--=        Mobile Header  =-->
   <!--=========================-->
   <header class="mobile-header">
     <div class="container-fluid custom-container">
       <div class="row">
-        <!-- Mobile menu Opener
-          ============================================= -->
+        <!-- Mobile menu Opener -->
         <div class="col-4">
           <div class="accordion-wrapper"> <a href="javascript:void(0);" class="mobile-open"><i class="flaticon-menu-1"></i></a> </div>
         </div>
@@ -294,9 +293,7 @@
           </div>
         </div>
       </div>
-      <!-- /.row end -->
     </div>
-    <!-- /.container end -->
   </header>
   <div class="accordion-wrapper">
     <!-- Mobile Menu Navigation -->
