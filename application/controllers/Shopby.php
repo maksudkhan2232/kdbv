@@ -83,7 +83,7 @@ class Shopby extends MY_Controller {
 						    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
 						    		$ProductDetailsHtml .=' Add to Cart';
 						    	$ProductDetailsHtml .='</a>';
-						    	$ProductDetailsHtml .='<a href="" class="add-to-cart" style="width:50px;">';
+						    	$ProductDetailsHtml .='<a href="'.base_url().'/products/view/'.$v['slug'].'" class="add-to-cart" style="width:50px;">';
 						    		$ProductDetailsHtml .='<i class="flaticon-eye"></i>';
 						    	$ProductDetailsHtml .='</a>';
 						   	$ProductDetailsHtml .='</div>';

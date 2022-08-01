@@ -8,9 +8,8 @@ class products extends MY_Controller {
         $this->load->model('administrator/Crud_Model');
     }
 
-	public function index()
+	public function index($type)
 	{
-		
 		$data['title'] = "Products";
 		$this->load->view('products',$data);
 	}
@@ -183,6 +182,26 @@ class products extends MY_Controller {
         }
         echo json_encode($ReturnDetails);exit;
 	}
+	public function view($type)
+	{
+		$pslug = $this->uri->segment(3);
+		$pid = $this->uri->segment(4);
+		$productwise=array('slug'=>$pslug);
+		$ProductDetails = $this->Crud_Model->GetProductSingleDetails($productwise);
+		// echo "<pre>".$pslug;
+		// print_r($ProductDetails);
+		// exit;
+		$CollectionName=$ProductDetails['collectionname'];
+		$ProductImageDetail=$this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$ProductDetails['id']),'ASC');
+		$ProductExtraDetail=$this->Crud_Model->getDatafromtablewhere('product_extra',array('product_id'=>$ProductDetails['id']),'ASC');
+
+		$this->data['ProductDetails'] = $ProductDetails;
+		$this->data['ProductExtraDetail'] = $ProductExtraDetail;
+		$this->data['ProductImageDetail'] = $ProductImageDetail;
+		$this->data['CollectionName'] = $CollectionName;
+		$this->load->view('product_detail',$this->data);
+	}
+
 
 }
 

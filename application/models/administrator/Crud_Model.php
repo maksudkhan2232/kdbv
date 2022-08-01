@@ -240,6 +240,9 @@ class crud_model extends CI_Model{
         if(isset($data['id']) and $data['id']!=''){
             $this->db->where('p.id',$data['id']);    
         }
+        if(isset($data['slug']) and $data['slug']!=''){
+            $this->db->where('p.slug',$data['slug']);    
+        }
         if(isset($data['collectiontype']) and $data['collectiontype']!=''){
             $this->db->where('p.collectiontype',$data['collectiontype']);    
         }
@@ -271,6 +274,7 @@ class crud_model extends CI_Model{
             $this->db->limit($data['Limit']);
         }
         $query=$this->db->get();
+        //echo $this->db->last_query();    
         return $query->row_array();
     } 	
     function CheckAlreadyCustomer($email){

@@ -112,7 +112,7 @@
                       
                       <div class="mid-wrapper">
                         <h5 class="pro-title">
-                          <a href="javascript:void(0);"><?php echo $tcval['productcode'];?></a>
+                          <a href="<?php echo base_url().'products/view/'.$tcval['slug'];?>"><?php echo $tcval['productcode'];?></a>
                         </h5>                  
                         <p><?php echo $tcval['collectionshortname'];?> / <span><?php echo $tcval['categoryname'];?></span></p>
                       </div>
@@ -183,7 +183,7 @@
                         }
                       ?>
                       <div class="mid-wrapper">
-                        <h5 class="pro-title"><a href="javascript:void(0);"><?php echo $navalue['productcode'];?></a></h5>
+                        <h5 class="pro-title"><a href="<?php echo base_url().'products/view/'.$navalue['slug'];?>"><?php echo $navalue['productcode'];?></a></h5>
                         <p><?php echo $navalue['collectionshortname'];?> / <span><?php echo $navalue['categoryname'];?></span></p>
                       </div>
                       <div class="icon-wrapper">

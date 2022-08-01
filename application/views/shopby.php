@@ -276,7 +276,7 @@
 								                      	?>
 						                              	<div class="mid-wrapper">
 						                                  <h5 class="pro-title">
-						                                  	<a href="javascript:void(0);"><?php echo $pvalue['productcode'];?></a>
+						                                  	<a href="<?php echo base_url().'products/view/'.$pvalue['slug'];?>"><?php echo $pvalue['productcode'];?></a>
 						                                  </h5>
 						                                  <p><?php echo ucwords($pvalue['collectionshortname']);?> / <span><?php echo ucwords($pvalue['categoryname']);?></span></p>
 						                                </div>

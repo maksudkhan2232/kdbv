@@ -53,11 +53,12 @@ class Product extends MY_Controller  {
 				$CategoryDetails = $this->Crud_Model->getDatafromtablewheresingle('sub_category',array('status'=>1,'id'=>$categoryid),'ASC');
 				$CollectionName =url_title($CollectionDetails['name'], 'dash', true);
 				$CategoryName =url_title($CategoryDetails['name'], 'dash', true); ;
-				$ProductName = $CollectionName.'_'.$CategoryName.'_'.$productcode;
+				$ProductName = $CollectionName.'_'.$CategoryName.'_'.url_title($productcode, 'dash', true);
 				//echo $ProductName;exit;
 
 				$data["collectiontype"] =$collectiontype;
 				$data["categoryid"] =$categoryid;
+				$data["slug"] =$ProductName;
 				$data["name"] =$ProductName;
 				$data["productcode"] =$productcode;
 				$data["price"] =$this->input->post('price');
