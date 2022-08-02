@@ -1,1 +1,9 @@
-ALTER TABLE `gender` CHANGE `title` `title` VARCHAR(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL;
+ALTER TABLE `admin` ADD `firm_name` VARCHAR(255) NULL DEFAULT NULL AFTER `user_type`, ADD `slogan` VARCHAR(255) NULL DEFAULT NULL AFTER `firm_name`, ADD `address` TEXT NULL DEFAULT NULL AFTER `slogan`, ADD `cemail` VARCHAR(255) NULL DEFAULT NULL AFTER `address`, ADD `contactno` VARCHAR(255) NULL DEFAULT NULL AFTER `cemail`;
+
+ALTER TABLE `admin` ADD `facebook` VARCHAR(255) NULL DEFAULT NULL AFTER `contactno`, ADD `twitter` VARCHAR(255) NULL DEFAULT NULL AFTER `facebook`, ADD `instagram` VARCHAR(255) NULL DEFAULT NULL AFTER `twitter`, ADD `linkedin` VARCHAR(255) NULL DEFAULT NULL AFTER `instagram`;
+
+ALTER TABLE `admin` ADD `website` VARCHAR(255) NULL DEFAULT NULL AFTER `linkedin`;
+ALTER TABLE `admin` ADD `youtube` VARCHAR(255) NULL DEFAULT NULL AFTER `website`, ADD `pinterest` VARCHAR(255) NULL DEFAULT NULL AFTER `youtube`;
+
+
+-------NOTE : IMPORT SQL FILE ALSO ------------------------------------
