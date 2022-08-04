@@ -19,6 +19,9 @@ class Customer extends MY_Controller {
             $this->load->view('registration',$this->data);
         }else{
         	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
+        	$getorder=array('CustomerID'=>$this->data['customer_info']['id']);
+        	$this->data['GetOrderDetails']=$this->Crud_Model->GetOrderDetails($getorder);
+        	//echo "<pre>";print_r($this->data['GetOrderDetails']);exit;
             $this->data['title'] = "Order Details";
             $this->load->view('customer_order',$this->data);
         }
@@ -100,10 +103,49 @@ class Customer extends MY_Controller {
 		$data['title'] = "Customer Reviews";
 		$this->load->view('registration',$data);
 	}
+	public function favoriteproducts()
+	{
+		
+		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        $this->data['message'] = $this->session->flashdata('message');
+        
+        if($this->data['customer_info']['id']==''){
+            $this->data['title'] = "Registration";
+            $this->load->view('registration',$this->data);
+        }else{
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
+        	$getorder=array('CustomerID'=>$this->data['customer_info']['id']);
+        	$this->data['GetOrderDetails']=$this->Crud_Model->GetOrderDetails($getorder);
+        	//echo "<pre>";print_r($this->data['GetOrderDetails']);exit;
+            $this->data['title'] = "Order Details";
+            $this->load->view('customer_favorite_products',$this->data);
+        }
+       
+	}
+	public function profile()
+	{
+		
+		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        $this->data['message'] = $this->session->flashdata('message');
+        
+        if($this->data['customer_info']['id']==''){
+            $this->data['title'] = "Registration";
+            $this->load->view('registration',$this->data);
+        }else{
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
+        	$getorder=array('CustomerID'=>$this->data['customer_info']['id']);
+        	$this->data['GetOrderDetails']=$this->Crud_Model->GetOrderDetails($getorder);
+        	//echo "<pre>";print_r($this->data['GetOrderDetails']);exit;
+            $this->data['title'] = "Order Details";
+            $this->load->view('customer_profile',$this->data);
+        }
+       
+	}
     public function review()
 	{
 		$data['title'] = "Customer Reviews";
 		$this->load->view('testimonials',$data);
 	}
+	
     
 }

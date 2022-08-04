@@ -286,14 +286,7 @@ class crud_model extends CI_Model{
         $query = $this->db->get();        
         return $query->row_array();
     }
-    function GetLastOrderNo(){ 
-        $this->db->select('count(OrderID) as totalorder');
-        $this->db->from('orders');
-        $this->db->order_by('OrderID ','DESC');
-        $this->db->limit(1);
-        $query=$this->db->get();
-        return $query->row_array();
-    }   
+      
 	function CheckAuth($email,$password){
         //check if password is working or not 
         $this->db->select('id');
@@ -334,6 +327,31 @@ class crud_model extends CI_Model{
             $AaExists['logged_in'] = FALSE;
             return $AaExists;
         }
+    }
+    function GetLastOrderNo(){ 
+        $this->db->select('count(OrderID) as totalorder');
+        $this->db->from('orders');
+        $this->db->order_by('OrderID ','DESC');
+        $this->db->limit(1);
+        $query=$this->db->get();
+        return $query->row_array();
     } 
+    function GetOrderDetails($data=''){
+        $this->db->select('*');
+        $this->db->from('orders');
+        if(isset($data['CustomerID']) and $data['CustomerID']!=''){
+            $this->db->where('CustomerID',$data['CustomerID']);    
+        }
+        if(isset($data['OrderNo']) and $data['OrderNo']!=''){
+            $this->db->where('OrderNo',$data['OrderNo']);    
+        }
+        if(isset($data['OrderDate']) and $data['OrderDate']!=''){
+            $this->db->where('OrderDate',$data['OrderDate']);    
+        }
+        $this->db->where('status','1');
+        $this->db->where('isdelete','0');
+        $query = $this->db->get();        
+        return $query->result_array();
+    }  
 }
 ?>

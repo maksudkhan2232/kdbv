@@ -144,4 +144,27 @@ class Ajax_banner extends MY_Controller {
 		echo json_encode(array("img_path"=>base_url().$imagePath,"up_image"=>$filename));
 		exit(0);
 	} 
+
+
+	public function bannerimagetempoffer()
+	{
+		define('SHPBANRIMG',"uploads/offer/");
+		$post = isset($_POST) ? $_POST: array();
+		$filename = $_POST['filename'];
+		$img = $_POST['pngimageData'];
+		$ext = $_POST['imageext'];
+		if ($ext == "png")
+			$img = str_replace('data:image/png;base64,', '', $img);
+		else
+			$img = str_replace('data:image/jpeg;base64,', '', $img);
+		$img = str_replace(' ', '+', $img);
+		$data = base64_decode($img);
+		file_put_contents(SHPBANRIMG. $filename, $data);
+		$imagePath = SHPBANRIMG.$filename;
+		chmod(SHPBANRIMG. $filename, 0777);
+		$uploaded = resizeImageNew($imagePath,370,375,1,"jpg");
+		@unlink("uploads/".$filename);
+		echo json_encode(array("img_path"=>base_url().$imagePath,"up_image"=>$filename));
+		exit(0);
+	} 
 }

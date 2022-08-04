@@ -56,10 +56,10 @@
                                 Account Of <?php echo ucwords($CustomerDetails['name']);?>
                             </p>
                             <div class="list-group">
-                              <a href="<?php echo base_url(); ?>customer/" class="list-group-item list-group-item-action active">
+                              <a href="<?php echo base_url(); ?>customer/" class="list-group-item list-group-item-action">
                                 Orders
                               </a>
-                              <a href="<?php echo base_url(); ?>customer/favoriteproducts/" class="list-group-item list-group-item-action">Favorite Product</a>
+                              <a href="<?php echo base_url(); ?>customer/favoriteproducts/" class="list-group-item list-group-item-action active">Favorite Product</a>
                               <a href="<?php echo base_url(); ?>customer/profile/" class="list-group-item list-group-item-action">Profile</a>
                               <a href="<?php echo base_url(); ?>customer/logout" class="list-group-item list-group-item-action">LogOut</a>
                             </div>

@@ -19,7 +19,7 @@
                 <li><a href="<?php echo base_url(); ?>">Home</a></li>
                 <li><a href="<?php echo base_url(); ?>about">About Us</a></li>
                 <li><a href="<?php echo base_url(); ?>collections">Collections</a></li>
-                <li><a href="javascript:void(0);">Photo Gallery</a></li>
+                <li><a href="<?php echo base_url(); ?>gallery">Photo Gallery</a></li>
                 <li><a href="<?php echo base_url(); ?>customer/review">Customer Reviews</a></li>
                 <li><a href="<?php echo base_url(); ?>contact">Contact Us</a></li>
               </ul>
@@ -32,11 +32,16 @@
             <h3>Quick Shop</h3>
             <div class="footer-menu">
               <ul>
-                <li><a href="javascript:void(0);">Trending Collections</a></li>
-                <li><a href="javascript:void(0);">Gold Jewellery</a></li>
-                <li><a href="javascript:void(0);">Silver Jewellery</a></li>
-                <li><a href="javascript:void(0);">Real Diamonds Jewellery</a></li>
-                <li><a href="javascript:void(0);">Platinum Jewellery</a></li>
+                <li><a href="<?php echo base_url().'shopby/trending/';?>">Trending Collections</a></li>
+                <?php
+                  foreach ($CollectionDetails as $ctkey => $ctvalue) {
+                ?>
+                    <li>
+                      <a href="<?php echo  base_url(); ?>shopby/collections/<?php echo $ctvalue['slug'];?>"><?php echo ucwords($ctvalue['name']);?></a>
+                    </li>
+                <?php
+                  }
+                ?>
                 <li><a href="javascript:void(0);">Offers</a></li>
               </ul>
             </div>
@@ -48,10 +53,10 @@
             <h3>Policies</h3>
             <div class="footer-menu">
               <ul>
-                <li><a href="javascript:void(0);">Privacy Policy</a></li>
-                <li><a href="javascript:void(0);">Refund Policy</a></li>
-                <li><a href="javascript:void(0);">Exchange Policy</a></li>
-                <li><a href="javascript:void(0);">Shipping Policy</a></li>
+                <li><a href="<?php echo base_url(); ?>privacypolicy">Privacy Policy</a></li>
+                <li><a href="<?php echo base_url(); ?>refundpolicy">Refund Policy</a></li>
+                <li><a href="<?php echo base_url(); ?>exchangepolicy">Exchange Policy</a></li>
+                <li><a href="<?php echo base_url(); ?>shippingpolicy">Shipping Policy</a></li>
               </ul>
             </div>
           </div>
@@ -77,7 +82,7 @@
       <div class="footer-bottom">
         <div class="row">
           <div class="col-md-12 col-lg-6 col-xl-6 order-1 order-lg-1">
-            <p>© <span>2022</span> All Rights Reserved by <span>KD Bhindi</span></p>
+            <p>© <span><?php echo date('Y');?></span> All Rights Reserved by <span>KD Bhindi</span></p>
           </div>
           <!-- /.col-xl-6 -->
           <div class="col-md-12 col-lg-6 col-xl-6 order-2 order-lg-2">

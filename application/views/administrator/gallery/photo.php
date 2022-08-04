@@ -15,10 +15,15 @@
       <!-- partial:partials/_sidebar.html -->
       <?php $this->load->view('administrator/common/sidebar');?>
       <!-- partial -->
-      <div id="errormsg"></div>
-      <?php $this->load->view('administrator/common/errors');?> 
+     
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12">
+              <div id="errormsg"></div>
+              <?php $this->load->view('administrator/common/errors');?>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-12 grid-margin stretch-card">
               <div class="card">

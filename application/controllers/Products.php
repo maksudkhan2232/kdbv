@@ -201,7 +201,28 @@ class products extends MY_Controller {
 		$this->data['CollectionName'] = $CollectionName;
 		$this->load->view('product_detail',$this->data);
 	}
+	function SetFavoriteProducts()
+    {
+        $returnarray = array();        
+        $productid   = $this->input->post('productid'); //productid  
 
+        if($this->data['customer_info']['id']!=''){
+        	$orderinfo =array();
+			$orderinfo['customer_id']=$this->data['customer_info']['id'];
+			$orderinfo['products_id']=$productid;
+			$orderinfo['status']='1';
+			$orderinfo['isdelete']='0';
+			$orderinfo['created_datetime']=date('Y-m-d H:i:s');
+			$orderinfo['modified_datetime']='0000-00-00 00:00:00';
+			$favoriteproductsid=$this->Crud_Model->InsertData('customer_favorite_products',$orderinfo);
+			$returnarray['msg'] = 'success';
+        	$returnarray['message'] = '';
+		}else{
+			$returnarray['msg'] = 'error';
+        	$returnarray['message'] = 'Please Login';        	
+        }
+        echo json_encode($returnarray);exit;        
+    }
 
 }
 

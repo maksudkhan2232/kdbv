@@ -77,8 +77,8 @@
       <div class="row">
         <div class="col-xl-4 col-lg-4">
           <div class="prod-banner-two mt-0"> 
-            <a href="javascript:void(0);"> 
-              <img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/s5.jpg" alt="">
+            <a href="<?php echo base_url().'shopby/trending/';?>"> 
+              <img src="<?php echo base_url().'uploads/trending/'.$TrendingCollectionSideImage['image']; ?>" alt="">
               <div class="pb-info">
                 <p>Trending Products</p>
                 <h6>View All</h6>
@@ -119,7 +119,7 @@
                       <div class="icon-wrapper">
                         <div class="pro-icon">
                           <ul>
-                            <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
+                            <li><a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $tcval['id'];?>);"><i class="flaticon-valentines-heart"></i></a></li>
                             <li>
                               <a href="javascript:void(0);" class="triggersss" data-id="<?php echo $tcval['id'];?>" id="productquickview" onClick="TrendingQuickView(<?php echo $tcval['id'];?>);">
                                 <i class="flaticon-eye"></i>
@@ -197,7 +197,12 @@
                         <div class="pro-icon">
                           <ul>
                             <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                            <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
+
+                            <li>
+                              <a href="javascript:void(0);" class="triggersss" data-id="<?php echo $navalue['id'];?>" id="productquickview" onClick="NewQuickView(<?php echo $navalue['id'];?>);">
+                                <i class="flaticon-eye"></i>
+                              </a>
+                            </li>
                           </ul>
                         </div>
                         <div class="add-to-cart"> <a href="javascript:void(0);" onclick="return addtocart(<?php echo $navalue['id'];?>);">add to cart</a> </div>
@@ -214,7 +219,7 @@
       <?php
         if(count($NewArrivalCollectionDetails) > 8){
       ?>
-      <div class="load-more-wrapper"> <a href="create-javascript:void(0);" class="btn-two">View All</a> </div>
+      <div class="load-more-wrapper"> <a href="<?php echo base_url().'shopby/newarrival/';?>" class="btn-two">View All</a> </div>
       <?php    
         }
       ?>      
@@ -228,7 +233,11 @@
   <!--=========================-->
   <!--=   Discount Countdown area      =-->
   <!--=========================-->
-  <section class="add-area"> <a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/add.jpg" alt=""></a> </section>
+  <section class="add-area">
+    <a href="javascript:void(0);">
+      <img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/add.jpg" alt="">
+    </a> 
+  </section>
   <!--=========================-->
   <!--=   Product  area with  banner      =-->
   <!--=========================-->
@@ -261,7 +270,7 @@
 <!-- /#site -->
   <?php $this->load->view('common/main-search');?> 
   <?php $this->load->view('common/common_js');?> 
-    <?php
+  <?php
   // Trednig Modal
   if(!empty($TrendingCollectionDetails)){
       foreach ($TrendingCollectionDetails as $pkey => $pvalue) {
@@ -323,5 +332,69 @@
       });
     }
   </script>
+
+   <?php
+  // Trednig Modal
+  if(!empty($NewArrivalCollectionDetails)){
+      foreach ($NewArrivalCollectionDetails as $pkey => $pvalue) {
+  ?>
+  <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
+    <div class="quickview">
+       <div class="row">
+        <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
+        <div class="col-md-6">
+          <span id="slider-js"></span>
+          <div class="quickview-sliders">
+            <div class="slider-for" id="slider-for<?php echo $pvalue['id'];?>">
+              <?php echo $pvalue['sliderfor']; ?>
+            </div>
+            <div class="slider-nav" id="slider-nav<?php echo $pvalue['id'];?>">
+              <?php echo $pvalue['slidernav']; ?>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" id="product-details">
+          <?php echo $pvalue['productdetails']; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+     $('.slider-for<?php echo $pvalue['id'];?>').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          arrows: false,
+          fade: true,
+          asNavFor: '.slider-nav',
+          swipe: false,
+        });
+
+        $('.slider-nav<?php echo $pvalue['id'];?>').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          asNavFor: '.slider-for',
+          focusOnSelect: true,
+          swipe: false,
+          infinite: false,
+          arrows: true,
+        });
+  </script>
+  <?php 
+      }
+  }
+  ?>
+  <script type="text/javascript">
+    function NewQuickView(productid){
+      var mask = '<div class="mask-overlay">';
+      $('#pmodel'+productid).toggleClass('open');
+      $(mask).hide().appendTo('body').fadeIn('fast');
+      
+      $('.mask-overlay, .close-qv').on('click', function() {
+        $('.quickview-wrapper').removeClass('open');
+        $('.mask-overlay').remove();
+      });
+    }
+  </script>
+
 </body>
 </html>

@@ -555,8 +555,159 @@ class Master extends MY_Controller  {
 		}
 	}
 
+	public function trending()
+	{ 	
+		$timg=$this->Crud_Model->getDatafromtablewhere('trending',array('id'=>1),'ASC')[0];	
+		$data['page_title']='Trending Product';		
+		$data['photo'] = $timg['image'];
+		$this->load->view('administrator/trending',$data);
+	}
+	public function uptrending()
+	{
+		$this->form_validation->set_rules('image', '', 'callback_file_check_trending');
+		if ($this->form_validation->run() == FALSE) {
+			$timg=$this->Crud_Model->getDatafromtablewhere('trending',array('id'=>1),'ASC')[0];	
+			$data['page_title']='Trending Product';		
+			$data['photo'] = $timg['image'];
+			$this->load->view('administrator/trending',$data);		
+		}else{		
+			
+			if(isset($_FILES['image']['name']) && $_FILES['image']['name']!="")
+			{
+				$config['upload_path']   = 'uploads/trending/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['encrypt_name'] = TRUE;
+                $config['max_width']  = '966';
+        		$config['max_height']  = '1457';
+                $this->load->library('upload', $config);
+                if($this->upload->do_upload('image')){
 
-    //PRICE END
+                    $uploadData = $this->upload->data();
+                    $uploadedFile = $uploadData['file_name'];                   
+                    $data['image'] = $uploadedFile;
+                    $editdata=$this->Crud_Model->getById(1,'id','trending');
+					unlink('uploads/trending/'.$editdata['image']);
+					$this->Crud_Model->Updatedata(1,'id','trending',$data);
+                }	
+               
+            }	
+			$this->session->set_flashdata('success', 'Trending Image Update Successfully.');
+			redirect('administrator/master/trending');
+			exit;
+		}
+	}
+
+	public function file_check_trending($str){
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
+        $mime = get_mime_by_extension($_FILES['image']['name']);
+        if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=""){
+            if(in_array($mime, $allowed_mime_type_arr))
+            {
+            	 list($width, $height) = getimagesize($_FILES['image']['tmp_name']);
+            	 if ($width != 966 || $height != 1457 )
+            	 {
+            	 	$this->form_validation->set_message('file_check_trending', 'Invaliad Width / Height.');
+                	return false;
+            	 }else
+            	 { 
+                	return true;
+                }
+            }else{
+                $this->form_validation->set_message('file_check_trending', 'Please select only Image file.');
+                return false;
+            }
+        }else{
+            $this->form_validation->set_message('file_check_trending', 'Please choose a file to upload.');
+            return false;
+        }
+    }
+    //TRENDING END
+
+    public function welcomenote()
+	{ 	
+		$timg=$this->Crud_Model->getDatafromtablewhere('welcomenote',array('id'=>1),'ASC')[0];	
+		$data['page_title']='Welcome Note';		
+		$data['photo'] = $timg['image'];
+		$data['title'] = $timg['title'];
+		$data['status'] = $timg['status'];
+		$data['description'] = $timg['description'];
+		$this->load->view('administrator/welcomenote',$data);
+	}
+	public function upwelcomenote()
+	{
+		$this->form_validation->set_rules('image', '', 'callback_file_check_welcomenote');
+		if ($this->form_validation->run() == FALSE) {
+			$timg=$this->Crud_Model->getDatafromtablewhere('welcomenote',array('id'=>1),'ASC')[0];	
+			$data['page_title']='Trending Product';		
+			$data['photo'] = $timg['image'];
+			$data['title'] = $timg['title'];
+			$data['description'] = $timg['description'];
+			$data['status'] = $timg['status'];
+			$this->load->view('administrator/welcomenote',$data);		
+		}else{		
+			
+			if($this->input->post('title'))
+			{
+				$this->Crud_Model->Updatedata(1,'id','welcomenote',array('title'=>trim($this->input->post('title'))));
+			}
+			if($this->input->post('description'))
+			{
+				$this->Crud_Model->Updatedata(1,'id','welcomenote',array('description'=>trim($this->input->post('description'))));
+			}
+			if($this->input->post('displaycheck'))
+			{
+				$status=1;
+			}else{
+				$status=0;
+			}
+			$this->Crud_Model->Updatedata(1,'id','welcomenote',array('status'=>$status));
+
+			if(isset($_FILES['image']['name']) && $_FILES['image']['name']!="")
+			{
+				$config['upload_path']   = 'uploads/trending/';
+                $config['allowed_types'] = 'gif|jpg|png|jpeg';
+                $config['encrypt_name'] = TRUE;
+                $config['max_width']  = '1030';
+        		$config['max_height']  = '560';
+                $this->load->library('upload', $config);
+                if($this->upload->do_upload('image')){
+                    $uploadData = $this->upload->data();
+                    $uploadedFile = $uploadData['file_name'];                   
+                    $data['image'] = $uploadedFile;
+                    $editdata=$this->Crud_Model->getById(1,'id','trending');
+					unlink('uploads/trending/'.$editdata['image']);
+					$this->Crud_Model->Updatedata(1,'id','welcomenote',$data);
+                }	
+            }	
+			$this->session->set_flashdata('success', 'Welcome Note Update Successfully.');
+			redirect('administrator/master/welcomenote');
+			exit;
+		}
+	}
+	public function file_check_welcomenote($str){
+        $allowed_mime_type_arr = array('image/gif','image/jpeg','image/pjpeg','image/png','image/x-png');
+        $mime = get_mime_by_extension($_FILES['image']['name']);
+        if(isset($_FILES['image']['name']) && $_FILES['image']['name']!=""){
+            if(in_array($mime, $allowed_mime_type_arr))
+            {
+            	 list($width, $height) = getimagesize($_FILES['image']['tmp_name']);
+            	 if ($width != 1030 || $height != 560 )
+            	 {
+            	 	$this->form_validation->set_message('file_check_welcomenote', 'Invaliad Width / Height.');
+                	return false;
+            	 }else
+            	 { 
+                	return true;
+                }
+            }else{
+                $this->form_validation->set_message('file_check_welcomenote', 'Please select only Image file.');
+                return false;
+            }
+        }/*else{
+            $this->form_validation->set_message('file_check_welcomenote', 'Please choose a file to upload.');
+            return false;
+        }*/
+    }
 
 }
 ?>

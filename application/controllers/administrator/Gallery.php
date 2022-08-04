@@ -21,6 +21,7 @@ class Gallery extends MY_Controller {
 	{	
 		if(count($this->input->post()) > 0 )
 		{
+
 			$this->form_validation->set_rules('name', 'Title', 'required');
 			if ($this->form_validation->run() == FALSE) {
 				$data["id"] = "";
@@ -57,6 +58,7 @@ class Gallery extends MY_Controller {
 				        }
 				    }
 				}
+							//print_r($_POST); echo "FFF" ;exit;
 				$this->session->set_flashdata('success', 'Gallery Inserted Successfully.');
 				redirect('administrator/gallery/photo','refresh');
 				
@@ -86,7 +88,7 @@ class Gallery extends MY_Controller {
 				$data['image']=$this->input->post('cover_image');
 				$data['event_detail'] = $this->Crud_Model->getDatafromtablewhere('photo_gallery_detail',array('event_id'=>$id));
 				$data["button_value"]="Update";
-				$this->load->view('administrator/gallery/add_event',$data);
+				$this->load->view('administrator/gallery/add_photo_gallery',$data);
 			}else{		 
 				$data["name"] =trim($this->input->post('name'));
 				$data['image'] = $this->input->post('cover_image');
@@ -107,7 +109,6 @@ class Gallery extends MY_Controller {
 				            $_FILES['file']['tmp_name']   = $_FILES['image_name']['tmp_name'][$i];
 				            $_FILES['file']['error']      = $_FILES['image_name']['error'][$i];
 				            $_FILES['file']['size']       = $_FILES['image_name']['size'][$i];
-			                // Uploaded file data
 			                $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION);
 			                $image_name = rand(11111,99999).".".$ext;
 			                //echo $image_name; exit;
@@ -136,7 +137,7 @@ class Gallery extends MY_Controller {
 			$data['page_title']='Photo Gallery';
 			$data['active_menu'] = 'gallery';
 			$data['sub_active_menu'] = 'event';
-			$this->load->view('administrator/gallery/add_photo_gallery.php',$data);
+			$this->load->view('administrator/gallery/add_photo_gallery',$data);
 		}
 	}
 	public function delete_sub_photo($row_id)

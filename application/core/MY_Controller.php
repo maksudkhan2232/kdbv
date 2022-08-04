@@ -19,6 +19,8 @@ class MY_Controller extends CI_Controller
 		$this->data['DailyRateChangerDetails'] = $DailyRateChangerDetails['name'];
 		$this->data['WebsiteInformation'] =WebsiteInformation();
 		$this->data['CollectionDetails'] =CollectionDetails();
+		$this->data['CollectionDetailsFooter'] =CollectionDetails();
+		// print_r($this->data['CollectionDetailsFooter']);exit;
 		$this->data['CategoryDetails'] =CategoryDetails();
 		$this->data['GenderDetails'] =GenderDetails();
 		$this->data['TestimonialDetails'] =TestimonialDetails();

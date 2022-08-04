@@ -28,6 +28,8 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/sub_category">Category</a></li>
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/gender">Gender</a></li>
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/price">Price Range</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/trending">Trending Product</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/welcomenote">Welcome Note</a></li>
         </ul>
       </div>
     </li>
@@ -35,6 +37,10 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/product"> <i class="fa fa-user-circle menu-icon"></i> <span class="menu-title">Product Master</span> </a> </li>
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/gallery/photo"> <i class="icon-image menu-icon"></i> <span class="menu-title">Photo Gallery</span> </a> </li>
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-paper menu-icon"></i> <span class="menu-title">Advertisement</span> </a> </li>
+
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone"> <i class="icon-image menu-icon"></i> <span class="menu-title">Offer Zone</span> </a> </li>
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-paper menu-icon"></i> <span class="menu-title">Advertisement</span> </a> </li>
+
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/testimonial"> <i class="icon-speech-bubble menu-icon"></i> <span class="menu-title">Testimonoial</span> </a> </li>
     <li class="nav-item">
       <a class="nav-link" href="<?php echo base_url(); ?>administrator/subscription">

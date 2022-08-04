@@ -3,7 +3,7 @@ class order extends MY_Controller{
     function __construct(){
         parent::__construct();
         $this->load->model('administrator/Crud_Model');
-        $this->load->model('order_model', '', TRUE);
+        //$this->load->model('order_model', '', TRUE);
         //error_reporting(E_ALL & ~E_NOTICE);
         //redirect($this->data['base_url'] . 'bussiness/');
         //$this->session->unset_userdata("cdetails_session");
@@ -310,7 +310,7 @@ class order extends MY_Controller{
                         $orderinfo['ShippingCharges']=0;
                         $orderinfo['Tax']=0;
                         $orderinfo['TotalValue']=$this->cart->total();
-                        
+                        $orderinfo['TotalProducts']=count($this->cart->contents());
                         // Address
                         $AddressDetails=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$customerid));
                         if(!empty($AddressDetails)){

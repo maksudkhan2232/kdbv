@@ -381,6 +381,44 @@ function login(){
     return false;
   }
 }
+function FavoriteProducts(productid){
+  var data = 'productid=' +productid;
+  if (productid>0){    
+    $.ajax({
+      type:'POST',
+      url:base_url+'products/SetFavoriteProducts/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Product set as favorite product.',
+            showConfirmButton: false,
+            timer: 500
+          })
+        }else if(msg=='error'){
+          Swal.fire({
+            icon: 'error',
+            title: 'Please Login your account.',
+            showConfirmButton: false,
+            timer: 500
+          })
+          window.location.href = base_url+'customer/';   
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 500
+          })
+        }      
+        return false;
+      }
+    });    
+  }
+}
 $(function() {
   $('#PlaceOrder').click(function(){
     var name = $('#sname').val();
