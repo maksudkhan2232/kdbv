@@ -120,7 +120,11 @@
                         <div class="pro-icon">
                           <ul>
                             <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                            <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
+                            <li>
+                              <a href="javascript:void(0);" class="triggersss" data-id="<?php echo $tcval['id'];?>" id="productquickview" onClick="TrendingQuickView(<?php echo $tcval['id'];?>);">
+                                <i class="flaticon-eye"></i>
+                              </a>
+                            </li>
                           </ul>
                         </div>
                         <div class="add-to-cart"> <a href="javascript:void(0);" onclick="return addtocart(<?php echo $tcval['id'];?>);">add to cart</a> </div>
@@ -144,6 +148,9 @@
   <?php 
     }
   ?>
+
+  
+
   <!-- main-product -->
   <?php
     if(!empty($NewArrivalCollectionDetails)){
@@ -216,6 +223,7 @@
   <?php 
     }
   ?>
+  
   <!-- main-product End -->
   <!--=========================-->
   <!--=   Discount Countdown area      =-->
@@ -253,5 +261,67 @@
 <!-- /#site -->
   <?php $this->load->view('common/main-search');?> 
   <?php $this->load->view('common/common_js');?> 
+    <?php
+  // Trednig Modal
+  if(!empty($TrendingCollectionDetails)){
+      foreach ($TrendingCollectionDetails as $pkey => $pvalue) {
+  ?>
+  <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
+    <div class="quickview">
+       <div class="row">
+        <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
+        <div class="col-md-6">
+          <span id="slider-js"></span>
+          <div class="quickview-sliders">
+            <div class="slider-for" id="slider-for<?php echo $pvalue['id'];?>">
+              <?php echo $pvalue['sliderfor']; ?>
+            </div>
+            <div class="slider-nav" id="slider-nav<?php echo $pvalue['id'];?>">
+              <?php echo $pvalue['slidernav']; ?>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6" id="product-details">
+          <?php echo $pvalue['productdetails']; ?>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script type="text/javascript">
+     $('.slider-for<?php echo $pvalue['id'];?>').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          arrows: false,
+          fade: true,
+          asNavFor: '.slider-nav',
+          swipe: false,
+        });
+
+        $('.slider-nav<?php echo $pvalue['id'];?>').slick({
+          slidesToShow: 4,
+          slidesToScroll: 1,
+          asNavFor: '.slider-for',
+          focusOnSelect: true,
+          swipe: false,
+          infinite: false,
+          arrows: true,
+        });
+  </script>
+  <?php 
+      }
+  }
+  ?>
+  <script type="text/javascript">
+    function TrendingQuickView(productid){
+      var mask = '<div class="mask-overlay">';
+      $('#pmodel'+productid).toggleClass('open');
+      $(mask).hide().appendTo('body').fadeIn('fast');
+      
+      $('.mask-overlay, .close-qv').on('click', function() {
+        $('.quickview-wrapper').removeClass('open');
+        $('.mask-overlay').remove();
+      });
+    }
+  </script>
 </body>
 </html>
