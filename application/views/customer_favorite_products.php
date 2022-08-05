@@ -19,7 +19,7 @@
 				<div class="row">
 					<div class="col-xl-12">
 						<div class="bc-inner">
-							<p><a href="<?php echo base_url(); ?>">Home  |</a> Order Details</p>
+							<p><a href="<?php echo base_url(); ?>">Home  |</a> Favorite Product List</p>
 						</div>
 					</div>
 					<!-- /.col-xl-12 -->
@@ -69,48 +69,36 @@
                     <!-- /.col-xl-3 -->
                     <div class="col-xl-9">
                         <div class="account-table">
-                            <h6>Order History</h6>
+                            <h6>Favorite Product List</h6>
                             <table class="tables">
                                 <thead>
                                     <tr>
-                                        <th>Order No</th>
-                                        <th>Date</th>
-                                        <th>Total Product</th>
-                                        <th>Fulfillment Status</th>
-                                        <th>Total</th>
+                                        <th>Produc Code</th>
+                                        <th>Product Image</th>
+                                        <th>Date Time</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    
                                     <?php
-                                      foreach($GetOrderDetails as $tckey=>$tcval){
+                                      foreach($FavoriteProductDetails as $tckey=>$tcval){
                                     ?>              
-                                        <tr>
+                                        <tr id="favoriteproducts<?php echo $tcval['id'];?>">
                                             <td>
-                                                <a href="#">#ORD<?php echo $tcval['OrderNo'];?></a>
+                                                <?php echo $tcval['productcode'];?>
                                             </td>
                                             <td>
-                                                <?php echo date('d-m-Y',strtotime($tcval['OrderDate']));?>
+                                                 <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $tcval['image_name'];?>" alt="<?php echo $tcval['productcode'];?>" width="100">
+                                                
                                             </td>
                                             <td>
-                                               <?php echo $tcval['TotalProducts'];?>
+                                               <?php echo date('d-m-Y h:i A',strtotime($tcval['created_datetime']));?>
                                             </td>
                                             <td>
-                                                <?php echo $tcval['OrderStatus'];?>
-                                                <?php                                                 
-                                                    if($tcval['Remark']!='0' AND $tcval['Remark']!=''){
-                                                        echo "<br>";
-                                                        echo nl2br($tcval['Remark']);
-                                                    }   
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php 
-                                                    if($tcval['TotalValue']!='0' AND $tcval['TotalValue']!=''){
-                                                        echo '₹. '.$tcval['TotalValue'];
-                                                    }else{
-                                                        echo ' - ';
-                                                    }                                                  
-                                                ?>
+                                                <button type="button" class="btn btn-sm btn-toggle FavoriteProductRemove active" data-table="customer_favorite_products" data-field="status" data-id-name="id" data-id="<?php echo $tcval['id'];?>" data-toggle="button" aria-pressed="1" autocomplete="off" onClick="return FavoriteProductsRemove(<?php echo $tcval['id'];?>);">
+                                                  <i class="fa fa-trash"></i>
+                                                </button>
                                             </td>
                                         </tr>
                                     <?php 

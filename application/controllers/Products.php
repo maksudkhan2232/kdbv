@@ -223,6 +223,21 @@ class products extends MY_Controller {
         }
         echo json_encode($returnarray);exit;        
     }
+    function RemoveFavoriteProducts()
+	{
+		$returnarray = array();        
+		$favoriteid   = $this->input->post('favoriteid'); //productid  
+		if($favoriteid !='')
+		{
+			$this->Crud_Model->DeletData($favoriteid,'id','customer_favorite_products');
+			$returnarray['msg'] = 'success';
+        	$returnarray['message'] = '';
+		}else{
+			$returnarray['msg'] = 'error';
+        	$returnarray['message'] = 'Please Login';
+		}
+		echo json_encode($returnarray);exit;        
+	}
 
 }
 

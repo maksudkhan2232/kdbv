@@ -106,41 +106,49 @@ class Customer extends MY_Controller {
 	public function favoriteproducts()
 	{
 		
-		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
-        $this->data['message'] = $this->session->flashdata('message');
-        
+		$this->data['message'] = $this->session->flashdata('message');
         if($this->data['customer_info']['id']==''){
             $this->data['title'] = "Registration";
             $this->load->view('registration',$this->data);
         }else{
-        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
-        	$getorder=array('CustomerID'=>$this->data['customer_info']['id']);
-        	$this->data['GetOrderDetails']=$this->Crud_Model->GetOrderDetails($getorder);
-        	//echo "<pre>";print_r($this->data['GetOrderDetails']);exit;
-            $this->data['title'] = "Order Details";
+        	$fpd=array('customer_id'=>$this->data['customer_info']['id']);
+        	$this->data['FavoriteProductDetails']=$this->Crud_Model->GetFavoriteProductDetails($fpd);
+        	$this->data['title'] = "Favorite Product List";
             $this->load->view('customer_favorite_products',$this->data);
         }
        
 	}
 	public function profile()
 	{
+		$rdata   = $this->input->post('data'); // Registration Data
 		
-		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
-        $this->data['message'] = $this->session->flashdata('message');
-        
+		if(isset($rdata) AND $rdata['name']!='' AND $rdata['mobileno']!=''){               
+           
+            $rdata['modified_datetime']=date('Y-m-d H:i:s');
+            $rdata['createdip']=$_SERVER['REMOTE_ADDR'];
+            $UpdateCustomerId = $this->Crud_Model->Updatedata($this->data['customer_info']['id'],'id','billing_customer',$rdata);
+        	$this->session->set_flashdata('message',"Your Profile Successfully Update."); 
+        	redirect($this->data['base_url'] . 'customer/profile/');
+	    }
+		$this->data['message'] = $this->session->flashdata('message');
         if($this->data['customer_info']['id']==''){
             $this->data['title'] = "Registration";
             $this->load->view('registration',$this->data);
         }else{
         	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
-        	$getorder=array('CustomerID'=>$this->data['customer_info']['id']);
-        	$this->data['GetOrderDetails']=$this->Crud_Model->GetOrderDetails($getorder);
-        	//echo "<pre>";print_r($this->data['GetOrderDetails']);exit;
+        	 $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        	//echo "<pre>";print_r($this->data['CustomerDetails']);exit;
             $this->data['title'] = "Order Details";
             $this->load->view('customer_profile',$this->data);
         }
        
 	}
+	public function logout()
+    {
+   		$this->session->unset_userdata('customer_info');
+   		session_destroy();
+   		redirect($this->data['base_url'] . 'customer/');
+    }
     public function review()
 	{
 		$data['title'] = "Customer Reviews";

@@ -419,6 +419,130 @@ function FavoriteProducts(productid){
     });    
   }
 }
+function FavoriteProductsRemove(favoriteid){  
+  var data = 'favoriteid='+favoriteid;
+  if(favoriteid!=''){
+    $.ajax({
+      type:'POST',
+      url:base_url+'products/RemoveFavoriteProducts/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Poduct Remove From Favorite List.',
+            showConfirmButton: false,
+            timer: 500
+          })
+          $("#favoriteproducts"+favoriteid).remove();
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 500
+          })
+        }    
+        return false;
+      }
+    });
+  }else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Something went wrong',
+      showConfirmButton: false,
+      timer: 500
+    })
+  }  
+}
+function profile(){
+  var name = $('#name').val();
+  var address = $('#address').val();
+  var country = $('#country').val();
+  var state = $('#state').val();
+  var city = $('#city').val();
+  var pincode = $('#pincode').val();
+  var mobileno = $('#mobileno').val();
+  
+
+  
+  
+  if (name=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Name.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (address=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Address.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (state=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Select Your State.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (city=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your City Name.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (pincode=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Your Pincode.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (mobileno=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Valid Mobile Number.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  if (mobileno!= '' && !mobileno.match('^[0-9]+$')) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter valid Mobile Number.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  var mobileno_len = $("#mobileno").val().length;
+  if(mobileno_len>10 || mobileno_len<=9) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter valid Mobile Number.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+}
 $(function() {
   $('#PlaceOrder').click(function(){
     var name = $('#sname').val();

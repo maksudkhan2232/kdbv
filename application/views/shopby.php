@@ -80,18 +80,28 @@
 					               <input type="text" placeholder="Search Product....">
 					               <button type="submit"><i class="fas fa-search"></i></button>
 					            </div>
+					            <?php 
+					            	if(!empty($GroupByCollectionDetails)){
+					            ?>
 					            <div class="sidebar-widget category-widget">
-					               <h6>Gold Collections / Categories</h6>
+					               <h6>Collections / Categories</h6>
 					               <ul>
-					                  <li><a href="#" class="active">Earrings</a> <span>(19)</span></li>
-					                  <li><a href="#">Bangles</a> <span>(15)</span></li>
-					                  <li><a href="#">Bracelets</a> <span>(59)</span></li>
-					                  <li><a href="#">Diamond Chains</a> <span>(29)</span></li>
-					                  <li><a href="#">Necklaces</a> <span>(56)</span></li>
-					                  <li><a href="#">Nose Pins</a> <span>(48)</span></li>
-					                  <li><a href="#">Mangalsutra</a> <span>(11)</span></li>
+					               	
+					               	<?php
+					               		foreach ($GroupByCollectionDetails as $ckey => $cvalue) {
+					               			if($cvalue['slug']==$typevalue){
+					               				$clsactive=' class="active" ';
+					               			}else{
+					               				$clsactive='';
+					               			}
+				                           echo '<li><a href="'.base_url().'shopby/category/'.$cvalue['categoryslug'].'" '.$clsactive.'>'.ucwords($cvalue['categoryname']).'</a> <span>('.$cvalue['totalrecord'].')</span></li>';
+				                        }
+				                     ?>
 					               </ul>
 					            </div>
+					            <?php 
+					            	}
+					            ?>
 					            <div class="sidebar-widget range-widget">
 					               <h6>SEARCH BY PRICE</h6>
 					               <div class="price-range">
@@ -103,18 +113,19 @@
 					            <div class="sidebar-widget category-widget">
 					               <h6>SEARCH BY GENDER</h6>
 					               <form>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chk1" checked>
-					                     <label for="chk1">Man Collections</label>
-					                  </div>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chk2" checked>
-					                     <label for="chk2">Woman Collections</label>
-					                  </div>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chk3" checked>
-					                     <label for="chk3">Kids Collections</label>
-					                  </div>
+					               	<?php
+					               		if(!empty($GenderDetails)){
+													foreach ($GenderDetails as $gkey => $gvalue) {
+				                      ?>
+				                           <div class="form-group">
+							                     <input type="checkbox" id="gender<?php echo ucwords($gvalue['id']);?>" checked>
+							                     <label for="gender<?php echo ucwords($gvalue['id']);?>"><?php echo ucwords($gvalue['name']);?> Collections</label>
+							                  </div>
+				                          
+				                      <?php
+				                        	}
+				                        }
+				                      ?>
 					               </form>
 					            </div>
 					            <div class="sidebar-widget category-widget">

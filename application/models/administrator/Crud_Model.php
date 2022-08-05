@@ -352,6 +352,87 @@ class crud_model extends CI_Model{
         $this->db->where('isdelete','0');
         $query = $this->db->get();        
         return $query->result_array();
-    }  
+    } 
+    function GetFavoriteProductDetails($data=''){ 
+        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name');
+        $this->db->from('customer_favorite_products as f');
+        $this->db->join('product as p','f.products_id=p.id','LEFT');
+        $this->db->join('product_image as pi','pi.product_id=f.products_id','LEFT');
+        if(isset($data['customer_id']) and $data['customer_id']!=''){
+            $this->db->where('f.customer_id',$data['customer_id']);    
+        }
+        if(isset($data['products_id']) and $data['products_id']!=''){
+            $this->db->where('f.products_id',$data['products_id']);    
+        }
+        
+        if(isset($data['status']) and $data['status']!=''){
+            $this->db->where('f.status',$data['status']);    
+        }else{
+            $this->db->where('f.status','1');    
+        }
+        $this->db->where('f.isdelete','0');
+        if(isset($data['OrderBy']) and $data['OrderBy']!=''){
+            $this->db->order_by($data['OrderBy'], $data['order']);
+        }else{
+             $this->db->order_by('f.id','DESC');
+        }
+        $this->db->group_by('f.products_id');        
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
+        $query=$this->db->get();
+        return $query->result_array();
+    } 
+    function GetProductCollectionDetails($data=''){ 
+        $this->db->select('p.*,c.name as collectionname,c.shortname as collectionshortname,sc.name as categoryname,sc.slug as categoryslug,count(p.id) as totalrecord');
+        $this->db->from('product as p');
+        $this->db->join('category as c','c.id=p.collectiontype','LEFT');
+        $this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
+        if(isset($data['collectiontype']) and $data['collectiontype']!=''){
+            $this->db->where('p.collectiontype',$data['collectiontype']);    
+        }
+        if(isset($data['categoryid']) and $data['categoryid']!=''){
+            $this->db->where('p.categoryid',$data['categoryid']);    
+        }
+        if(isset($data['productcode']) and $data['productcode']!=''){
+            $this->db->where('p.productcode',$data['productcode']);    
+        }
+        if(isset($data['gender']) and $data['gender']!=''){
+            $this->db->like('p.gender',$data['gender']);    
+        }
+        if(isset($data['pricemin']) and $data['pricemin']!='' and $data['pricemax']!=''){
+            if($data['pricemin']!='' and $data['pricemax']!=''  and $data['pricemax']!='0'){
+                $this->db->where('price >=', $data['pricemin']);
+                $this->db->where('price <=', $data['pricemax']);
+            }
+            if($data['pricemax']!=''  and $data['pricemax']=='0'){
+                $this->db->where('price >=', $data['pricemin']);
+            }
+        }
+        if(isset($data['highlight']) and $data['highlight']!=''){
+            $this->db->like('p.highlight',$data['highlight']);    
+        }
+        if(isset($data['status']) and $data['status']!=''){
+            $this->db->where('p.status',$data['status']);    
+        }else{
+            $this->db->where('p.status','1');    
+        }
+        $this->db->where('p.isdelete','0');
+        if(isset($data['OrderBy']) and $data['OrderBy']!=''){
+            $this->db->order_by($data['OrderBy'], $data['order']);
+        }else{
+             $this->db->order_by('p.id','DESC');
+        }
+        if(isset($data['GroupBy']) and $data['GroupBy']!=''){
+            $this->db->group_by($data['GroupBy']);
+        }else{
+             $this->db->group_by('p.id','DESC');
+        }
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
+        $query=$this->db->get();
+        return $query->result_array();
+    } 
 }
 ?>

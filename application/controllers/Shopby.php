@@ -548,10 +548,22 @@ class Shopby extends MY_Controller {
 		}else{
 			 redirect($this->data['base_url']);
 		}
+		// Get Available Category
+		$GroupByCollection=array('GroupBy'=>"p.collectiontype");
+		$GroupByCollectionDetails=$this->Crud_Model->GetProductCollectionDetails($GroupByCollection);
+		$this->data['GroupByCollectionDetails'] = $GroupByCollectionDetails;
+			// echo "<pre>";
+			// print_r($GroupByCollectionDetails);
+			// exit;
+		// Get Gender
 
+		// Get Minimim Price and Maximum Price
+
+		// Get
 		$this->data['title'] = "Shop By";
 		$this->data['type'] = $type;
 		$this->data['SubType'] = $SubType;
+		$this->data['typevalue'] = $typevalue;
 		$this->load->view('shopby',$this->data);
 	}
 	// public function index()

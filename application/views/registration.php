@@ -223,21 +223,21 @@
     </section>
     
     <section class="login-now">
-			<div class="container-fluid custom-container">
-				<div class="col-12">
-					<span>If you have any query. Please Contact Us</span>
-					<a href="javascript:void(0);" class="btn-two">+91 9999988888</a>
-				</div>
-				<!-- /.col-12 -->
+		<div class="container-fluid custom-container">
+			<div class="col-12">
+				<span>If you have any query. Please Contact Us</span>
+				<a href="javascript:void(0);" class="btn-two">+91 9999988888</a>
 			</div>
-			<!-- /.container-fluid -->
-		</section>
+			<!-- /.col-12 -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
 
 
   <!--=========================-->
   <!--=   Subscribe area      =-->
     
-              <?php $this->load->view('common/footer');?> 
+    <?php $this->load->view('common/footer');?> 
   <!-- footer-widget-area -->
   <!-- Back to top
   ============================================= -->

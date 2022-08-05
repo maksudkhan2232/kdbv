@@ -68,58 +68,88 @@
                     </div>
                     <!-- /.col-xl-3 -->
                     <div class="col-xl-9">
-                        <div class="account-table">
-                            <h6>Order History</h6>
-                            <table class="tables">
-                                <thead>
-                                    <tr>
-                                        <th>Order No</th>
-                                        <th>Date</th>
-                                        <th>Total Product</th>
-                                        <th>Fulfillment Status</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                      foreach($GetOrderDetails as $tckey=>$tcval){
-                                    ?>              
-                                        <tr>
-                                            <td>
-                                                <a href="#">#ORD<?php echo $tcval['OrderNo'];?></a>
-                                            </td>
-                                            <td>
-                                                <?php echo date('d-m-Y',strtotime($tcval['OrderDate']));?>
-                                            </td>
-                                            <td>
-                                               <?php echo $tcval['TotalProducts'];?>
-                                            </td>
-                                            <td>
-                                                <?php echo $tcval['OrderStatus'];?>
-                                                <?php                                                 
-                                                    if($tcval['Remark']!='0' AND $tcval['Remark']!=''){
-                                                        echo "<br>";
-                                                        echo nl2br($tcval['Remark']);
-                                                    }   
-                                                ?>
-                                            </td>
-                                            <td>
-                                                <?php 
-                                                    if($tcval['TotalValue']!='0' AND $tcval['TotalValue']!=''){
-                                                        echo '₹. '.$tcval['TotalValue'];
-                                                    }else{
-                                                        echo ' - ';
-                                                    }                                                  
-                                                ?>
-                                            </td>
-                                        </tr>
-                                    <?php 
-                                      }
-                                    ?>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.cart-table -->
+                        <section class="contact-area">
+                            <div class="container-fluid custom-container">
+                                <div class="checkout-area section-padding">
+                                    <div class="container">                    
+                                        <div class="checkout-wrap">
+                                            <div class="row">
+                                                <div class="col-lg-12 col-12">                 
+                                                    <div class="caupon-wrap s2" id="">
+                                                       <div class="biling-item">
+                                                          <div class="coupon coupon-3">
+                                                             <label id="toggle2">Your Profile</label>
+                                                          </div>
+                                                          <form action="<?php echo base_url(); ?>customer/profile/" id="myForm" enctype="multipart/form-data" method="post" accept-charset="utf-8" onSubmit="return profile();">
+                                                                <div class="billing-adress" id="">
+                                                                    <div class="contact-form form-style text-left" id="newuserregistrationform">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-12 col-md-12 col-12">
+                                                                                <label for="name">Name <span class="text-danger">*</span></label>
+                                                                                <input type="text" placeholder="Enter Your Name." id="name" name="data[name]" maxlength="55" value="<?php echo $CustomerDetails['name'];?>">
+                                                                            </div>
+                                                                            <div class="col-lg-12 col-md-12 col-12">
+                                                                                <label for="address">Address <span class="text-danger">*</span></label>
+                                                                                <input type="text" placeholder="Enter Your Address." id="address" name="data[address]" value="<?php echo $CustomerDetails['address'];?>">
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="country">Country <span class="text-danger">*</span></label>
+                                                                                <select name="data[country]" id="country" class="form-control">
+                                                                                   <option value="India" selected>India</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="state">State <span class="text-danger">*</span></label>
+                                                                                <select name="data[state]" id="state" class="form-control">
+                                                                                    <option value="">Select State</option>
+                                                                                    <?php
+                                                                                    $sele='';
+                                                                                    foreach ($StateDetails as $skey => $svalue) {
+                                                                                        if(isset($CustomerDetails['state']) && $CustomerDetails['state']!=''){
+                                                                                            if($svalue['id']==$CustomerDetails['state']){
+                                                                                                $sele="selected";
+                                                                                            }
+                                                                                        }
+                                                                                      echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
+                                                                                    }
+                                                                                   ?>
+                                                                                </select>
+                                                                            </div>                                                  
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="city">City <span class="text-danger">*</span></label>
+                                                                                <input type="text" placeholder="Enter Your City Name."  id="city" name="data[city]" value="<?php echo $CustomerDetails['city'];?>">
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="pincode">Pincode <span class="text-danger">*</span></label>
+                                                                                <input type="text" placeholder="Enter Your Pincode."  id="pincode" name="data[pincode]" value="<?php echo $CustomerDetails['pincode'];?>">
+                                                                            </div>                                                    
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
+                                                                                <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]" value="<?php echo $CustomerDetails['mobileno'];?>">
+                                                                            </div>
+                                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                                <label for="email">Email Id <span class="text-danger">*</span></label>
+                                                                                <input type="email" placeholder="Enter Your Email."  value="<?php echo $CustomerDetails['email'];?>" readonly>
+                                                                            </div>
+                                                                            <div class="col-lg-12 col-md-12 col-12">
+                                                                                <div class="col-xl-12">
+                                                                                    <input type="submit" class="cart-btn" value="Update" style="background: #3f3f3f;">
+                                                                                </div>
+                                                                            </div>                                                  
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                          <form>
+                                                       </div>
+                                                    </div>                                    
+                                                </div>
+                                                
+                                            </div>
+                                        </div>                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                     <!-- /.col-xl-9 -->
 
