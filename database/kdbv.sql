@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2022 at 02:49 PM
+-- Generation Time: Aug 06, 2022 at 03:55 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.4.10
 
@@ -3257,7 +3257,12 @@ CREATE TABLE `customer_favorite_products` (
 
 INSERT INTO `customer_favorite_products` (`id`, `customer_id`, `products_id`, `status`, `isdelete`, `created_datetime`, `modified_datetime`) VALUES
 (3, 3, 2, 1, 0, '2022-08-04 23:21:52', '0000-00-00 00:00:00'),
-(5, 3, 1, 1, 0, '2022-08-04 23:22:08', '0000-00-00 00:00:00');
+(5, 3, 1, 1, 0, '2022-08-04 23:22:08', '0000-00-00 00:00:00'),
+(6, 3, 3, 1, 0, '2022-08-06 17:36:39', '0000-00-00 00:00:00'),
+(7, 3, 1, 1, 0, '2022-08-06 17:41:11', '0000-00-00 00:00:00'),
+(8, 3, 2, 1, 0, '2022-08-06 17:41:18', '0000-00-00 00:00:00'),
+(9, 3, 1, 1, 0, '2022-08-06 17:41:20', '0000-00-00 00:00:00'),
+(10, 3, 2, 1, 0, '2022-08-06 17:41:43', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -20436,6 +20441,8 @@ CREATE TABLE `product` (
   `size` text DEFAULT NULL,
   `highlight` text DEFAULT NULL,
   `displayorder` int(11) DEFAULT 0,
+  `totalrating` int(11) DEFAULT 0,
+  `totalreviews` int(11) DEFAULT 0,
   `status` tinyint(4) NOT NULL,
   `isdelete` int(11) NOT NULL,
   `created_datetime` datetime NOT NULL,
@@ -20447,11 +20454,11 @@ CREATE TABLE `product` (
 -- Dumping data for table `product`
 --
 
-INSERT INTO `product` (`id`, `collectiontype`, `categoryid`, `name`, `slug`, `productcode`, `price`, `description`, `gender`, `size`, `highlight`, `displayorder`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
-(1, 1, 7, 'gold-collection_bracelet_Helix', 'gold-collection_bracelet_Helix', 'Helix', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
-(2, 1, 9, 'silver-collection_pendant_Heart Younger', 'silver-collection_pendant_HeartYounger', 'Heart Younger', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'MEN,WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:20:59', '0000-00-00 00:00:00', '::1'),
-(3, 3, 5, 'real-diamonds-collection_nose-pins_Elesh', 'real-diamonds-collection_nose-pins_Elesh', 'Elesh', 562, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:27:10', '0000-00-00 00:00:00', '::1'),
-(4, 4, 6, 'platinum-collection_mangalsutra_Magal', 'platinum-collection_mangalsutra_Magal', 'Magal', 658, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 1, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
+INSERT INTO `product` (`id`, `collectiontype`, `categoryid`, `name`, `slug`, `productcode`, `price`, `description`, `gender`, `size`, `highlight`, `displayorder`, `totalrating`, `totalreviews`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
+(1, 1, 7, 'gold collection bracelet Helix', 'gold-collection_bracelet_Helix', 'Helix', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 1, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(2, 1, 9, 'silver-collection_pendant_Heart Younger', 'silver-collection_pendant_HeartYounger', 'Heart Younger', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'MEN,WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 1, 0, '2022-07-19 11:20:59', '0000-00-00 00:00:00', '::1'),
+(3, 3, 5, 'real-diamonds-collection_nose-pins_Elesh', 'real-diamonds-collection_nose-pins_Elesh', 'Elesh', 562, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 1, 0, '2022-07-19 11:27:10', '0000-00-00 00:00:00', '::1'),
+(4, 4, 6, 'platinum-collection_mangalsutra_Magal', 'platinum-collection_mangalsutra_Magal', 'Magal', 658, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 1, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
 
 -- --------------------------------------------------------
 
@@ -20581,6 +20588,31 @@ INSERT INTO `product_pricerange` (`id`, `name`, `slug`, `image`, `pricemax`, `pr
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `product_rating`
+--
+
+CREATE TABLE `product_rating` (
+  `id` int(50) NOT NULL,
+  `name` varchar(200) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `mobileno` varchar(15) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `email` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `product_rating` varchar(5) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `product_review` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `customerid` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `order_no` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `order_id` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `replayby` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `replayremark` text COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` tinyint(3) NOT NULL,
+  `isdelete` tinyint(3) NOT NULL,
+  `created_datetime` datetime NOT NULL,
+  `createdip` varchar(100) CHARACTER SET utf8mb4 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `slider`
 --
 
@@ -20630,7 +20662,8 @@ INSERT INTO `subscription` (`id`, `email`, `created_at`) VALUES
 (1, 'abc@yahoo.com', '2021-07-14 10:23:35'),
 (2, 'Testing@yahoo.com', '2021-07-14 10:24:31'),
 (3, 'demotesting@yahoo.com', '2021-07-14 10:26:12'),
-(4, 'abcd@yahoo.com', '2021-07-14 10:27:11');
+(4, 'abcd@yahoo.com', '2021-07-14 10:27:11'),
+(5, 'maksud@gmail.com', '2022-08-06 17:35:40');
 
 -- --------------------------------------------------------
 
@@ -21017,6 +21050,12 @@ ALTER TABLE `product_pricerange`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `product_rating`
+--
+ALTER TABLE `product_rating`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `slider`
 --
 ALTER TABLE `slider`
@@ -21126,7 +21165,7 @@ ALTER TABLE `committee_master`
 -- AUTO_INCREMENT for table `customer_favorite_products`
 --
 ALTER TABLE `customer_favorite_products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `dailyratechanger`
@@ -21219,6 +21258,12 @@ ALTER TABLE `product_pricerange`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'pricerange id', AUTO_INCREMENT=6;
 
 --
+-- AUTO_INCREMENT for table `product_rating`
+--
+ALTER TABLE `product_rating`
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `slider`
 --
 ALTER TABLE `slider`
@@ -21228,7 +21273,7 @@ ALTER TABLE `slider`
 -- AUTO_INCREMENT for table `subscription`
 --
 ALTER TABLE `subscription`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sub_category`

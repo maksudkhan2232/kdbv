@@ -18,3 +18,80 @@
 <script src="<?php echo  base_url(); ?>assest/frontend/js/sweetalert2@10.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/general.js"></script>
 <!--<script src="assets/js/right.js"></script>-->
+<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+	// $(document).ready(function(){
+	// 	$( "#SearchTypeAhead" ).autocomplete({
+	//         source: function( request, response ) {
+	//           // Fetch data
+	//           $.ajax({
+	//             url:base_url+'Products/ProductSearch/',
+	//             type: 'post',
+	//             dataType: "json",
+	//             data: {
+	//               search: request.term
+	//             },
+	//             success: function( data ) {
+	//               response( data );
+	//             }
+	//           });
+	//         },
+	//         select: function (event, ui) {
+	//           // Set selection
+	//           //$('#SearchTypeAhead').val(ui.item.label); // display the selected text
+	//           $('#SearchTypeAhead').html(ui.item.label); // save selected id to input
+	//           return false;
+	//         }
+ //      	});
+ 	//    });
+ 	// $(document).ready(function(){
+		// $( "#SearchTypeAhead" ).typeahead({
+	 //        source: function( request, response ) {
+	 //          // Fetch data
+	 //          $.ajax({
+	 //            url:base_url+'Products/ProductSearch/',
+	 //            type: 'post',
+	 //            dataType: "json",
+	 //            data: {
+	 //              search: request.term
+	 //            },
+	 //            success: function( data ) {
+	 //            	console.log(data);
+	 //              response( data );
+	 //            }
+	 //          });
+	 //        },
+	 //        select: function (event, ui) {
+	 //          // Set selection
+	 //          $('#SearchTypeAhead').val(ui.item.label); // display the selected text
+	 //          //$('#SearchTypeAhead').html(ui.item.label); // save selected id to input
+	 //          return false;
+	 //        }
+  //     	});
+  //   });
+	    if (jQuery('input#SearchTypeAhead').length > 0) {
+		    jQuery('input#SearchTypeAhead').typeahead({
+		      displayText: function(item) {
+		           return item.name
+		      },
+		      afterSelect: function(item) {
+		            this.$element[0].value = item.name;
+		            jQuery("input#SearchTypeAhead").val(item.name);
+		      },
+		      source: function (query, process) {
+		        jQuery.ajax({
+	                url: base_url+'Products/ProductSearch/',
+	                data: {query:query},
+	                dataType: "json",
+	                type: "POST",
+	                success: function (data) {
+	                	console.log(data);
+	                    process(data)
+	                }
+	            })
+		      }   
+		    });
+		}
+</script>

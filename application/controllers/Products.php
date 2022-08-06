@@ -239,6 +239,19 @@ class products extends MY_Controller {
 		echo json_encode($returnarray);exit;        
 	}
 
+	public function ProductSearch() {
+        $json = array();
+        $Search = $this->input->post('query');
+       	$data = $this->Crud_Model->GetProductForSearch($Search);
+        // foreach ($geCountries as $key => $element) {
+        //     $json[] = array(
+        //         'country_id' => $element['country_id'], 
+        //         'country_name' => $element['country_name'],
+        //     );
+        // }
+        // $this->output->set_header('Content-Type: application/json');
+        echo json_encode($data);
+    }
 }
 
 

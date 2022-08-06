@@ -54,11 +54,12 @@ class Product extends MY_Controller  {
 				$CollectionName =url_title($CollectionDetails['name'], 'dash', true);
 				$CategoryName =url_title($CategoryDetails['name'], 'dash', true); ;
 				$ProductName = $CollectionName.'_'.$CategoryName.'_'.url_title($productcode, 'dash', true);
+				$ProductFullName = $CollectionDetails['name'].' '.$CategoryDetails['name'].' '.$productcode;
 				//echo $ProductName;exit;
 
 				$data["collectiontype"] =$collectiontype;
 				$data["categoryid"] =$categoryid;
-				$data["slug"] =$ProductName;
+				$data["slug"] =$ProductFullName;
 				$data["name"] =$ProductName;
 				$data["productcode"] =$productcode;
 				$data["price"] =$this->input->post('price');
@@ -197,9 +198,10 @@ class Product extends MY_Controller  {
 				$CollectionName =url_title($CollectionDetails['name'], 'dash', true);
 				$CategoryName =url_title($CategoryDetails['name'], 'dash', true); ;
 				$ProductName = $CollectionName.'_'.$CategoryName.'_'.$productcode;
-
+				$ProductFullName = $CollectionDetails['name'].' '.$CategoryDetails['name'].' '.$productcode;
 				$data["collectiontype"] =$collectiontype;
 				$data["categoryid"] =$categoryid;
+				$data["slug"] =$ProductFullName;
 				$data["name"] =$ProductName;
 				$data["productcode"] =$productcode;
 				$data["price"] =$this->input->post('price');

@@ -154,6 +154,60 @@ class Customer extends MY_Controller {
 		$data['title'] = "Customer Reviews";
 		$this->load->view('testimonials',$data);
 	}
+	public function newslettersubscribe()
+	{
+		$subscribeemail   = $this->input->post('subscribeemail'); // Subscribe Email
+		$returnarray = array();     
+		if(isset($subscribeemail) AND $subscribeemail!=''){               
+            $returnarray['msg'] = 'success';
+            $returnarray['message'] = 'Join our newsletter successfully.';
+            $subscribeinfo=array();
+        	$subscribeinfo['email']=$subscribeemail;
+            $subscribeinfo['created_at']=date('Y-m-d H:i:s');
+            $subscribeid=$this->Crud_Model->InsertData('subscription',$subscribeinfo);        	
+	    }else{
+	    	$returnarray['msg'] = 'error';
+            $returnarray['message'] = 'Something Wrong.';
+	    }
+		echo json_encode($returnarray);exit;       
+	}
+	public function reviewupdate()
+	{
+		
+		$productreview   = $this->input->post('review'); // review
+		$productid   = $this->input->post('productid'); // productrating
+		$productrating   = $this->input->post('productrating'); // productrating
+		
+		$returnarray = array();     
+		if($this->data['customer_info']['id']!=''){
+			if(isset($productreview) AND $productreview!=''){               
+
+	            $reviewinfo=array();
+	        	$reviewinfo['name']=$this->data['customer_info']['name'];
+	        	$reviewinfo['mobileno']=$this->data['customer_info']['mobileno'];
+	        	$reviewinfo['email']=$this->data['customer_info']['email'];
+	        	$reviewinfo['customerid']=$this->data['customer_info']['id'];
+	        	$reviewinfo['product_id']=$productid;
+	        	$reviewinfo['product_rating']=$productrating;
+	        	$reviewinfo['product_review']=$productreview;
+	        	$reviewinfo['status']=0;
+	        	$reviewinfo['isdelete']=0;
+	            $reviewinfo['created_datetime']=date('Y-m-d H:i:s');
+	            $reviewinfo['createdip']=$_SERVER['REMOTE_ADDR'];
+	            $subscribeid=$this->Crud_Model->InsertData('product_rating',$reviewinfo);  
+
+	            $returnarray['msg'] = 'success';
+	            $returnarray['message'] = 'Your Review Submit Successfully.';      	
+		    }else{
+		    	$returnarray['msg'] = 'error';
+	        	$returnarray['message'] = 'Please Login';
+		    }
+		}else{
+	    	$returnarray['msg'] = 'error';
+        	$returnarray['message'] = 'Please Login';
+	    }
+		echo json_encode($returnarray);exit;       
+	}
 	
     
 }

@@ -283,7 +283,7 @@
 						                               <div class="icon-wrapper">
 						                                  <div class="pro-icon">
 						                                     <ul>
-						                                        <li><a href="#"><i class="flaticon-valentines-heart"></i></a></li>
+						                                        <li><a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $pvalue['id'];?>);" ><i class="flaticon-valentines-heart"></i></a></li>
 						                                        <li><a href="javascript:void(0);" class="triggers" data-id="<?php echo $pvalue['id'];?>" id="productquickview" onClick="productquickview(<?php echo $pvalue['id'];?>);"><i class="flaticon-eye"></i></a></li>
 						                                     </ul>
 						                                  </div>

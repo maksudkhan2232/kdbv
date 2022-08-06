@@ -9,8 +9,8 @@
         <!-- col-xl-6 -->
         <div class="col-lg-7">
           <div class="subscribe-wrapper">
-            <input placeholder="Enter your Email" type="text">
-            <button type="submit">SUBSCRIBE</button>
+            <input placeholder="Enter your Email" type="email" id="subscribeemail">
+            <button type="submit" id="subscribesubmit">SUBSCRIBE</button>
           </div>
         </div>
       </div>

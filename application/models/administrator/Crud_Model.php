@@ -434,5 +434,31 @@ class crud_model extends CI_Model{
         $query=$this->db->get();
         return $query->result_array();
     } 
+    function GetProductMinMaxPriceDetails(){ 
+        $this->db->select('Min(price) as MinPrice,Max(price) as MaxPrice');
+        $this->db->from('product');
+        $this->db->limit(1);
+        $query=$this->db->get();
+        return $query->row_array();
+    } 
+    function GetProductForSearch($search){
+ 
+        $response = array();
+      
+        $this->db->select('*');
+        $this->db->from('product');
+        if(isset($search)){
+          // Select record
+            $this->db->like('name', $search, 'both');
+            //$this->db->where("name like '%".$data['search']."%' ");
+            //$this->db->where("description like '%".$data['search']."%' ");
+        }
+        $records=$this->db->get()->result();
+        //echo $this->db->last_query();exit;
+        foreach($records as $row ){
+            $response[] = array("id"=>$row->id,"name"=>$row->name);
+        }
+        return $response;
+      }
 }
 ?>

@@ -649,6 +649,117 @@ $(function() {
     
     
   });
+
+});
+$(function() {
+  $('#subscribesubmit').click(function(){
+    var email = $('#subscribeemail').val();
+    var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  
+    if (email=='') { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Email Id.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+    if(!emailRegex.test(email)){
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Valid Email Id.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+    var data = 'subscribeemail='+email;
+    $.ajax({
+      type:'POST',
+      url:base_url+'customer/newslettersubscribe/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Join our newsletter successfully.',
+            showConfirmButton: false,
+            timer: 500
+          })
+          $("#subscribeemail").val('');
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 500
+          })
+        }    
+        return false;
+      }
+    });
+  });
+});
+$(function() {
+  $('#review_submit').click(function(){
+    var reviewname = $('#reviewname').val();
+    var review = $('#review').val();
+    var productid = $('#productid').val();
+    var reviewname = $('#reviewname').val();
+  
+    if (reviewname=='') { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Name.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+    if (review=='') { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Review.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+   
+    var data = 'reviewname='+reviewname;
+        data += '&review='+review;
+    $.ajax({
+      type:'POST',
+      url:base_url+'customer/reviewupdate/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Your Review Submit Successfully.',
+            showConfirmButton: false,
+            timer: 500
+          })
+          $("#reviewname").val('');
+          $("#review").val('');
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Please Login your account.',
+            showConfirmButton: false,
+            timer: 500
+          })
+          window.location.href = base_url+'customer/';   
+        }    
+        return false;
+      }
+    });
+  });
 });
 
 

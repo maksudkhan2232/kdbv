@@ -7,6 +7,34 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registration |  KD Bhindi Jewellers</title>
 <?php $this->load->view('common/common_css');?> 
+<style type="text/css">
+
+.list-group-item.active {
+    z-index: 2;
+    color: #fff;
+    background-color: #3f3f3f  !important;
+    border-color: #3f3f3f  !important;
+}
+
+.account-details a {
+  font-family: 'Work Sans', sans-serif;
+  font-weight: 600;
+  color: #fff;
+  background: #d19e66;
+  height: 50px;
+  font-size: 18px;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 50px;
+  padding: 0 20px;
+  margin-top: 0px !important;
+}
+.account-details a:hover {
+  background: #3f3f3f;
+  color: #fff!important;
+}
+
+</style>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
 <div class="site-content">

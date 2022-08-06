@@ -75,20 +75,22 @@
 				<div class="container-fluid custom-container">
 			   		<div class="row">
 				      	<div class="order-2 order-lg-1 col-lg-3 col-xl-3">
+				      		<input type="hidden" name="type" id="type" value="<?php echo $type;?>">
+				      		<input type="hidden" name="typevalue" id="typevalue" value="<?php echo $typevalue;?>">
 				         	<div class=" shop-sidebar">
 					            <div class="sidebar-widget sidebar-search">
 					               <input type="text" placeholder="Search Product....">
 					               <button type="submit"><i class="fas fa-search"></i></button>
 					            </div>
 					            <?php 
-					            	if(!empty($GroupByCollectionDetails)){
+					            	if(!empty($GroupByCategoryDetails)){
 					            ?>
 					            <div class="sidebar-widget category-widget">
 					               <h6>Collections / Categories</h6>
 					               <ul>
 					               	
 					               	<?php
-					               		foreach ($GroupByCollectionDetails as $ckey => $cvalue) {
+					               		foreach ($GroupByCategoryDetails as $ckey => $cvalue) {
 					               			if($cvalue['slug']==$typevalue){
 					               				$clsactive=' class="active" ';
 					               			}else{
@@ -107,7 +109,9 @@
 					               <div class="price-range">
 					                  <div id="slider-range"></div>
 					                  <span>Price :</span>
-					                  <input type="text" id="amount">
+					                  <input type="text" id="amount" readonly>
+					                  <input type="hidden" id="MinPrice" name="MinPrice" value="<?php echo $ProductMinMaxPriceDetails['MinPrice'];?>">
+					                  <input type="hidden" id="MaxPrice" name="MaxPrice" value="<?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>">
 					               </div>
 					            </div>
 					            <div class="sidebar-widget category-widget">
@@ -118,7 +122,7 @@
 													foreach ($GenderDetails as $gkey => $gvalue) {
 				                      ?>
 				                           <div class="form-group">
-							                     <input type="checkbox" id="gender<?php echo ucwords($gvalue['id']);?>" checked>
+							                     <input type="checkbox" id="gender<?php echo ucwords($gvalue['id']);?>" >
 							                     <label for="gender<?php echo ucwords($gvalue['id']);?>"><?php echo ucwords($gvalue['name']);?> Collections</label>
 							                  </div>
 				                          
@@ -131,99 +135,60 @@
 					            <div class="sidebar-widget category-widget">
 					               <h6>SEARCH BY Metal</h6>
 					               <form>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chkGold" checked>
-					                     <label for="chkGold">Gold</label>
-					                  </div>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chkSilver" >
-					                     <label for="chkSilver">Silver</label>
-					                  </div>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chkReal" >
-					                     <label for="chkReal">Real Diamonds</label>
-					                  </div>
-					                  <div class="form-group">
-					                     <input type="checkbox" id="chkPlatinum" >
-					                     <label for="chkPlatinum">Platinum</label>
-					                  </div>
+					               	<?php
+					               		if(!empty($GroupByCollectionDetails)){
+													foreach ($GroupByCollectionDetails as $gkey => $gvalue) {
+				                      ?>
+				                           <div class="form-group">
+							                     <input type="checkbox" id="collection<?php echo ucwords($gvalue['collectiontype']);?>" checked>
+							                     <label for="collection<?php echo ucwords($gvalue['collectiontype']);?>"><?php echo ucwords($gvalue['collectionshortname']);?></label>
+							                  </div>
+				                          
+				                      <?php
+				                        	}
+				                        }
+				                      ?>
 					               </form>
 					            </div>
 					            <div class="sidebar-widget product-widget">
 					               <h6>Trending Products</h6>
-					               <div class="wid-pro">
-					                  <div class="sp-img">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/sb1.jpg" alt="">
-					                  </div>
-					                  <div class="small-pro-details">
-					                     <h5 class="title"><a href="#">The Felicidad Oval Bangle</a></h5>
-					                     <span>Gold / Bracelet</span>
-					                     <div class="rating">
-					                        <a href="javascript:void(0);">View Details</a>
-					                     </div>
-					                  </div>
-					               </div>
-					               <div class="wid-pro">
-					                  <div class="sp-img">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/sb1.jpg" alt="">
-					                  </div>
-					                  <div class="small-pro-details">
-					                     <h5 class="title"><a href="#">The Felicidad Oval Bangle</a></h5>
-					                     <span>Gold / Bracelet</span>
-					                     <div class="rating">
-					                        <a href="javascript:void(0);">View Details</a>
-					                     </div>
-					                  </div>
-					               </div>
-					               <div class="wid-pro">
-					                  <div class="sp-img">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/sb1.jpg" alt="">
-					                  </div>
-					                  <div class="small-pro-details">
-					                     <h5 class="title"><a href="#">The Felicidad Oval Bangle</a></h5>
-					                     <span>Gold / Bracelet</span>
-					                     <div class="rating">
-					                        <a href="javascript:void(0);">View Details</a>
-					                     </div>
-					                  </div>
-					               </div>
-					               <div class="wid-pro">
-					                  <div class="sp-img">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/sb1.jpg" alt="">
-					                  </div>
-					                  <div class="small-pro-details">
-					                     <h5 class="title"><a href="#">The Felicidad Oval Bangle</a></h5>
-					                     <span>Gold / Bracelet</span>
-					                     <div class="rating">
-					                        <a href="javascript:void(0);">View Details</a>
-					                     </div>
-					                  </div>
-					               </div>
+					               <?php
+						              foreach($TrendingDetails as $tckey=>$tcval){
+						            ?>
+						            	<div class="wid-pro">
+						                  <div class="sp-img">
+						                     <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $tcval['image_name'];?>" alt="<?php echo $tcval['productcode'];?>" width="94">
+						                  </div>
+						                  <div class="small-pro-details">
+						                     <h5 class="title"><a href="<?php echo base_url().'products/view/'.$tcval['slug'];?>"><?php echo $tcval['productcode'];?></a></h5>
+						                     <span><?php echo $tcval['collectionshortname'];?> / <span><?php echo $tcval['categoryname'];?></span>
+						                     <div class="rating">
+						                        <a href="<?php echo base_url().'products/view/'.$tcval['slug'];?>">View Details</a>
+						                     </div>
+						                  </div>
+						               </div>
+						            <?php 
+						              }
+						            ?>
 					            </div>
 					            <div class="sidebar-widget product-widget">
 					               <h6>Our Collections</h6>
 					               <div class="singleProduct-slider owl-carousel owl-theme">
-					                  <div class="sin-instagram">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/products/01.png" alt="">
-					                     <div class="hover-text"> <a href="#"> <span>Gold Jewellery</span> </a> </div>
-					                  </div>
-					                  <div class="sin-instagram">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/products/02.png" alt="">
-					                     <div class="hover-text"> <a href="#"> <span>Silver Jewellery</span> </a> </div>
-					                  </div>
-					                  <div class="sin-instagram">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/products/03.png" alt="">
-					                     <div class="hover-text"> <a href="#"> <span>Real Diamond Jewellery</span> </a> </div>
-					                  </div>
-					                  <div class="sin-instagram">
-					                     <img src="<?php echo  base_url(); ?>assest/frontend/media/images/products/04.png" alt="">
-					                     <div class="hover-text"> <a href="#"> <span>Platinum Jewellery</span> </a> </div>
-					                  </div>
+					               	<?php
+					                    foreach ($CollectionDetails as $ckey => $cvalue) {
+					                  ?>
+					                     <div class="sin-instagram">
+						                     <img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>">
+						                     <div class="hover-text"> <a href="<?php echo base_url(); ?>shopby/collections/<?php echo $cvalue['slug'];?>"> <span><?php echo ucwords($cvalue['shortname']);?> Jewellery</span> </a> </div>
+					                  	</div>
+											<?php
+					                    }
+					                  ?>
 					               </div>
 					            </div>
 					            <div class="sidebar-widget banner-wid">
 					               <div class="img">
-					                  <img src="<?php echo  base_url(); ?>assest/frontend/media/images/banner/sb1.jpg" alt="">
+					                  <img src="<?php echo base_url().'uploads/trending/'.$TrendingCollectionSideImage['image']; ?>" alt="">
 					               </div>
 					            </div>
 				         	</div>
@@ -294,7 +259,7 @@
 						                               <div class="icon-wrapper">
 						                                  <div class="pro-icon">
 						                                     <ul>
-						                                        <li><a href="#"><i class="flaticon-valentines-heart"></i></a></li>
+						                                        <li><a  href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $pvalue['id'];?>);" ><i class="flaticon-valentines-heart"></i></a></li>
 						                                        <li><a href="javascript:void(0);" class="triggers" data-id="<?php echo $pvalue['id'];?>" id="productquickview" onClick="productquickview(<?php echo $pvalue['id'];?>);"><i class="flaticon-eye"></i></a></li>
 						                                     </ul>
 						                                  </div>
@@ -405,6 +370,21 @@ function productquickview(productid)
 	        });
 
 }
+$("#slider-range").slider({
+  range: true,
+  min: <?php echo $ProductMinMaxPriceDetails['MinPrice'];?>,
+  max: <?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>,
+  values: [<?php echo $ProductMinMaxPriceDetails['MinPrice'];?>, <?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>],
+  slide: function(event, ui) {
+    $("#amount").val("₹" + ui.values[0] + " to ₹" + ui.values[1]);
+    $("#MinPrice").val(ui.values[0]);
+	 $("#MaxPrice").val(ui.values[1]);
+  }
+});
+$("#amount").val("₹" + $("#slider-range").slider("values", 0) +
+        " to ₹" + $("#slider-range").slider("values", 1));
+
+
 
 
 </script>

@@ -352,7 +352,7 @@
           <a href="javascript:void(0);">Log in</a> | <a href="create-javascript:void(0);">Create Account</a> 
       </div>
       <form action="javascript:void(0);" id="moble-search">
-        <input placeholder="Search...." type="text">
+        <input placeholder="Search...." type="text" class="">
         <button type="submit"><i class="fa fa-search"></i></button>
       </form>
     </div>

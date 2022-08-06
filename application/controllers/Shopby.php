@@ -9,7 +9,7 @@ class Shopby extends MY_Controller {
     function index(){
 		$type = $this->uri->segment(2);
 		$typevalue = $this->uri->segment(3);
-
+		
 		
 		if(isset($type) && $type!='' && $type=='collections'){
 			if(isset($typevalue) && $typevalue!=''){
@@ -549,17 +549,27 @@ class Shopby extends MY_Controller {
 			 redirect($this->data['base_url']);
 		}
 		// Get Available Category
+		$GroupByCategory=array('GroupBy'=>"p.categoryid");
+		$GroupByCategoryDetails=$this->Crud_Model->GetProductCollectionDetails($GroupByCategory);
+		$this->data['GroupByCategoryDetails'] = $GroupByCategoryDetails;
+		
+		// Get Minimim Price and Maximum Price
+		$ProductMinMaxPriceDetails=$this->Crud_Model->GetProductMinMaxPriceDetails();
+		$this->data['ProductMinMaxPriceDetails'] = $ProductMinMaxPriceDetails;
+
+		// Get Available Collection
 		$GroupByCollection=array('GroupBy'=>"p.collectiontype");
 		$GroupByCollectionDetails=$this->Crud_Model->GetProductCollectionDetails($GroupByCollection);
 		$this->data['GroupByCollectionDetails'] = $GroupByCollectionDetails;
-			// echo "<pre>";
-			// print_r($GroupByCollectionDetails);
-			// exit;
-		// Get Gender
 
-		// Get Minimim Price and Maximum Price
+		// TRENDING COLLECTIONS
+		$trending=array('highlight'=>"TRENDING COLLECTIONS",'Limit'=>5);
+		$TrendingDetails=$this->Crud_Model->GetProductDetails($trending);
+		$this->data['TrendingDetails'] = $TrendingDetails;
 
-		// Get
+		// TRENDING COLLECTIONS SIDE IMAGE
+		$this->data['TrendingCollectionSideImage']=$this->Crud_Model->getDatafromtablewheresingle('trending',array('id'=>1));
+		
 		$this->data['title'] = "Shop By";
 		$this->data['type'] = $type;
 		$this->data['SubType'] = $SubType;

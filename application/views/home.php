@@ -196,7 +196,7 @@
                       <div class="icon-wrapper">
                         <div class="pro-icon">
                           <ul>
-                            <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
+                            <li><a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $navalue['id'];?>);"><i class="flaticon-valentines-heart"></i></a></li>
 
                             <li>
                               <a href="javascript:void(0);" class="triggersss" data-id="<?php echo $navalue['id'];?>" id="productquickview" onClick="NewQuickView(<?php echo $navalue['id'];?>);">

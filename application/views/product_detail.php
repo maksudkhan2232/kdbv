@@ -21,7 +21,7 @@
                </div>
             </div>
          </section>
-         <section class="shop-area style-two">
+         <section class="shop-area style-two" style="padding-bottom: 45px;">
             <div class="container">
                <div class="row">
                   <div class="col-xl-12">
@@ -73,16 +73,18 @@
                               	<a href="javascript:void(0);"><?php echo $ProductDetails['productcode'];?></a>
                               </h5>
                               <?php 
-	                              if($v['price']!='0'){
-																	echo '<span class="price">Price : ₹.'.$v['price'].'</span>';	
-																}				       
+	                              if($v['price']!='0' and $v['price']!=''){
+												echo '<span class="price">Price : ₹.'.$v['price'].'</span>';	
+											}else{
+                                    echo '<span class="price"></span>';
+                                 }			       
                               ?>
                               <div class="add-tocart-wrap">
                               	<div class="cart-plus-minus-button">
                                     <input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty<?php echo $ProductDetails['id'];?>" min="1">
                                  </div>
                                  <a href="javascript:void(0);" class="add-to-cart" onclick="return addtocart(<?php echo $ProductDetails['id'];?>);"><i class="flaticon-shopping-purse-icon"></i>Add to Cart</a>
-                                 <!-- <a href="#"><i class="flaticon-valentines-heart"></i></a> -->
+                                <!--  <a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $ProductDetails['id'];?>);"><i class="flaticon-valentines-heart"></i></a> -->
                               </div>
                               <!-- <span>SKU:	N/A</span>
                                   <p>Tags 
@@ -91,14 +93,53 @@
                                   	<a href="#">Rok-dress</a>
                                   </p>
                               -->
-                              <p>
-                              	<?php echo nl2br($ProductDetails['description']);?>
-                              </p>
+                              
                               <!-- <ul>
                                  <li>Lorem ipsum dolor sit amet</li>
                                  <li>quis nostrud exercitation ullamco</li>
                                  <li>Duis aute irure dolor in reprehenderit</li>
                               </ul> -->
+                              <div class="">
+                                 <!-- <h5>Additional information</h5> -->
+                                 <style type="text/css">
+                                   .first{
+                                        width: 40% !important;
+                                        
+                                   }
+                                   .secound{
+                                        width: 50% !important;
+
+                                   }
+                                   .sin-aditional-info{
+                                    border-bottom: 1px solid #d6d4d3;
+                                    border-right: 1px solid #d6d4d3;
+                                   }
+                                 </style>
+                                 <div class="info-wrap">
+                                    <?php 
+                                       $ProductDetailsHtml='';
+                                       if(!empty($ProductExtraDetail)){
+                                          foreach ($ProductExtraDetail as $pekey => $pevalue) {
+                                             $ProductDetailsHtml .='<div class="sin-aditional-info">';
+                                                $ProductDetailsHtml .='<div class="first">';
+                                                   $ProductDetailsHtml .=ucwords($pevalue['ename']);
+                                                $ProductDetailsHtml .='</div>';
+                                                $ProductDetailsHtml .='<div class="secound">';
+                                                   $ProductDetailsHtml .=ucwords($pevalue['evalue']);
+                                                $ProductDetailsHtml .='</div>';
+                                             $ProductDetailsHtml .='</div>';
+                                             }
+                                       }
+                                       echo $ProductDetailsHtml;
+                                    ?>
+                                 </div>
+                              </div>
+
+                              <br>
+                              <p style="padding: 20px 0px 20px;">
+                                 <?php echo nl2br($ProductDetails['description']);?>
+                              </p>
+
                               <div class="product-social">
                                  <span>Share :</span>
                                  <ul>
@@ -111,7 +152,7 @@
                            </div>
                         </div>
                         <!-- /.col-xl-6 -->
-                        <div class="col-xl-12">
+                        <!-- <div class="col-xl-12">
                            <div class="product-des-tab">
                               <ul class="nav nav-tabs " role="tablist">
                                  <li class="nav-item">
@@ -137,22 +178,22 @@
                                     <div class="prod-bottom-tab-sin">
                                     	<h5>Additional information</h5>
                                       <div class="info-wrap">
-                                       		<?php 
-                                       			$ProductDetailsHtml='';
-                                       			if(!empty($ProductExtraDetail)){
-																		  				foreach ($ProductExtraDetail as $pekey => $pevalue) {
-																		  					$ProductDetailsHtml .='<div class="sin-aditional-info">';
-																		  						$ProductDetailsHtml .='<div class="first">';
-																		  							$ProductDetailsHtml .=ucwords($pevalue['ename']);
-																		  						$ProductDetailsHtml .='</div>';
-																		  						$ProductDetailsHtml .='<div class="secound">';
-																		  							$ProductDetailsHtml .=ucwords($pevalue['evalue']);
-																		  						$ProductDetailsHtml .='</div>';
-																		  					$ProductDetailsHtml .='</div>';
-																							}
-																		  			}
-																		  			echo $ProductDetailsHtml;
-                                       		?>
+                                    		<?php 
+                                    			$ProductDetailsHtml='';
+                                    			if(!empty($ProductExtraDetail)){
+												  				foreach ($ProductExtraDetail as $pekey => $pevalue) {
+												  					$ProductDetailsHtml .='<div class="sin-aditional-info">';
+												  						$ProductDetailsHtml .='<div class="first">';
+												  							$ProductDetailsHtml .=ucwords($pevalue['ename']);
+												  						$ProductDetailsHtml .='</div>';
+												  						$ProductDetailsHtml .='<div class="secound">';
+												  							$ProductDetailsHtml .=ucwords($pevalue['evalue']);
+												  						$ProductDetailsHtml .='</div>';
+												  					$ProductDetailsHtml .='</div>';
+																	}
+												  			}
+												  			echo $ProductDetailsHtml;
+                                    		?>
                                       </div>
                                     </div>
                                  </div>
@@ -189,12 +230,10 @@
                                                 </ul>
                                              </div>
                                              <div class="raing-form">
-                                                <form action="#">
-                                                   <input type="text" placeholder="">
-                                                   <input type="text">
-                                                   <textarea name="rating-form"></textarea>
-                                                   <input type="submit">
-                                                </form>
+                                                   <input type="hidden" name="productid" id="productid" value="<?php echo $ProductDetails['id'];?>">
+                                                   <input type="text" name="reviewname" id="reviewname" placeholder="Enter Your Name" value="">
+                                                   <textarea name="review" id="review" placeholder="Enter Your Review"></textarea>
+                                                   <input type="button" name="review_submit" id="review_submit">
                                              </div>
                                           </div>
                                        </div>
@@ -202,7 +241,7 @@
                                  </div>
                               </div>
                            </div>
-                        </div>
+                        </div> -->
                      </div>
                      <!-- /.row -->
                   </div>
@@ -212,7 +251,7 @@
             </div>
             <!-- /.container-fluid -->
          </section>
-         <section class="banner-product">
+         <section class="banner-product" style="padding: 67px 0 75px;">
             <div class="container-fluid custom-container">
                <div class="section-heading pb-30">
                   <h3>Related <span>Products</span></h3>
