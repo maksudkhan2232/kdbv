@@ -69,12 +69,126 @@ class Customer extends MY_Controller {
                 redirect($this->data['base_url'] . 'customer');
             }else{
             	if($rdata['email']!='' AND $rdata['name']!='' AND $rdata['password']!='' AND $rdata['mobileno']!=''){
+	                $password=$rdata['password'];
 	                $rdata['password']=md5($rdata['password']);
 		            $rdata['status']='1';            
 		            $rdata['isdelete']='0';
 		            $rdata['created_datetime']=date('Y-m-d H:i:s');
 		            $rdata['createdip']=$_SERVER['REMOTE_ADDR'];
 	            	$AddCustomerId = $this->Crud_Model->InsertData('billing_customer',$rdata);
+
+	            	// Email Send
+
+	            	$subject = "Welcome KD Bhindi Jewellers Junagadh";
+	            	$message = '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
+					   <tbody>
+					      <tr>
+					         <td valign="top" align="center">
+					            <u></u>
+					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fff;max-width:600px">
+					               <tbody>
+					                  <tr>
+					                     <td style="padding-top:18px;padding-bottom:18px;padding-left:15px" valign="top" align="center">
+					                        <img src="'.base_url().'assest/frontend/media/images/logo.svg" width="200" height="auto"> 
+					                        <div style="color:#666666">Zanzarda Road, opp. Saibaba Temple, Junagadh, Gujarat 362001 India<br />Phone: +91 9825085001</div>
+					                     </td>
+					                  </tr>
+					               </tbody>
+					            </table>
+					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;border:1px solid #e2e2e2;background:#fff;border-bottom:1px solid #ef4e46">
+					               <tbody>
+					                  <tr>
+					                     <td style="padding-top:0;padding-right:14px;padding-bottom:14px;padding-left:14px">
+					                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+					                           <tbody>
+					                              <tr>
+					                                 <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;padding-top:40px;padding-bottom:24px">
+					                                    Hi '.ucwords($rdata['name']).',
+					                                 </td>
+					                                 <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:right;padding-top:30px;padding-bottom:24px">
+					                                    '.date('d M Y').'
+					                                 </td>
+					                              </tr>
+					                              <tr>
+					                                 <td valign="top" colspan="2" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;word-wrap:nornal">
+					                                    <table cellpadding="10" cellspacing="0" align="center" width="100%" style="font-family:Calibri;"  frame="box" rules="groups">
+					                                       <tr>
+					                                          <td colspan="2" style="font-size:20px;font-weight:bold;color:#990000;background-color:#ffe9be">
+					                                             Welcome
+					                                             <p style="font-size:14px;line-height:18px;font-weight:normal;color:#000000;">Hey '.ucwords($rdata['name']).'! Welcome to our store!
+					                                                Thank you for creating a account. We are more than happy to have you on board.
+					                                                Please make yourself at home and enjoy shopping with us.
+					                                                The Customer Experience Team at KD Bhindi Jewellers.
+					                                             </p>
+					                                          </td>
+					                                       </tr>
+					                                       <tr>
+					                                          <td colspan="2">
+					                                             <table border="0" cellpadding="10" cellspacing="0" align="center" width="100%" style="font-size:18px;"  frame="void" rules="none">
+					                                                <tr>
+					                                                   <td><b>Name : </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td>'.ucwords($rdata['name']).'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Address : </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td>'.nl2br($rdata['address']).'<br>'.$rdata['city'].'<br>'.$rdata['pincode'].'</td>
+					                                                   </td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Mobile No</b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td>'.$rdata['mobileno'].'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Email Id </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td colspan="5">'.$rdata['email'].'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Username </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td colspan="5">'.$rdata['email'].'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Password </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td colspan="5">'.$password.'</td>
+					                                                </tr>
+					                                             </table>
+					                                          </td>
+					                                       </tr>
+					                                    </table>
+					                                 </td>
+					                              </tr>
+					                           </tbody>
+					                        </table>
+					                     </td>
+					                  </tr>
+					                  <tr>
+					                     <td valign="top" style="padding-top:10px;padding-right:14px;padding-bottom:36px;padding-left:14px;text-align:center;">
+					                        <table cellspacing="0" cellpadding="0" width="50%" border="0" style="margin-top:20px;" align="center">
+					                           <tbody>
+					                              <tr>
+					                                 <td style="font:normal 15px arial;color:#fff;line-height:18px;background:#00bcd5;border-radius:3px;border:1px solid #00bcd5;text-align:center;padding:12px;">
+					                                    <a href="'.base_url().'customer/" title="Connect"  style="outline:none;text-decoration:none;color:#fff" target="_blank">Login Now</a> 
+					                                 </td>
+					                              </tr>
+					                           </tbody>
+					                        </table>
+					                     </td>
+					                  </tr>
+					               </tbody>
+					            </table>
+					         </td>
+					      </tr>
+					   </tbody>
+					</table>';
+	            	$email=$rdata['email'];
+	            	send_mail($email,$message,$subject,"");
+
+	            	
 	            	$this->session->set_flashdata('message',"Your Registration Successfully Complete."); 
 
 	            	// Session Set

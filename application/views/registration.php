@@ -143,7 +143,7 @@
                                                             </div>
                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                 <label for="email">Email Id <span class="text-danger">*</span></label>
-                                                                <input type="email" placeholder="Enter Your Email."  id="email" name="data[email]">
+                                                                <input type="email" placeholder="Enter Your Email."  id="remail" name="data[email]">
                                                             </div>
                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                 <label for="password">Password<span class="text-danger">*</span></label>

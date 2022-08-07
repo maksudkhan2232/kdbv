@@ -47,6 +47,9 @@ class order extends MY_Controller{
             $product_collectionid=$ProductSingleDetails['collectiontype'];
             $product_categoryid=$ProductSingleDetails['categoryid'];
             $product_image=$ProductSingleDetails['image_name'];
+            $collectionname=$ProductSingleDetails['collectionname'];
+            $collectionshortname=$ProductSingleDetails['collectionshortname'];
+            $categoryname=$ProductSingleDetails['categoryname'];
             
 
             // Check if items variation multiple 
@@ -64,7 +67,7 @@ class order extends MY_Controller{
                                 'qty'     => $product_quantity,
                                 'price'   => $product_cost,
                                 'name'    => $product_name,
-                                'options' => array('product_code' => $product_code,'product_collectionid' => $product_collectionid,'product_categoryid' => $product_categoryid,'product_image' => $product_image)
+                                'options' => array('product_code' => $product_code,'product_collectionid' => $product_collectionid,'product_categoryid' => $product_categoryid,'product_image' => $product_image,'collectionname' => $collectionname,'collectionshortname' => $collectionshortname,'categoryname' => $categoryname)
                             );  
                             $this->cart->update($dat);
                             $returnarray['msg'] = 'cartupdate';
@@ -82,7 +85,7 @@ class order extends MY_Controller{
                      'qty'     => $product_quantity, // Item Quantity
                      'price'   => $product_cost,//item_cost from rk_items table
                      'name'    => $product_name,
-                     'options' => array('product_code' => $product_code,'product_collectionid' => $product_collectionid,'product_categoryid' => $product_categoryid,'product_image' => $product_image)
+                     'options' => array('product_code' => $product_code,'product_collectionid' => $product_collectionid,'product_categoryid' => $product_categoryid,'product_image' => $product_image,'collectionname' => $collectionname,'collectionshortname' => $collectionshortname,'categoryname' => $categoryname)
                     );
                    
 
@@ -313,6 +316,8 @@ class order extends MY_Controller{
                         $orderinfo['TotalProducts']=count($this->cart->contents());
                         // Address
                         $AddressDetails=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$customerid));
+                        $BillingEmail=$AddressDetails['email'];
+                        $BillingName=$AddressDetails['name'];
                         if(!empty($AddressDetails)){
                             $orderinfo['BillingName']=$AddressDetails['name'];
                             $orderinfo['BillingEmail']=$AddressDetails['email'];
@@ -366,9 +371,128 @@ class order extends MY_Controller{
                             }
                         }
                        
+                       
+                        
+
+                        // Email Send
+                        $subject = "A Thank you for order! Your order #ORD".$OrderNo;
+                        $message ='';
+                        $message .= '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
+                               <tbody>
+                                  <tr>
+                                     <td valign="top" align="center">
+                                        <u></u>
+                                        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fff;max-width:600px">
+                                           <tbody>
+                                              <tr>
+                                                 <td style="padding-top:18px;padding-bottom:18px;padding-left:15px" valign="top" align="center">
+                                                    <img src="'.base_url().'assest/frontend/media/images/logo.svg" width="200" height="auto"> 
+                                                    <div style="color:#666666">Zanzarda Road, opp. Saibaba Temple, Junagadh, Gujarat 362001 India<br />Phone: +91 9825085001</div>
+                                                 </td>
+                                              </tr>
+                                           </tbody>
+                                        </table>
+                                        <table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;border:1px solid #e2e2e2;background:#fff;border-bottom:1px solid #ef4e46">
+                                           <tbody>
+                                              <tr>
+                                                 <td style="padding-top:0;padding-right:14px;padding-bottom:14px;padding-left:14px">
+                                                    <table width="100%" cellspacing="0" cellpadding="0" border="0">
+                                                       <tbody>
+                                                          <tr>
+                                                             <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;padding-top:40px;padding-bottom:24px">
+                                                                Order Number: ORD'.$OrderNo.'
+                                                             </td>
+                                                             <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:right;padding-top:30px;padding-bottom:24px">
+                                                                '.date('d M Y').'
+                                                             </td>
+                                                          </tr>
+                                                          <tr>
+                                                             <td valign="top" colspan="2" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;word-wrap:nornal">
+                                                                <table cellpadding="10" cellspacing="0" align="center" width="100%" style="font-family:Calibri;"  frame="box" rules="groups">
+                                                                   <tr>
+                                                                      <td colspan="2" style="font-size:20px;font-weight:bold;color:#990000;background-color:#ffe9be">
+                                                                         Hello '.$BillingName.',
+                                                                         <p style="font-size:14px;line-height:18px;font-weight:normal;color:#000000;">We’re happy to let you know that we’ve received your order.
+                                                                         If you have any questions, contact us here or call us on +91 9825085001
+                                                                         </p>
+                                                                      </td>
+                                                                   </tr>
+                                                                   <tr>
+                                                                      <td colspan="2">
+                                                                         <table border="0" cellpadding="10" cellspacing="0" align="center" width="100%" style="font-size:18px;"  frame="void" rules="none">
+                                                                            <tr>
+                                                                               <td><b>Sr No. </b></td>
+                                                                               <td><b>Product Code </b></td>
+                                                                               <td><b>Collection </b></td>
+                                                                               <td><b>Category </b></td>
+                                                                               <td><b>Qty </b></td>
+                                                                               <td><b>Price </b></td>
+                                                                               <td><b>Total </b></td>
+                                                                            </tr>';
+                                                                            $total=0;
+                                                                            $Ftotal =0;
+                                                                            foreach ($CartTmpDate as $cdkey => $cdvalue) {
+                                                                                $total = ($cdvalue['price']*$cdvalue['qty']);
+                                                                                $Ftotal = ($Ftotal+$total);
+                                                                                    if($cdvalue['price']!='0'){ 
+                                                                                        $price = $cdvalue['price'];
+                                                                                        $totals = ($cdvalue['price']*$cdvalue['qty']);
+                                                                                    }else{ 
+                                                                                        $price = '-';
+                                                                                        $totals = '-';
+                                                                                    }
+                                                                                    $message .= '<tr>
+                                                                                           <td>'.($cdkey+1).'</td>
+                                                                                           <td>'.$cdvalue['options']['product_code'].'</td>
+                                                                                           <td>'.$cdvalue['options']['collectionshortname'].'</td>
+                                                                                           <td>'.$cdvalue['options']['categoryname'].'</td>
+                                                                                           <td>'.$cdvalue['qty'].'</td>
+
+                                                                                           <td>'.$price.'</td>
+                                                                                           <td>'.($totals).'</td>
+                                                                                        </tr>';
+                                                                                
+                                                                            }
+
+                                                                            $message .= '<tr>
+                                                                               <td colspan="5" align="center"><b>Total</b></td>
+                                                                               <td  colspan="2" align="right"><b>₹ '.$Ftotal.'</b></td>
+                                                                            </tr>
+                                                                         </table>
+                                                                      </td>
+                                                                   </tr>
+                                                                </table>
+                                                             </td>
+                                                          </tr>
+                                                       </tbody>
+                                                    </table>
+                                                 </td>
+                                              </tr>
+                                              <tr>
+                                                 <td valign="top" style="padding-top:10px;padding-right:14px;padding-bottom:36px;padding-left:14px;text-align:center;">
+                                                    <table cellspacing="0" cellpadding="0" width="50%" border="0" style="margin-top:20px;" align="center">
+                                                       <tbody>
+                                                          <tr>
+                                                             <td style="font:normal 15px arial;color:#fff;line-height:18px;background:#00bcd5;border-radius:3px;border:1px solid #00bcd5;text-align:center;padding:12px;">
+                                                                <a href="'.base_url().'customer/" title="Connect"  style="outline:none;text-decoration:none;color:#fff" target="_blank">View Order</a> 
+                                                             </td>
+                                                          </tr>
+                                                       </tbody>
+                                                    </table>
+                                                 </td>
+                                              </tr>
+                                           </tbody>
+                                        </table>
+                                     </td>
+                                  </tr>
+                               </tbody>
+                        </table>';
+                        $email=$BillingEmail;
+                        send_mail($email,$message,$subject,"");
+                        
+
                         $this->cart->destroy();
                         $this->session->unset_userdata("ordernote");
-                        
                         $this->session->set_flashdata('message',"Your Order Successfully Place.");
                         redirect($this->data['base_url'].'customer');            
                     }else{

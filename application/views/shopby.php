@@ -75,13 +75,15 @@
 				<div class="container-fluid custom-container">
 			   		<div class="row">
 				      	<div class="order-2 order-lg-1 col-lg-3 col-xl-3">
-				      		<input type="hidden" name="type" id="type" value="<?php echo $type;?>">
-				      		<input type="hidden" name="typevalue" id="typevalue" value="<?php echo $typevalue;?>">
-				         	<div class=" shop-sidebar">
-					            <div class="sidebar-widget sidebar-search">
-					               <input type="text" placeholder="Search Product....">
-					               <button type="submit"><i class="fas fa-search"></i></button>
-					            </div>
+				      		<div class=" shop-sidebar">
+					            <form action="<?php echo base_url()."search/"; ?>" id="MyProductSearchForm" enctype="multipart/form-data" method="post" accept-charset="utf-8">
+					            	<div class="sidebar-widget sidebar-search">
+						               <input type="text" placeholder="Search Product...." name="TopSearchText" id="TopSearchText">
+						               <button type="submit"><i class="fas fa-search"></i></button>
+						            </div>
+								   </form>
+								   <input type="hidden" name="type" id="type" value="<?php echo $type;?>">
+				      			<input type="hidden" name="typevalue" id="typevalue" value="<?php echo $typevalue;?>">
 					            <?php 
 					            	if(!empty($GroupByCategoryDetails)){
 					            ?>
@@ -107,7 +109,7 @@
 					            <div class="sidebar-widget range-widget">
 					               <h6>SEARCH BY PRICE</h6>
 					               <div class="price-range">
-					                  <div id="slider-range"></div>
+					                  <div id="slider-range" onclick="return OnPageSearch();"></div>
 					                  <span>Price :</span>
 					                  <input type="text" id="amount" readonly>
 					                  <input type="hidden" id="MinPrice" name="MinPrice" value="<?php echo $ProductMinMaxPriceDetails['MinPrice'];?>">
@@ -122,7 +124,7 @@
 													foreach ($GenderDetails as $gkey => $gvalue) {
 				                      ?>
 				                           <div class="form-group">
-							                     <input type="checkbox" id="gender<?php echo ucwords($gvalue['id']);?>" >
+							                     <input type="checkbox" class="gender" id="gender<?php echo ucwords($gvalue['id']);?>" name="gender[]" value="<?php echo $gvalue['name'];?>" onClick="return OnPageSearch();">
 							                     <label for="gender<?php echo ucwords($gvalue['id']);?>"><?php echo ucwords($gvalue['name']);?> Collections</label>
 							                  </div>
 				                          
@@ -140,7 +142,7 @@
 													foreach ($GroupByCollectionDetails as $gkey => $gvalue) {
 				                      ?>
 				                           <div class="form-group">
-							                     <input type="checkbox" id="collection<?php echo ucwords($gvalue['collectiontype']);?>" checked>
+							                     <input type="checkbox" name="collection[]" class="collection" id="collection<?php echo ucwords($gvalue['collectiontype']);?>" onClick="return OnPageSearch();" value="<?php echo $gvalue['id'];?>">
 							                     <label for="collection<?php echo ucwords($gvalue['collectiontype']);?>"><?php echo ucwords($gvalue['collectionshortname']);?></label>
 							                  </div>
 				                          
@@ -210,12 +212,11 @@
 								<div class="col-12 col-sm-8 col-md-6">
 								   <div class="sort-by">
 								      <span>Sort by :</span>
-								      <select class="orderby" name="orderby">
+								      <select class="orderby" name="sortby" id="sortby" onchange="return OnPageSearch();">
 								         <option value="menu_order">Default sorting</option>
 								         <option value="popularity">Sort by popularity</option>
-								         <option value="rating">Sort by average rating</option>
-								         <option value="date">Sort by newness</option>
-								         <option selected="selected">Best Selling</option>
+								         <option value="trending">Sort by trending</option>
+								         <option value="newarrival">Sort by new arrival</option>
 								      </select>
 								   </div>
 								</div>						
@@ -372,9 +373,9 @@ function productquickview(productid)
 }
 $("#slider-range").slider({
   range: true,
-  min: <?php echo $ProductMinMaxPriceDetails['MinPrice'];?>,
+  min: 1,
   max: <?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>,
-  values: [<?php echo $ProductMinMaxPriceDetails['MinPrice'];?>, <?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>],
+  values: [1, <?php echo $ProductMinMaxPriceDetails['MaxPrice'];?>],
   slide: function(event, ui) {
     $("#amount").val("₹" + ui.values[0] + " to ₹" + ui.values[1]);
     $("#MinPrice").val(ui.values[0]);

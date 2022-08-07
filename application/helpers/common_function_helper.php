@@ -281,35 +281,35 @@ function slugify($text)
 
 function send_mail($email="vinayakwebinfotech@gmail.com",$message,$subject,$attachment="")
 {
-    $ci = &get_instance();
-    $ci->load->library('phpmailer_lib');
-    $mail = $ci->phpmailer_lib->load();
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username = 'YOUREMAIL@gmail.com';
-    $mail->Password = 'YOURPASS';				
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587;
-    $mail->setFrom('vinayakinfotechjnd@gmail.com', $subject);
-    if($attachment !=""){           
-        $mail->addAttachment($attachment); 
-    }
-   // $mail->addAddress($email);
-    $mail->addAddress('vinayakwebinfotech@gmail.com'); 
-    $mail->Subject = $subject;
-    $mail->IsHTML(true);
-    $mail->Body = $message; 
-    if(!$mail->send())
-    {
-        echo 'Error';
-        echo  'Mailer Error: '. $mail->ErrorInfo; exit;
-        return false;
-    }
-    else
-    {                
-        return true;
-    } 
+   //  $ci = &get_instance();
+   //  $ci->load->library('phpmailer_lib');
+   //  $mail = $ci->phpmailer_lib->load();
+   //  $mail->isSMTP();
+   //  $mail->Host = 'smtp.gmail.com';
+   //  $mail->SMTPAuth = true;
+   //  $mail->Username = 'YOUREMAIL@gmail.com';
+   //  $mail->Password = 'YOURPASS';				
+   //  $mail->SMTPSecure = 'tls';
+   //  $mail->Port = 587;
+   //  $mail->setFrom('vinayakinfotechjnd@gmail.com', $subject);
+   //  if($attachment !=""){           
+   //      $mail->addAttachment($attachment); 
+   //  }
+   // // $mail->addAddress($email);
+   //  $mail->addAddress('vinayakwebinfotech@gmail.com'); 
+   //  $mail->Subject = $subject;
+   //  $mail->IsHTML(true);
+   //  $mail->Body = $message; 
+   //  if(!$mail->send())
+   //  {
+   //      echo 'Error';
+   //      echo  'Mailer Error: '. $mail->ErrorInfo; exit;
+   //      return false;
+   //  }
+   //  else
+   //  {                
+   //      return true;
+   //  } 
 }
 
 function common_testimonials()

@@ -242,9 +242,8 @@ function registration(){
   var city = $('#city').val();
   var pincode = $('#pincode').val();
   var mobileno = $('#mobileno').val();
-  var email = $('#email').val();
+  var email = $('#remail').val();
   var password = $('#password').val();
-
   var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   
   if (name=='') { 
@@ -543,6 +542,19 @@ function profile(){
     return false;
   }
 }
+function topsearch(){
+  var TopSearchText = $('#TopSearchText').val();
+  if (TopSearchText=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Search Product.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
+  }
+  window.location.href = base_url+'shopby/search/'+TopSearchText;   
+}
 $(function() {
   $('#PlaceOrder').click(function(){
     var name = $('#sname').val();
@@ -687,7 +699,7 @@ $(function() {
             icon: 'success',
             title: 'Join our newsletter successfully.',
             showConfirmButton: false,
-            timer: 500
+            timer: 1500
           })
           $("#subscribeemail").val('');
         }else{
@@ -761,5 +773,29 @@ $(function() {
     });
   });
 });
+function OnPageSearch(){
+  var type = $('#type').val();
+  var typevalue = $('#typevalue').val();
+  var MinPrice = $('#MinPrice').val();
+  var MaxPrice = $('#MaxPrice').val();
+  var sortby = $('#sortby').val();
+  
+
+  var val = [];
+  $('.gender:checked').each(function(i){
+    val[i] = $(this).val();
+  });
+  var gender =val;
+  
+  var cval = [];
+  $('.collection:checked').each(function(i){
+    cval[i] = $(this).val();
+  });
+  var collection =cval;
+  alert(gender);
+  alert(collection);
+  //return false;
+  
+}
 
 
