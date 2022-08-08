@@ -773,9 +773,10 @@ $(function() {
     });
   });
 });
-function OnPageSearch(){
+function OnProductPage(){
   var type = $('#type').val();
   var typevalue = $('#typevalue').val();
+  var filedvalue = $('#filedvalue').val();
   var MinPrice = $('#MinPrice').val();
   var MaxPrice = $('#MaxPrice').val();
   var sortby = $('#sortby').val();
@@ -792,10 +793,43 @@ function OnPageSearch(){
     cval[i] = $(this).val();
   });
   var collection =cval;
-  alert(gender);
-  alert(collection);
-  //return false;
-  
+
+  var data ="type="+type;
+      data +="&typevalue="+typevalue;
+      data +="&filedvalue="+filedvalue;
+      data +="&MinPrice="+MinPrice;
+      data +="&MaxPrice="+MaxPrice;
+      data +="&sortby="+sortby;
+      data +="&gender="+gender;
+      data +="&collection="+collection;
+  $.ajax({
+    type:'POST',
+    url:base_url+'search/OnProductPage/',
+    data:data,
+    dataType: "json",
+    success:function(result){
+      var msg = result.msg;
+      if(msg=='success'){
+        Swal.fire({
+          icon: 'success',
+          title: 'Your Review Submit Successfully.',
+          showConfirmButton: false,
+          timer: 500
+        })
+        $("#reviewname").val('');
+        $("#review").val('');
+      }else{
+        Swal.fire({
+          icon: 'error',
+          title: 'Please Login your account.',
+          showConfirmButton: false,
+          timer: 500
+        })
+        window.location.href = base_url+'customer/';   
+      }    
+      return false;
+    }
+  });
 }
 
 

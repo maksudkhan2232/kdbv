@@ -219,6 +219,9 @@ class crud_model extends CI_Model{
         if(isset($data['highlight']) and $data['highlight']!=''){
             $this->db->like('p.highlight',$data['highlight']);    
         }
+        if(isset($data['CustomWhere']) and $data['CustomWhere']!=''){
+            $this->db->where($data['CustomWhere']);    
+        }
         if(isset($data['status']) and $data['status']!=''){
             $this->db->where('p.status',$data['status']);    
         }else{
@@ -524,6 +527,88 @@ class crud_model extends CI_Model{
         }
         $query=$this->db->get();
         //echo $this->db->last_query();    exit;
+        return $query->result_array();
+    } 
+    function GetSearchProductOnPageDetails($data=''){ 
+        $this->db->select('p.*,c.name as collectionname,c.shortname as collectionshortname,sc.name as categoryname,pi.image_name');
+        $this->db->from('product as p');
+        $this->db->join('category as c','c.id=p.collectiontype','LEFT');
+        $this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
+        $this->db->join('product_image as pi','pi.product_id=p.id','LEFT');
+        if(isset($data['status']) and $data['status']!=''){
+            $this->db->where('p.status',$data['status']);    
+        }else{
+            $this->db->where('p.status','1');    
+        }
+        $this->db->where('p.isdelete','0');
+        if(isset($data['collectiontype']) and $data['collectiontype']!=''){
+            $this->db->where('p.collectiontype',$data['collectiontype']);    
+        }
+        if(isset($data['categoryid']) and $data['categoryid']!=''){
+            $this->db->where('p.categoryid',$data['categoryid']);    
+        }
+        
+        if(isset($data['pricemin']) and $data['pricemin']!='' and $data['pricemax']!=''){
+            if($data['pricemin']!='' and $data['pricemax']!=''  and $data['pricemax']!='0'){
+                $this->db->where('price >=', $data['pricemin']);
+                $this->db->where('price <=', $data['pricemax']);
+            }
+            if($data['pricemax']!=''  and $data['pricemax']=='0'){
+                $this->db->where('price >=', $data['pricemin']);
+            }
+        }
+        $this->db->group_start();
+        
+        if(isset($data['collection']) and $data['collection']!=''){
+            $excollection = explode(',',$data['collection']);
+            if(!empty($excollection)){
+                foreach ($excollection as $key => $value) {
+                    if($value!=''){
+                        $this->db->like('p.collectiontype',$value);    
+                    }
+                }
+            }            
+        }
+
+        if(isset($data['name']) and $data['name']!=''){
+            $this->db->like('p.name',$data['name']);    
+        }
+        if(isset($data['productcode']) and $data['productcode']!=''){
+            $this->db->or_like('p.productcode',$data['productcode']);    
+        }
+        
+        if(isset($data['description']) and $data['description']!=''){
+            $this->db->or_like('p.description',$data['description']);    
+        }
+        if(isset($data['genders']) and $data['genders']!=''){
+            $exgenders = explode(',',$data['genders']);
+            if(!empty($exgenders)){
+                foreach ($exgenders as $key => $value) {
+                    if($value!=''){
+                        $this->db->or_like('p.gender',$value);    
+                    }
+                }
+            } 
+        }
+        if(isset($data['gender']) and $data['gender']!=''){
+
+            $this->db->or_like('p.gender',$data['gender']);    
+        }
+        if(isset($data['highlight']) and $data['highlight']!=''){
+            $this->db->or_like('p.highlight',$data['highlight']);    
+        }
+        $this->db->group_end();        
+        if(isset($data['OrderBy']) and $data['OrderBy']!=''){
+            $this->db->order_by($data['OrderBy'], $data['order']);
+        }else{
+             $this->db->order_by('p.id','DESC');
+        }
+        $this->db->group_by('p.id');        
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
+        $query=$this->db->get();
+        echo $this->db->last_query();    exit;
         return $query->result_array();
     } 
 }

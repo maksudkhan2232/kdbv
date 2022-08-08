@@ -158,6 +158,16 @@
                                                     </div>
                                                 </div>
                                           <form>
+                                            <div class="col-lg-12 col-12">
+                                                <div class="login-now">
+                                                    <div class="container-fluid custom-container">
+                                                        <div class="col-lg-12 col-12">
+                                                            <span>Already Registered.?</span>
+                                                            <a href="javascript:void(0)" class="btn-two" id="openloginaccount"> Login Now</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                        </div>
                                     </div>                                    
                                 </div>

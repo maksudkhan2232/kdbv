@@ -805,4 +805,9 @@ var THEMEIM = THEMEIM || {};
       $('#open2').css("display","block");      
       $('#loginpanel').css("display","none");
     })
+    $('#openloginaccount').on("click", function() {
+      $('#newregisterpanel').css("display","none");
+      $('#open2').css("display","block");      
+      $('#loginpanel').css("display","block");
+    })
     

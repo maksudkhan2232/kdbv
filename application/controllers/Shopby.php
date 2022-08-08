@@ -78,7 +78,7 @@ class Shopby extends MY_Controller {
 						  	$ProductDetailsHtml .='</div>';
 						  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 						    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-						      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+						      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 						    	$ProductDetailsHtml .='</div>';
 						    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 						    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -95,6 +95,7 @@ class Shopby extends MY_Controller {
 					}
 
 					$this->data['ProductDetails']=$product_details;
+					$this->data['filedvalue'] = $CollectionId;
 					// echo "<pre>";
 					// print_r($this->data['ProductDetails']);
 					// exit;
@@ -171,7 +172,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -188,6 +189,7 @@ class Shopby extends MY_Controller {
 				}
 
 				$this->data['ProductDetails']=$product_details;
+				$this->data['filedvalue'] = $CategoryId;
 				// echo "<pre>";
 				// print_r($this->data['ProductDetails']);
 				// exit;
@@ -261,7 +263,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -278,6 +280,8 @@ class Shopby extends MY_Controller {
 				}
 
 				$this->data['ProductDetails']=$product_details;
+				$this->data['filedvalue'] = $Gender;
+				
 				// echo "<pre>";
 				// print_r($this->data['ProductDetails']);
 				// exit;
@@ -352,7 +356,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -369,6 +373,7 @@ class Shopby extends MY_Controller {
 				}
 
 				$this->data['ProductDetails']=$product_details;
+				$this->data['filedvalue'] = $Priceid;
 				// echo "<pre>";
 				// print_r($this->data['ProductDetails']);
 				// exit;
@@ -442,7 +447,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -459,6 +464,7 @@ class Shopby extends MY_Controller {
 				}
 
 				$this->data['ProductDetails']=$product_details;
+				$this->data['filedvalue'] = "trending";
 			}else{
 				$this->data['title'] = "Collections";
 				$this->load->view('collections',$this->data);
@@ -529,7 +535,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -546,6 +552,7 @@ class Shopby extends MY_Controller {
 				}
 
 				$this->data['ProductDetails']=$product_details;
+				$this->data['filedvalue'] = "newarrival";
 			}else{
 				$this->data['title'] = "Collections";
 				$this->load->view('collections',$this->data);
@@ -555,7 +562,7 @@ class Shopby extends MY_Controller {
 			
 			
 			$searcharea=array('productcode'=>$typevalue,'name'=>$typevalue,'description'=>$typevalue,'gender'=>$typevalue,'highlight'=>$typevalue);
-			
+			$this->data['filedvalue'] = $typevalue;
 			$SearchDetails=$this->Crud_Model->GetSearchProductDetails($searcharea);
 			//print_r($SearchDetails);exit;
 			if(!empty($SearchDetails)){
@@ -618,7 +625,7 @@ class Shopby extends MY_Controller {
 					  	$ProductDetailsHtml .='</div>';
 					  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 					    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+					      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 					    	$ProductDetailsHtml .='</div>';
 					    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 					    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';

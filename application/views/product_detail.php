@@ -72,11 +72,12 @@
                               <h5 class="pro-title">
                               	<a href="javascript:void(0);"><?php echo $ProductDetails['productcode'];?></a>
                               </h5>
+                              <p style="padding: 0px;"><?php echo $ProductDetails['collectionshortname'];?> / <span style="color: #d19e66;"><?php echo $ProductDetails['categoryname'];?></span></p>
                               <?php 
 	                              if($v['price']!='0' and $v['price']!=''){
 												echo '<span class="price">Price : ₹.'.$v['price'].'</span>';	
 											}else{
-                                    echo '<span class="price"></span>';
+                                    //echo '<span class="price"></span>';
                                  }			       
                               ?>
                               <div class="add-tocart-wrap">
@@ -86,6 +87,7 @@
                                  <a href="javascript:void(0);" class="add-to-cart" onclick="return addtocart(<?php echo $ProductDetails['id'];?>);"><i class="flaticon-shopping-purse-icon"></i>Add to Cart</a>
                                 <!--  <a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $ProductDetails['id'];?>);"><i class="flaticon-valentines-heart"></i></a> -->
                               </div>
+                              <br>
                               <!-- <span>SKU:	N/A</span>
                                   <p>Tags 
                                   	<a href="#">boys,</a>
@@ -251,6 +253,9 @@
             </div>
             <!-- /.container-fluid -->
          </section>
+         <?php 
+            if(!empty($RelatedProduct)){
+         ?>
          <section class="banner-product" style="padding: 67px 0 75px;">
             <div class="container-fluid custom-container">
                <div class="section-heading pb-30">
@@ -261,117 +266,54 @@
                   <!-- Col end-->
                   <div class="no-padding col-xl-12 col-lg-12">
                      <div class="relprod-carousel owl-carousel owl-theme">
-                        <div class="sin-prod-car">
-                           <!-- SingleProduct-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/1.jpg" alt=""> </div>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Helix Bracelet</a></h5>
-                                 <p>Gold / <span>Bracelet</span></p>
+                        <?php
+                          foreach(array_chunk($RelatedProduct, 2) as $RelatedProductCollection ) {
+                        ?>
+                          <div class="sin-prod-car">
+                           <?php
+                              foreach($RelatedProductCollection as $tckey=>$tcval){
+                           ?>              
+                              <div class="sin-product style-two small">
+                                  <div class="pro-img"> 
+                                    <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $tcval['image_name'];?>" alt="<?php echo $tcval['productcode'];?>"> 
+                                  </div>
+                                  <?php 
+                                    if (strpos($tcval['highlight'], 'NEW ARRIVAL') !== false) {
+                                  ?>
+                                      <span class="new-tag">
+                                        New 
+                                      </span>
+                                  <?php
+                                    }
+                                  ?>
+                                  
+                                  <div class="mid-wrapper">
+                                    <h5 class="pro-title">
+                                      <a href="<?php echo base_url().'products/view/'.$tcval['slug'];?>"><?php echo $tcval['productcode'];?></a>
+                                    </h5>                  
+                                    <p><?php echo $tcval['collectionshortname'];?> / <span><?php echo $tcval['categoryname'];?></span></p>
+                                  </div>
+                                  <div class="icon-wrapper">
+                                    <div class="pro-icon">
+                                      <ul>
+                                        <li><a href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $tcval['id'];?>);"><i class="flaticon-valentines-heart"></i></a></li>
+                                        <li>
+                                          <a href="javascript:void(0);" class="triggersss" data-id="<?php echo $tcval['id'];?>" id="productquickview" onClick="TrendingQuickView(<?php echo $tcval['id'];?>);">
+                                            <i class="flaticon-eye"></i>
+                                          </a>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                    <div class="add-to-cart"> <a href="javascript:void(0);" onclick="return addtocart(<?php echo $tcval['id'];?>);">add to cart</a> </div>
+                                  </div>
                               </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                           <!-- Single Product-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/2.jpg" alt=""> </div>
-                              <span class="new-tag">NEW!</span>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Ixia Nose Pin</a></h5>
-                                 <p>Gold / <span>Nose Pin</span></p>
-                              </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="sin-prod-car">
-                           <!-- Single Product-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/3.jpg" alt=""> </div>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Birta Lariat Necklace</a></h5>
-                                 <p>Gold / <span>Necklace</span></p>
-                              </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                           <!-- Single Product-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/4.jpg" alt=""> </div>
-                              <span class="new-tag">NEW!</span>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Felicidad Oval Bangle</a></h5>
-                                 <p>Gold / <span>Bangle</span></p>
-                              </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="sin-prod-car">
-                           <!-- Single Product-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/5.jpg" alt=""> </div>
-                              <span class="new-tag">NEW!</span>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Heart Yonder Pendant</a></h5>
-                                 <p>Silver / <span>Pendant</span></p>
-                              </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                           <!-- Single Product-->
-                           <div class="sin-product style-two small">
-                              <div class="pro-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/product/6.jpg" alt=""> </div>
-                              <div class="mid-wrapper">
-                                 <h5 class="pro-title"><a href="javascript:void(0);">The Elisha Twister Bangle</a></h5>
-                                 <p>Real Diamonds / <span>Bangle</span></p>
-                              </div>
-                              <div class="icon-wrapper">
-                                 <div class="pro-icon">
-                                    <ul>
-                                       <li><a href="javascript:void(0);"><i class="flaticon-valentines-heart"></i></a></li>
-                                       <li><a class="trigger" href="javascript:void(0);"><i class="flaticon-eye"></i></a></li>
-                                    </ul>
-                                 </div>
-                                 <div class="add-to-cart"> <a href="javascript:void(0);">add to cart</a> </div>
-                              </div>
-                           </div>
-                        </div>
+                           <?php 
+                              }
+                           ?>
+                          </div>
+                        <?php 
+                          }
+                        ?>
                      </div>
                   </div>
                   <!-- Col end-->
@@ -380,6 +322,10 @@
             </div>
             <!-- Container End -->
          </section>
+         <?php 
+            }
+         ?>
+         
          <!--=========================-->
          <!--=   Subscribe area      =-->
          <?php $this->load->view('common/gender-collections');?> 

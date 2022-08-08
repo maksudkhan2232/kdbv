@@ -199,6 +199,18 @@ class products extends MY_Controller {
 		$this->data['ProductExtraDetail'] = $ProductExtraDetail;
 		$this->data['ProductImageDetail'] = $ProductImageDetail;
 		$this->data['CollectionName'] = $CollectionName;
+		
+		// Related Product // Collection and category
+		$CollectionAndCategory=array('collectiontype'=>$ProductDetails['collectiontype'],'categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
+		$CollectionAndCategoryWise=$this->Crud_Model->GetProductDetails($CollectionAndCategory);
+		$this->data['RelatedProduct'] = $CollectionAndCategoryWise;
+		if(empty($CollectionAndCategoryWise)){
+			// Related category
+			$CategoryGet=array('categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
+			$CategoryWise=$this->Crud_Model->GetProductDetails($CategoryGet);
+			$this->data['RelatedProduct'] = $CategoryWise;
+		}
+
 		$this->load->view('product_detail',$this->data);
 	}
 	function SetFavoriteProducts()

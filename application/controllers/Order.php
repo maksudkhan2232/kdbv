@@ -188,7 +188,9 @@ class order extends MY_Controller{
                             }
                         $carthtml .='</p>';
                     $carthtml .='</div>';
-                    $carthtml .='<a href="javascript:void(0);" onclick="return removetocart("'.$cartvalue['rowid'].'");"><i class="fa fa-times"></i></a>'; 
+                    $carthtml .='<a href="javascript:void(0);" onclick="return removetocart(';
+                    $carthtml .="'".$cartvalue['rowid']."'";
+                    $carthtml .=');"><i class="fa fa-times"></i></a>'; 
                 $carthtml .='</div>';
             }
             $carthtml .='<div class="cart-bottom">';

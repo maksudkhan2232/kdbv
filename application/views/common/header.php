@@ -196,7 +196,7 @@
                               ?> 
                             </p>
                           </div>
-                          <a href="javascript:void(0);" onclick="return removetocart('<?php echo $cartvalue['rowid'];?>');"><i class="fa fa-times"></i></a> 
+                          <a href="javascript:void(0)s;" onclick="return removetocart('<?php echo $cartvalue['rowid'];?>');"><i class="fa fa-times"></i></a> 
                         </div>
                     <?php
                       }

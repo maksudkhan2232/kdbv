@@ -72,7 +72,7 @@ class Home extends MY_Controller {
 			  	$ProductDetailsHtml .='</div>';
 			  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 			    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-			      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+			      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 			    	$ProductDetailsHtml .='</div>';
 			    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 			    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
@@ -152,7 +152,7 @@ class Home extends MY_Controller {
 			  	$ProductDetailsHtml .='</div>';
 			  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 			    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-			      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'">';
+			      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$v['id'].'" min="1">';
 			    	$ProductDetailsHtml .='</div>';
 			    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$v['id'].');">';
 			    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';

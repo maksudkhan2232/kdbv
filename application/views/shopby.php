@@ -84,6 +84,7 @@
 								   </form>
 								   <input type="hidden" name="type" id="type" value="<?php echo $type;?>">
 				      			<input type="hidden" name="typevalue" id="typevalue" value="<?php echo $typevalue;?>">
+				      			<input type="hidden" name="filedvalue" id="filedvalue" value="<?php echo $filedvalue;?>">
 					            <?php 
 					            	if(!empty($GroupByCategoryDetails)){
 					            ?>
@@ -109,7 +110,7 @@
 					            <div class="sidebar-widget range-widget">
 					               <h6>SEARCH BY PRICE</h6>
 					               <div class="price-range">
-					                  <div id="slider-range" onclick="return OnPageSearch();"></div>
+					                  <div id="slider-range" onclick="return OnProductPage();"></div>
 					                  <span>Price :</span>
 					                  <input type="text" id="amount" readonly>
 					                  <input type="hidden" id="MinPrice" name="MinPrice" value="<?php echo $ProductMinMaxPriceDetails['MinPrice'];?>">
@@ -124,7 +125,7 @@
 													foreach ($GenderDetails as $gkey => $gvalue) {
 				                      ?>
 				                           <div class="form-group">
-							                     <input type="checkbox" class="gender" id="gender<?php echo ucwords($gvalue['id']);?>" name="gender[]" value="<?php echo $gvalue['name'];?>" onClick="return OnPageSearch();">
+							                     <input type="checkbox" class="gender" id="gender<?php echo ucwords($gvalue['id']);?>" name="gender[]" value="<?php echo $gvalue['name'];?>" onClick="return OnProductPage();">
 							                     <label for="gender<?php echo ucwords($gvalue['id']);?>"><?php echo ucwords($gvalue['name']);?> Collections</label>
 							                  </div>
 				                          
@@ -142,7 +143,7 @@
 													foreach ($GroupByCollectionDetails as $gkey => $gvalue) {
 				                      ?>
 				                           <div class="form-group">
-							                     <input type="checkbox" name="collection[]" class="collection" id="collection<?php echo ucwords($gvalue['collectiontype']);?>" onClick="return OnPageSearch();" value="<?php echo $gvalue['id'];?>">
+							                     <input type="checkbox" name="collection[]" class="collection" id="collection<?php echo ucwords($gvalue['collectiontype']);?>" onClick="return OnProductPage();" value="<?php echo $gvalue['id'];?>">
 							                     <label for="collection<?php echo ucwords($gvalue['collectiontype']);?>"><?php echo ucwords($gvalue['collectionshortname']);?></label>
 							                  </div>
 				                          
@@ -212,8 +213,8 @@
 								<div class="col-12 col-sm-8 col-md-6">
 								   <div class="sort-by">
 								      <span>Sort by :</span>
-								      <select class="orderby" name="sortby" id="sortby" onchange="return OnPageSearch();">
-								         <option value="menu_order">Default sorting</option>
+								      <select class="orderby" name="sortby" id="sortby" onchange="return OnProductPage();">
+								         <option value="">Default sorting</option>
 								         <option value="popularity">Sort by popularity</option>
 								         <option value="trending">Sort by trending</option>
 								         <option value="newarrival">Sort by new arrival</option>
@@ -276,7 +277,7 @@
 				                      	</div>
 				                   </div>
 				                </div>
-				                <div class="load-more-wrapper">
+				                <!-- <div class="load-more-wrapper">
 				                   <a href="#" class="btn-two">Load More</a>
 				                </div>
 				                <div class="load-more-wrapper">
@@ -289,7 +290,7 @@
 				                         <li><a href="#" class="control"><span class="fa fa-caret-right"></span></a></li>
 				                      </ul>
 				                   </div>
-				                </div>
+				                </div> -->
 				            </div>			            
 				        </div>
 			        </div>
