@@ -664,7 +664,7 @@ class Master extends MY_Controller  {
 
 			if(isset($_FILES['image']['name']) && $_FILES['image']['name']!="")
 			{
-				$config['upload_path']   = 'uploads/trending/';
+				$config['upload_path']   = 'uploads/welcomenote/';
                 $config['allowed_types'] = 'gif|jpg|png|jpeg';
                 $config['encrypt_name'] = TRUE;
                 $config['max_width']  = '1030';
@@ -674,8 +674,8 @@ class Master extends MY_Controller  {
                     $uploadData = $this->upload->data();
                     $uploadedFile = $uploadData['file_name'];                   
                     $data['image'] = $uploadedFile;
-                    $editdata=$this->Crud_Model->getById(1,'id','trending');
-					unlink('uploads/trending/'.$editdata['image']);
+                    $editdata=$this->Crud_Model->getById(1,'id','welcomenote');
+					unlink('uploads/welcomenote/'.$editdata['image']);
 					$this->Crud_Model->Updatedata(1,'id','welcomenote',$data);
                 }	
             }	

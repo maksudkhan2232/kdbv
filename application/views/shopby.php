@@ -225,11 +225,11 @@
 				            <div class="shop-content shop-four-grid">
 				                <div class="tab-content" id="myTabContent">
 				                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-				                      	<div class="row">
+				                      	<div class="row" id="ProductDetailsShow">
 					                      	<?php
 					                      		foreach ($ProductDetails as $pkey => $pvalue) {
 					                      	?>
-					                      		<div class="col-sm-6 col-xl-3">
+					                      		<div class="col-sm-6 col-xl-3 popularityset" data-id="<?php echo $pvalue['id'];?>">
 						                            <div class="sin-product style-two">
 						                               <div class="pro-img">
 						                                  <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $pvalue['image_name'];?>" alt="<?php echo $pvalue['productcode'];?>">

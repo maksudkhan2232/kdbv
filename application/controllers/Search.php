@@ -84,8 +84,58 @@ class Search extends MY_Controller {
 			$GetProduct['highlight']=$typevalue;
 		}
 		$PDetails=$this->Crud_Model->GetSearchProductOnPageDetails($GetProduct);
-		echo "<pre>";
-		print_r($PDetails);exit;
-		
+		$returnarray=array();
+		if(!empty($PDetails)){
+			$phtml='';
+			foreach ($PDetails as $pkey => $pvalue) {          	
+          		$phtml .='<div class="col-sm-6 col-xl-3 " onClick="popularityset('.$pvalue['id'].');"  data-id="'.$pvalue['id'].'">';
+                    $phtml .='<div class="sin-product style-two ">';
+                    	$phtml .='<div class="pro-img">';
+                        	$phtml .='<img src="'.base_url().'uploads/product/thumbnails/'.$pvalue['image_name'].'" alt="'. $pvalue['productcode'].'">';
+                       	$phtml .='</div>';
+                        if (strpos($pvalue['highlight'], 'NEW ARRIVAL') !== false) {
+	                    	$phtml .='<span class="new-tag">NEW </span>';
+                      	}
+                      	if (strpos($pvalue['highlight'], 'TRENDING COLLECTIONS') !== false) {
+	                    	$phtml .='<span class="new-tag">Trending </span>';
+                      	}
+                      	$phtml .='<div class="mid-wrapper">';
+                        	$phtml .='<h5 class="pro-title">';
+                          		$phtml .='<a href="'.base_url().'products/view/'.$pvalue['slug'].'">'.$pvalue['productcode'].'</a>';
+                          	$phtml .='</h5>';
+                          	$phtml .='<p>';
+                          		$phtml .=ucwords($pvalue['collectionshortname']);
+                          		$phtml .=' / ';
+                          		$phtml .='<span>'.ucwords($pvalue['categoryname']).'</span>';
+                          	$phtml .='</p>';
+                        $phtml .='</div>';
+                       	$phtml .='<div class="icon-wrapper">';
+                          	$phtml .='<div class="pro-icon">';
+                            	$phtml .='<ul>';
+                                	$phtml .='<li>';
+                                		$phtml .='<a  href="javascript:void(0);" onClick="FavoriteProducts('.$pvalue['id'].');" >';
+                                			$phtml .='<i class="flaticon-valentines-heart"></i>';
+                                		$phtml .='</a>';
+                                	$phtml .='</li>';
+                                	$phtml .='<li>';
+                                		$phtml .='<a href="javascript:void(0);" class="triggers" data-id="'.$pvalue['id'].'" id="productquickview" onClick="productquickview('.$pvalue['id'].');"><i class="flaticon-eye"></i></a>';
+                                	$phtml .='</li>';
+                             	$phtml .='</ul>';
+                          	$phtml .='</div>';
+                          	$phtml .='<div class="add-to-cart">';
+                             	$phtml .='<a href="javascript:void(0);"  onclick="return addtocart('.$pvalue['id'].');">add to cart</a>';
+                          	$phtml .='</div>';
+                       $phtml .='</div>';
+                    $phtml .='</div>';
+                $phtml .='</div>';
+          	
+          	}
+          	$returnarray['phtml']=$phtml;
+          	$returnarray['msg']='success';
+        }else{
+        	$returnarray['phtml']='';
+          	$returnarray['msg']='error';
+        }
+		echo json_encode($returnarray);exit;		
 	}
 }

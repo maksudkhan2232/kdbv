@@ -39,29 +39,30 @@
         				  }else{
         				  	$action=base_url().'administrator/slider/add';
         				  }?>
-                 <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
-                  <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
-                    
+                  <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
+                    <input type="hidden" name="id" id="id" value="<?php echo $id; ?>">
                     <div class="form-group">
                       <label for="exampleInputName1">Slider Image <span class="text-danger">*</span></label>
                       <div class="row">
-                          <div class="col-md-12">
-                            <input type="file" id="prodImage1" data-num="1" name="prodImage1" class="file-upload-default allbannerimg">
-                            <div class="input-group col-xs-12">
-                              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                              <span class="input-group-append">
-                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
-                              </span>
-                            </div>
+                        <div class="col-md-12">
+                          <input type="file" id="image_name" data-num="1" name="image_name" class="file-upload-default allbannerimg">
+                          <div class="input-group col-xs-12">
+                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                            <span class="input-group-append">
+                              <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                            </span>
                           </div>
+                        </div>
+                        <div class="col-md-12">
                           <?php 
-                              if(isset($id) && $id!="")
-                              {
-                                $img=base_url().'uploads/slider/'.$photo;
-                              }
-                              else{
-                                $img=base_url().'uploads/book.png';
-                              }    ?>
+                            if(isset($id) && $id!="")
+                            {
+                              $img=base_url().'uploads/slider/thumbnails/'.$image;
+                            }
+                            else{
+                              $img=base_url().'uploads/book.png';
+                            }    
+                            ?>
                           <div class="form-group">
                             <label for="exampleInputName1">&nbsp;</label>
                             <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
@@ -69,19 +70,21 @@
                             </a>                            
                           </div>
                           <div style="color:#000099;font-size:14px;text-align:center;">
-                          Image Size  = Width : <font color="#FF0000">1920 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">844 px</font><br>
-                          Upload Image Type - <font color="#FF0000">JPG / JPEG</font></div>
+                              Image Size  = Width : <font color="#FF0000">1920 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : 
+                              <font color="#FF0000">844 px</font><br>
+                              Upload Image Type - <font color="#FF0000">JPG / JPEG</font>
+                          </div>
+                        </div>
+                      </div>                    
+                      <div class="form-group">
+                        <label for="title">Title <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="title" name="title" value="<?php echo $title; ?>" placeholder=" Enter Title ">
+                        <?php echo '<div class="text-danger">'.form_error('title').'</div>' ?>
                       </div>
-                      </div>
-                    
-                    <div class="form-group">
-                      <label for="exampleInputName1">Title <span class="text-danger">*</span></label>
-                      <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" placeholder="Name">
-                      <?php echo '<div class="text-danger">'.form_error('name').'</div>' ?>
+					            <hr>
+                      <a href="<?php echo base_url('administrator/slider');?>" class="btn btn-outline-danger">Cancel</a>
+                      <button type="submit" class="btn btn-success mr-2 pull-right"><?php echo $button_value;?></button>
                     </div>
-					          <hr>
-                    <a href="<?php echo base_url('administrator/dashboard');?>" class="btn btn-outline-danger">Cancel</a>
-                    <button type="submit" class="btn btn-success mr-2 pull-right"><?php echo $button_value;?></button>
                   <?php echo form_close(); ?> 
                 </div>
               </div>
@@ -97,6 +100,7 @@
                       <tr>
                         <th>No</th>
                         <th>Name</th>
+                        <th>Image</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -109,7 +113,8 @@
                       ?>
                         <tr>
                           <td><?php echo $i; ?></td>
-                          <td style="line-height:28px;"><?php echo $val['name']; ?></td>
+                          <td style="line-height:28px;"><?php echo $val['title']; ?></td>
+                           <td style="line-height:28px;"><?php echo $val['title']; ?></td>
                           <td><?php if($val['status'] == 1){ ?>
                             <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="slider" data-field="status" data-id-name="id" data-id="<?php echo $val['id'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">
                             <div class="handle"></div>
@@ -144,6 +149,7 @@
   </div>
   <!-- container-scroller -->
 <?php $this->load->view('administrator/common/footer-js');?> 
+<script src="<?php echo  base_url(); ?>assest/administrator/js/file-upload.js"></script>
 <script type="text/javascript">
   function check_confirm_delete(row_id)
   {

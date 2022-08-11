@@ -287,6 +287,50 @@ class crud_model extends CI_Model{
         //echo $this->db->last_query();    
         return $query->row_array();
     } 	
+    function GetCustomerDetails($data=''){ 
+        //count(o.OrderID) as totalorder,count(fp.id) as totalfavorite
+        $this->db->select('c.*');
+        $this->db->from('billing_customer as c');
+        $this->db->join('orders as o','o.CustomerID=c.id','LEFT');
+        $this->db->join('customer_favorite_products as fp','fp.customer_id=c.id','LEFT');
+        
+        if(isset($data['id']) and $data['id']!=''){
+            $this->db->where('c.id',$data['id']);    
+        }
+        if(isset($data['email']) and $data['email']!=''){
+            $this->db->where('c.email',$data['email']);    
+        }
+        if(isset($data['state']) and $data['state']!=''){
+            $this->db->where('c.state',$data['state']);    
+        }
+        if(isset($data['city']) and $data['city']!=''){
+            $this->db->like('c.city',$data['city']);    
+        }
+        if(isset($data['name']) and $data['name']!=''){
+            $this->db->like('c.name',$data['name']);    
+        }
+        if(isset($data['created_datetime']) and $data['created_datetime']!=''){
+            $this->db->like('c.created_datetime',$data['created_datetime']);    
+        }
+        if(isset($data['status']) and $data['status']!=''){
+            $this->db->where('c.status',$data['status']);    
+        }else{
+            $this->db->where('c.status','1');    
+        }
+        $this->db->where('c.isdelete','0');
+        if(isset($data['OrderBy']) and $data['OrderBy']!=''){
+            $this->db->order_by($data['OrderBy'], $data['order']);
+        }else{
+             $this->db->order_by('c.id','DESC');
+        }
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
+        $this->db->group_by('c.id');        
+        $query=$this->db->get();
+        //echo $this->db->last_query();    exit;
+        return $query->result_array();
+    }
     function CheckAlreadyCustomer($email){
         $this->db->select('*');
         $this->db->from('billing_customer');
@@ -608,7 +652,7 @@ class crud_model extends CI_Model{
             $this->db->limit($data['Limit']);
         }
         $query=$this->db->get();
-        echo $this->db->last_query();    exit;
+        //echo $this->db->last_query();    exit;
         return $query->result_array();
     } 
 }

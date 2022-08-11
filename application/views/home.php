@@ -31,7 +31,7 @@
         <img src="<?php echo  base_url(); ?>uploads/slider/<?php echo $sval['image'];?>" alt="<?php echo $sval['title'];?>">
         <div class="container-fluid custom-container slider-content">
           <div class="row align-items-center">
-            <div class="col-12 col-sm-8 col-md-8 col-lg-6 ml-auto">
+           <!--  <div class="col-12 col-sm-8 col-md-8 col-lg-6 ml-auto">
               <div class="slider-text style-two">
                 <h1 class="animated fadeIn"><span><?php echo $sval['title'];?></span> <?php echo $sval['subtitle'];?></h1>
                 <p class="animated fadeIn"><?php echo $sval['description'];?></p>
@@ -42,7 +42,7 @@
                 <?php 
                   }
                 ?>                
-            </div>
+            </div> -->
             <!-- Col End -->
           </div>
           <!-- Row End -->
@@ -96,7 +96,7 @@
                 <?php
                   foreach($TrendingCollection as $tckey=>$tcval){
                 ?>              
-                    <div class="sin-product style-two small">
+                    <div class="sin-product style-two small popularityset"  data-id="<?php echo $tcval['id'];?>">
                       <div class="pro-img"> 
                         <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $tcval['image_name'];?>" alt="<?php echo $tcval['productcode'];?>"> 
                       </div>
@@ -175,7 +175,7 @@
               <?php 
                 foreach ($NewArrivalCollectionDetails as $nakey => $navalue) {
               ?>
-                  <div class=" grid-item <?php echo $navalue['collectionshortname'];?> col-6 col-md-6  col-lg-4 col-xl-3">
+                  <div class="grid-item <?php echo $navalue['collectionshortname'];?> col-6 col-md-6  col-lg-4 col-xl-3 popularityset"  data-id="<?php echo $navalue['id'];?>">
                     <div class="sin-product style-two">
                       <div class="pro-img">
                          <img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $navalue['image_name'];?>" alt="<?php echo $navalue['productcode'];?>"> 

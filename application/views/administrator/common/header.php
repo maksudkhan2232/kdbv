@@ -17,7 +17,7 @@
         <ul class="navbar-nav navbar-nav-right">
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle nav-profile" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-              <img src="<?php echo base_url(); ?>assest/administrator/images/faces/face1.jpg" alt="image">
+              <img src="<?php echo base_url(); ?>assest/administrator/images/faces/default_male.jpg" alt="image">
               <span class="d-none d-lg-inline"><?php echo $this->session->userdata('KDBhindiAdminSession')->name; ?></span>
             </a>
             <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">

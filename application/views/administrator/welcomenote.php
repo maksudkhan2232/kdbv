@@ -48,7 +48,7 @@
                             </div>
                             <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?>
                           </div>
-                          <?php $img=base_url().'uploads/trending/'.$photo; ?>
+                          <?php $img=base_url().'uploads/welcomenote/'.$photo; ?>
                           <div class="col-md-4">
                           <div class="form-group ">
                             <label for="exampleInputName1">&nbsp;</label>

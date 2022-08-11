@@ -773,6 +773,21 @@ $(function() {
     });
   });
 });
+$(function() {
+  $('.popularityset').click(function(){
+    var productid = $(this).data('id');
+    //alert(productid);return false;
+    var data = 'productid='+productid;
+    $.ajax({
+      type:'POST',
+      url:base_url+'products/SetPopularityProducts/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+      }
+    });
+  });
+});
 function OnProductPage(){
   var type = $('#type').val();
   var typevalue = $('#typevalue').val();
@@ -810,24 +825,27 @@ function OnProductPage(){
     success:function(result){
       var msg = result.msg;
       if(msg=='success'){
-        Swal.fire({
-          icon: 'success',
-          title: 'Your Review Submit Successfully.',
-          showConfirmButton: false,
-          timer: 500
-        })
-        $("#reviewname").val('');
-        $("#review").val('');
+        $("#ProductDetailsShow").html(result.phtml);
       }else{
         Swal.fire({
           icon: 'error',
-          title: 'Please Login your account.',
+          title: 'Product Not Found.',
           showConfirmButton: false,
           timer: 500
         })
-        window.location.href = base_url+'customer/';   
       }    
       return false;
+    }
+  });
+}
+function popularityset(productid){
+  var data = 'productid='+productid;
+  $.ajax({
+    type:'POST',
+    url:base_url+'products/SetPopularityProducts/',
+    data:data,
+    dataType: "json",
+    success:function(result){
     }
   });
 }

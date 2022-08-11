@@ -250,7 +250,29 @@ class products extends MY_Controller {
 		}
 		echo json_encode($returnarray);exit;        
 	}
+	function SetPopularityProducts()
+    {
+        $returnarray = array();        
+        $productid   = $this->input->post('productid'); //productid  
 
+        if($productid!='' and $productid!='0'){
+        	$ProductDetail=$this->Crud_Model->getDatafromtablewheresingle('product',array('status'=>1,'id'=>$productid));
+        	if(!empty($ProductDetail)){
+        		$popularity=$ProductDetail['popularity'];
+        		$pinfo =array();
+				$pinfo['popularity']=($popularity+1);
+				$pinfo['id']=$productid;
+				$this->Crud_Model->Updatedata($productid,'id','product',$pinfo);
+				$returnarray['msg'] = 'success';
+	        	$returnarray['message'] = '';
+        	}
+        	
+		}else{
+			$returnarray['msg'] = 'error';
+        	$returnarray['message'] = 'Please Login';        	
+        }
+        echo json_encode($returnarray);exit;        
+    }
 	public function ProductSearch() {
         $json = array();
         $Search = $this->input->post('query');

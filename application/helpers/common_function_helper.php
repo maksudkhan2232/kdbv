@@ -378,6 +378,14 @@ function PriceRangeDetails()
     $res = $ci->db->from('product_pricerange')->get()->result_array();
     return  $res;
 }
+function WelcomeNoteDetails()
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->where("status",1);
+    $res = $ci->db->from('welcomenote')->get()->row_array();
+    return  $res;
+}
 
 
 

@@ -106,7 +106,7 @@
                           <td><a href="<?php echo base_url()."uploads/gender/".$val['image']; ?>" target="_blank">
                               <img src="<?php echo base_url()."uploads/gender/".$val['image']; ?>" class="img-thumbnail">
                             </a></td>
-                          <td><?php echo $val['title']; ?></td>
+                          <td><?php echo $val['name']; ?></td>
                           <td><?php if($val['status'] == 1){ ?>
                             <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="gender" data-field="status" data-id-name="id" data-id="<?php echo $val['id'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">
                             <div class="handle"></div>
