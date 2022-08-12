@@ -262,7 +262,7 @@
 						                                  <div class="pro-icon">
 						                                     <ul>
 						                                        <li><a  href="javascript:void(0);" onClick="FavoriteProducts(<?php echo $pvalue['id'];?>);" ><i class="flaticon-valentines-heart"></i></a></li>
-						                                        <li><a href="javascript:void(0);" class="triggers" data-id="<?php echo $pvalue['id'];?>" id="productquickview" onClick="productquickview(<?php echo $pvalue['id'];?>);"><i class="flaticon-eye"></i></a></li>
+						                                        <li><a href="javascript:void(0);" class="triggers" data-id="<?php echo $pvalue['id'];?>" id="productquickview" onClick="productquickviewnew(<?php echo $pvalue['id'];?>);"><i class="flaticon-eye"></i></a></li>
 						                                     </ul>
 						                                  </div>
 						                                  <div class="add-to-cart">
@@ -280,17 +280,7 @@
 				                <!-- <div class="load-more-wrapper">
 				                   <a href="#" class="btn-two">Load More</a>
 				                </div>
-				                <div class="load-more-wrapper">
-				                   <div class="pagination-box">
-				                      <ul class="styled-pagination">
-				                         <li><a href="#" class="control"><span class="fa fa-caret-left"></span></a></li>
-				                         <li><a href="#" class="active">1</a></li>
-				                         <li><a href="#">2</a></li>
-				                         <li><a href="#">3</a></li>
-				                         <li><a href="#" class="control"><span class="fa fa-caret-right"></span></a></li>
-				                      </ul>
-				                   </div>
-				                </div> -->
+				                -->
 				            </div>			            
 				        </div>
 			        </div>
@@ -302,76 +292,16 @@
 			<?php $this->load->view('common/footer');?> 
 		 	<!-- Back to top -->
 		 	<div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-			<?php //$this->load->view('common/quick-view');?> 
+			<?php 
+				$this->load->view('common/quick-view');
+			?> 
 		</div>
       	<?php $this->load->view('common/main-search');?> 
       	<?php $this->load->view('common/common_js');?> 
    </body>
 </html>
 
-<?php
-foreach ($ProductDetails as $pkey => $pvalue) {
-?>
- <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
-	  <div class="quickview">
-	     <div class="row">
-	      <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
-	      <div class="col-md-6">
-	        <span id="slider-js"></span>
-	        <div class="quickview-sliders">
-	          <div class="slider-for" id="slider-for<?php echo $pvalue['id'];?>">
-	            <?php echo $pvalue['sliderfor']; ?>
-	          </div>
-	          <div class="slider-nav" id="slider-nav<?php echo $pvalue['id'];?>">
-	           	<?php echo $pvalue['slidernav']; ?>
-	          </div>
-	        </div>
-	      </div>
-	      <div class="col-md-6" id="product-details">
-	      	<?php echo $pvalue['productdetails']; ?>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<script type="text/javascript">
-		 $('.slider-for<?php echo $pvalue['id'];?>').slick({
-	        slidesToShow: 4,
-	        slidesToScroll: 1,
-	        arrows: false,
-	        fade: true,
-	        asNavFor: '.slider-nav',
-	        swipe: false,
-	      });
-
-	      $('.slider-nav<?php echo $pvalue['id'];?>').slick({
-	        slidesToShow: 4,
-	        slidesToScroll: 1,
-	        asNavFor: '.slider-for',
-	        focusOnSelect: true,
-	        swipe: false,
-	        infinite: false,
-	        arrows: true,
-	      });
-	</script>
-<?php } ?>
-
-
 <script type="text/javascript">
-
-
-
-function productquickview(productid)
-{
-	   var mask = '<div class="mask-overlay">';
-	        $('#pmodel'+productid).toggleClass('open');
-	        $(mask).hide().appendTo('body').fadeIn('fast');
-	        
-	        $('.mask-overlay, .close-qv').on('click', function() {
-	          $('.quickview-wrapper').removeClass('open');
-	          $('.mask-overlay').remove();
-	        });
-
-}
 $("#slider-range").slider({
   range: true,
   min: 1,

@@ -1,5 +1,24 @@
 function productquickview(productid){
   var data = 'productid=' +productid;
+  var $opts = {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.slider-nav',
+      swipe: false,
+  }
+  var $opts1 = {
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      asNavFor: '.slider-for',
+      focusOnSelect: true,
+      swipe: false,
+      infinite: false,
+      arrows: true,
+  }
+  $('.slider-for').slick('unslick');
+  $('.slider-nav').slick('unslick');
   if (productid>0){    
     $.ajax({
       type:'POST',
@@ -23,6 +42,59 @@ function productquickview(productid){
           $('.quickview-wrapper').removeClass('open');
           $('.mask-overlay').remove();
         });
+        $('.slider-for').slick($opts);
+        $('.slider-nav').slick($opts1);
+        return false;
+      }
+    });    
+  }
+}
+function productquickviewnew(productid){
+  var data = 'productid=' +productid;
+  var $opts = {
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      arrows: false,
+      fade: true,
+      asNavFor: '.slider-nav',
+      swipe: false,
+  }
+  var $opts1 = {
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      asNavFor: '.slider-for',
+      focusOnSelect: true,
+      swipe: false,
+      infinite: false,
+      arrows: true,
+  }
+  $('.slider-for').slick('unslick');
+  $('.slider-nav').slick('unslick');
+  if (productid>0){    
+    $.ajax({
+      type:'POST',
+      url:base_url+'Products/ProductQuickView/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        //$("#quickviewproduct").html(result); 
+        //alert(result.sliderjs);
+
+        $("#slider-for").html(result.sliderfor);    
+        $("#slider-nav").html(result.slidernav);    
+        $("#product-details").html(result.productdetails);  
+        //$("#slider-js").html(result.sliderjs);      
+        //$("#quickviewproduct").html(result);      
+        var mask = '<div class="mask-overlay">';
+        $('.quickview-wrapper').toggleClass('open');
+        $(mask).hide().appendTo('body').fadeIn('fast');
+        
+        $('.mask-overlay, .close-qv').on('click', function() {
+          $('.quickview-wrapper').removeClass('open');
+          $('.mask-overlay').remove();
+        });
+        $('.slider-for').slick($opts);
+        $('.slider-nav').slick($opts1);
         return false;
       }
     });    

@@ -118,7 +118,7 @@ class Search extends MY_Controller {
                                 		$phtml .='</a>';
                                 	$phtml .='</li>';
                                 	$phtml .='<li>';
-                                		$phtml .='<a href="javascript:void(0);" class="triggers" data-id="'.$pvalue['id'].'" id="productquickview" onClick="productquickview('.$pvalue['id'].');"><i class="flaticon-eye"></i></a>';
+                                		$phtml .='<a href="javascript:void(0);" class="triggers" data-id="'.$pvalue['id'].'" id="productquickview" onClick="productquickviewnew('.$pvalue['id'].');"><i class="flaticon-eye"></i></a>';
                                 	$phtml .='</li>';
                              	$phtml .='</ul>';
                           	$phtml .='</div>';
