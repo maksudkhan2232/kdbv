@@ -678,15 +678,4 @@ class Shopby extends MY_Controller {
 		$this->data['typevalue'] = $typevalue;
 		$this->load->view('shopby',$this->data);
 	}
-	// public function index()
-	// {
-	// 	$data['title'] = "Products";
-	// 	$this->load->view('products',$data);
-	// }
-    
- //    public function details()
-	// {
-	// 	$data['title'] = "Product Details";
-	// 	$this->load->view('product_detail',$data);
-	// }
 }
