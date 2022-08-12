@@ -179,5 +179,6 @@ class order extends MY_Controller {
 			redirect('administrator/customer'); exit;
 		}
 	}
+	
 }
 ?>

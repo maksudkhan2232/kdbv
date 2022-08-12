@@ -51,7 +51,11 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
 
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/order"> <i class="icon-circle-check menu-icon"></i> <span class="menu-title">Order</span> </a> </li>
 
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-heart menu-icon"></i> <span class="menu-title">Favorite Product</span> </a> </li>
+    <li class="nav-item"> 
+      <a class="nav-link" href="<?php echo base_url(); ?>administrator/favorite"> 
+        <i class="icon-heart menu-icon"></i> <span class="menu-title">Favourite Product</span> 
+      </a> 
+    </li>
 
 
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/testimonial"> <i class="icon-speech-bubble menu-icon"></i> <span class="menu-title">Testimonoial</span> </a> </li>

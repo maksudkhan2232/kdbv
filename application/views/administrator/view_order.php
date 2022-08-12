@@ -94,15 +94,22 @@
                                           ?>                                          
                                         </td>
                                         <td>
-                                             <?php if($val['status'] == 1){ ?>
-                                             <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="orders" data-field="status" data-id-name="OrderID" data-id="<?php echo $val['OrderID'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">
+                                            <?php 
+                                                if($val['OrderStatus']!=''){
+                                                  echo $val['OrderStatus'];
+                                                }
+                                            ?> 
+                                            <?php 
+                                                if($val['status'] == '1'){ 
+                                            ?>
+                                           <!--   <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="orders" data-field="status" data-id-name="OrderID" data-id="<?php echo $val['OrderID'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">
                                                 <div class="handle"></div>
                                              </button>
                                              <?php } else { ?>
                                              <button type="button" class="btn btn-sm btn-toggle changestatus" data-table="orders" data-field="status" data-id-name="OrderID" data-id="<?php echo $val['OrderID'];?>" data-toggle="button" aria-pressed="0" autocomplete="off">
                                                 <div class="handle"></div>
                                              </button>
-                                             <?php } ?>
+                                             <?php } ?> -->
                                         </td>
                                         <td>
                                          <!--  <a href="<?php echo base_url(); ?>administrator/customer/editview/<?php echo $val['id']; ?>" class="btn btn-outline-primary mb-2">Edit</a>&nbsp;&nbsp;<a href="javascript:void(0);" onClick="check_confirm_delete('<?php echo $val['id']; ?>');" class="btn btn-outline-danger">Delete</a> -->
