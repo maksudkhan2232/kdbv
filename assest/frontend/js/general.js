@@ -282,12 +282,12 @@ function orderspecialnote(){
       success:function(result){
         var msg = result.msg;
         if(msg=='success'){
-          Swal.fire({
-            icon: 'success',
-            title: result.message,
-            showConfirmButton: false,
-            timer: 500
-          })
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: result.message,
+          //   showConfirmButton: false,
+          //   timer: 500
+          // })
         }else{
           Swal.fire({
             icon: 'error',
@@ -318,6 +318,7 @@ function registration(){
   var mobileno = $('#mobileno').val();
   var email = $('#remail').val();
   var password = $('#password').val();
+  var repassword = $('#repassword').val();
   var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   
   if (name=='') { 
@@ -415,6 +416,24 @@ function registration(){
     Swal.fire({
       icon: 'error',
       title: 'Please Enter Your Password.',
+      showConfirmButton: false,
+      timer: 500
+    }) 
+    return false;
+  }
+  if (repassword=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Re-Enter Your Password.',
+      showConfirmButton: false,
+      timer: 500
+    }) 
+    return false;
+  }
+  if (password!=repassword) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Passwords do not match.',
       showConfirmButton: false,
       timer: 500
     }) 

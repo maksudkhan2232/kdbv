@@ -197,7 +197,7 @@ class Customer extends MY_Controller {
 	                $rdata['logged_in'] = TRUE;
 	                $this->session->set_userdata('customer_info', $rdata);
 	            	
-	            	if(count($this->cart->contents() > 0)) {	            		
+	            	if(count($this->cart->contents()) > 0) {	            		
 			            redirect($this->data['base_url'] . 'order/checkout');
 			        }else{
 			        	redirect($this->data['base_url'] . 'customer');
