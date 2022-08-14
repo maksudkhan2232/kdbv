@@ -776,12 +776,19 @@ $(function() {
             timer: 1500
           })
           $("#subscribeemail").val('');
+        }else if(msg=='already'){
+          Swal.fire({
+            icon: 'error',
+            title: 'Newsletter subscription already join.',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }else{
           Swal.fire({
             icon: 'error',
             title: 'Something went wrong',
             showConfirmButton: false,
-            timer: 500
+            timer: 1500
           })
         }    
         return false;

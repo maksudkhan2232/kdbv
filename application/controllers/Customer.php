@@ -272,13 +272,20 @@ class Customer extends MY_Controller {
 	{
 		$subscribeemail   = $this->input->post('subscribeemail'); // Subscribe Email
 		$returnarray = array();     
-		if(isset($subscribeemail) AND $subscribeemail!=''){               
-            $returnarray['msg'] = 'success';
-            $returnarray['message'] = 'Join our newsletter successfully.';
-            $subscribeinfo=array();
-        	$subscribeinfo['email']=$subscribeemail;
-            $subscribeinfo['created_at']=date('Y-m-d H:i:s');
-            $subscribeid=$this->Crud_Model->InsertData('subscription',$subscribeinfo);        	
+		if(isset($subscribeemail) AND $subscribeemail!=''){ 
+			$SubscribeDetails=$this->Crud_Model->getDatafromtablewheresingle('subscription',array('email'=>$subscribeemail));   
+			if(!empty($SubscribeDetails)){
+				$returnarray['msg'] = 'already';
+	            $returnarray['message'] = 'Newsletter subscription already join.';
+			}else{
+				$returnarray['msg'] = 'success';
+	            $returnarray['message'] = 'Join our newsletter successfully.';
+	            $subscribeinfo=array();
+	        	$subscribeinfo['email']=$subscribeemail;
+	            $subscribeinfo['created_at']=date('Y-m-d H:i:s');
+	            $subscribeid=$this->Crud_Model->InsertData('subscription',$subscribeinfo);        		
+			}
+            
 	    }else{
 	    	$returnarray['msg'] = 'error';
             $returnarray['message'] = 'Something Wrong.';

@@ -438,10 +438,14 @@ class crud_model extends CI_Model{
         return $query->result_array();
     }
     function FavoriteProductDetails($data=''){ 
-        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name,count(f.customer_id) as totalcustomer');
+        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name,count(f.customer_id) as totalcustomer,c.name as collectionname,c.shortname as collectionshortname,sc.name as categoryname,pi.image_name');
         $this->db->from('customer_favorite_products as f');
         $this->db->join('product as p','f.products_id=p.id','LEFT');
+        $this->db->join('category as c','c.id=p.collectiontype','LEFT');
+        $this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
         $this->db->join('product_image as pi','pi.product_id=f.products_id','LEFT');
+
+
         if(isset($data['customer_id']) and $data['customer_id']!=''){
             $this->db->where('f.customer_id',$data['customer_id']);    
         }

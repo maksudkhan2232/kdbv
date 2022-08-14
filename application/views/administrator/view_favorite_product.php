@@ -22,7 +22,7 @@
                         <div id="errormsg"></div>
                         <?php $this->load->view('administrator/common/errors');?> 
                         <div class="d-flex justify-content-between align-items-center">
-                           <h4 class="card-title">View Favourite Product</h4>
+                           <h4 class="card-title">Favourite Product</h4>
                         </div>
                         <hr />
                         <div class="row">
@@ -32,7 +32,9 @@
                                     <thead>
                                        <tr>
                                           <th>Sr No.</th>
-                                          <th>Favourite Product Code</th>
+                                          <th>Product Name / Code</th>
+                                          <th>Type</th>
+                                          <th>Image</th>
                                           <th>Total Customer Favourite</th>
                                        </tr>
                                     </thead>
@@ -43,7 +45,10 @@
                                       ?>
                                        <tr>
                                         <td><?php echo $i; ?></td>
-                                        <td style="line-height:22px;"><?php echo $val['pname']; ?></td>
+                                        <td style="line-height:22px;"><?php echo $val['productcode']; ?></td>
+                                        <td style="line-height:22px;"><?php echo ucwords($val['collectionshortname']).' / '.ucwords($val['categoryname']); ?></td>
+                                        <td style="line-height:22px;"><img src="<?php echo base_url().'uploads/product/'.$val['image_name'];?>" alt="<?php echo $val['productcode'];?>"></td>
+                                        
                                         <td style="line-height:22px;"><?php echo $val['totalcustomer']; ?></td>
                                        </tr>
                                       <?php
