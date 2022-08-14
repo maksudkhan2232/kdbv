@@ -361,6 +361,7 @@ var THEMEIM = THEMEIM || {};
             newVal = 0;
           }
         }
+        alert(newVal);
         $button.parent().find("input").val(newVal);
       });
 
