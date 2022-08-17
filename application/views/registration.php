@@ -40,7 +40,7 @@
                                     <?php 
                                         if($message!=''){
                                     ?>
-                                        <div class="alert alert-danger" role="alert">
+                                        <div class="alert alert-success" role="alert">
                                             <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                               <?php echo $message;?>
                                         </div>
@@ -139,7 +139,7 @@
                                                             </div>                                                    
                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                 <label for="mobileno">Mobile No. <span class="text-danger">*</span></label>
-                                                                <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]">
+                                                                <input type="text" placeholder="Enter Your Mobile No."  id="mobileno" name="data[mobileno]" maxlength="10">
                                                             </div>
                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                 <label for="email">Email Id <span class="text-danger">*</span></label>
@@ -148,6 +148,10 @@
                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                 <label for="password">Password<span class="text-danger">*</span></label>
                                                                 <input type="password" placeholder="Enter Your Password."  id="password" name="data[password]">
+                                                            </div>  
+                                                            <div class="col-lg-6 col-md-12 col-12">
+                                                                <label for="repassword">Re-Enter Password<span class="text-danger">*</span></label>
+                                                                <input type="password" placeholder="Enter Re-Enter Password."  id="repassword" name="repassword">
                                                             </div>  
                                                             <div class="col-lg-12 col-md-12 col-12">
                                                                 <div class="col-xl-12">

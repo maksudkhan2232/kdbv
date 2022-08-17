@@ -67,12 +67,13 @@
             <h3>Gallery</h3>
             <div class="footer-instagram">
               <ul>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/6.jpg" alt=""></a></li>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/7.jpg" alt=""></a></li>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/8.jpg" alt=""></a></li>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/9.jpg" alt=""></a></li>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/10.jpg" alt=""></a></li>
-                <li><a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/instagram/11.jpg" alt=""></a></li>
+                <?php 
+                  if(!empty($FooterGalleryDetails)){
+                    foreach ($FooterGalleryDetails as $gkey => $gvalue) {
+                     echo '<li><a href="javascript:void(0);"><img src="'.base_url().'uploads/photo/thumb/'.$gvalue['image_name'].'"></a></li>';
+                    }
+                  }
+                ?>
               </ul>
             </div>
           </div>

@@ -27,7 +27,8 @@ class MY_Controller extends CI_Controller
 		$this->data['PriceRangeDetails'] =PriceRangeDetails();
 		$this->data['PriceRangeDetails'] =PriceRangeDetails();
 		$this->data['WelcomeNoteDetails'] =WelcomeNoteDetails();
-
+		$this->data['FooterGalleryDetails'] =FooterGalleryDetails(6);
+		
 		
 		if ($this->cart->contents()) { 
 			$this->data['carttotal'] = $this->cart->total();

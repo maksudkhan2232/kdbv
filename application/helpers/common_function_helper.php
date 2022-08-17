@@ -386,6 +386,17 @@ function WelcomeNoteDetails()
     $res = $ci->db->from('welcomenote')->get()->row_array();
     return  $res;
 }
+function FooterGalleryDetails($limit=0)
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->order_by('rand()');
+    if($limit!=0){
+        $ci->db->limit($limit);    
+    }    
+    $res = $ci->db->from('photo_gallery_detail')->get()->result_array();
+    return  $res;
+}
 
 
 

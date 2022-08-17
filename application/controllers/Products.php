@@ -142,7 +142,7 @@ class products extends MY_Controller {
 				$ProductDetailsHtml='';
 				$ProductDetailsHtml .='<div class="product-details">';
 					$ProductDetailsHtml .='<h5 class="pro-title">';
-						$ProductDetailsHtml .='<a href="javascript:void(0);">'.$ProductDetail['productcode'].'</a>';
+						$ProductDetailsHtml .='<a href="'.base_url().'products/view/'.$ProductDetail['slug'].'">'.$ProductDetail['productcode'].'</a>';
 					$ProductDetailsHtml .='</h5>';
 					if($ProductDetail['price']!='0'){
 						$ProductDetailsHtml .='<span class="price">₹ '.$ProductDetail['price'].'</span>';	
@@ -161,13 +161,13 @@ class products extends MY_Controller {
 				  	$ProductDetailsHtml .='</div>';
 				  	$ProductDetailsHtml .='<div class="add-tocart-wrap">';
 				    	$ProductDetailsHtml .='<div class="cart-plus-minus-button">';
-				      		$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus">';
-				    	$ProductDetailsHtml .='</div>';
+			      			$ProductDetailsHtml .='<input type="text" value="1" name="qtybutton" class="cart-plus-minus" id="qty'.$ProductDetail['id'].'" min="1">';
+			    		$ProductDetailsHtml .='</div>';
 				    	$ProductDetailsHtml .='<a href="javascript:void(0);" class="add-to-cart" style="width:45%;margin-right:10px;" onclick="return addtocart('.$ProductDetail['id'].');">';
 				    		$ProductDetailsHtml .='<i class="flaticon-shopping-purse-icon"></i>';
 				    		$ProductDetailsHtml .=' Add to Cart';
 				    	$ProductDetailsHtml .='</a>';
-				    	$ProductDetailsHtml .='<a href="" class="add-to-cart" style="width:50px;">';
+				    	$ProductDetailsHtml .='<a href="'.base_url().'products/view/'.$ProductDetail['slug'].'" class="add-to-cart" style="width:50px;">';
 				    		$ProductDetailsHtml .='<i class="flaticon-eye"></i>';
 				    	$ProductDetailsHtml .='</a>';
 				   	$ProductDetailsHtml .='</div>';
@@ -210,9 +210,12 @@ class products extends MY_Controller {
 				$this->data['RelatedProduct'] = $CategoryWise;
 			}
 
+
 			$this->load->view('product_detail',$this->data);
 		}else{
 			 redirect($this->data['base_url'] . 'collections');
+
+		
 		}
 		
 	}

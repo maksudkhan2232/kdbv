@@ -44,6 +44,7 @@ function productquickview(productid){
         });
         $('.slider-for').slick($opts);
         $('.slider-nav').slick($opts1);
+        $(".cart-plus-minus-button").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
         return false;
       }
     });    
@@ -95,6 +96,7 @@ function productquickviewnew(productid){
         });
         $('.slider-for').slick($opts);
         $('.slider-nav').slick($opts1);
+        $(".cart-plus-minus-button").append('<div class="dec qtybutton" onclick="return cartminusbutton('+productid+');">-</div><div class="inc qtybutton" onclick="return cartplusbutton('+productid+');">+</div>');
         return false;
       }
     });    
@@ -316,6 +318,7 @@ function registration(){
   var mobileno = $('#mobileno').val();
   var email = $('#remail').val();
   var password = $('#password').val();
+  var repassword = $('#repassword').val();
   var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   
   if (name=='') { 
@@ -413,6 +416,24 @@ function registration(){
     Swal.fire({
       icon: 'error',
       title: 'Please Enter Your Password.',
+      showConfirmButton: false,
+      timer: 500
+    }) 
+    return false;
+  }
+  if (repassword=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Enter Re-Enter Your Password.',
+      showConfirmButton: false,
+      timer: 500
+    }) 
+    return false;
+  }
+  if (password!=repassword) { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Passwords do not match.',
       showConfirmButton: false,
       timer: 500
     }) 
@@ -774,12 +795,19 @@ $(function() {
             timer: 1500
           })
           $("#subscribeemail").val('');
+        }else if(msg=='already'){
+          Swal.fire({
+            icon: 'error',
+            title: 'Newsletter subscription already join.',
+            showConfirmButton: false,
+            timer: 1500
+          })
         }else{
           Swal.fire({
             icon: 'error',
             title: 'Something went wrong',
             showConfirmButton: false,
-            timer: 500
+            timer: 1500
           })
         }    
         return false;
@@ -920,6 +948,23 @@ function popularityset(productid){
     success:function(result){
     }
   });
+}
+function cartplusbutton(productid){
+  var qty = $('#qty'+productid).val();
+  var newVal = parseFloat(qty) + 1;
+  $('#qty'+productid).val(newVal);
+  
+}
+function cartminusbutton(productid){
+  var qty = $('#qty'+productid).val();
+  var newVal = parseFloat(qty) - 1;
+  if(newVal<1){
+
+  }else{
+    $('#qty'+productid).val(newVal);  
+  }
+  
+  
 }
 
 
