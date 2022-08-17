@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0.1
+-- version 5.1.3
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 11, 2022 at 03:48 PM
--- Server version: 10.1.32-MariaDB
--- PHP Version: 5.6.36
+-- Generation Time: Aug 13, 2022 at 02:16 PM
+-- Server version: 10.4.14-MariaDB
+-- PHP Version: 7.4.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -37,11 +36,11 @@ CREATE TABLE `admin` (
   `org_password` varchar(255) DEFAULT NULL,
   `mo_number` varchar(255) DEFAULT NULL,
   `image` varchar(255) DEFAULT NULL,
-  `status` tinyint(4) NOT NULL DEFAULT '1',
-  `user_type` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0-master, 1-user',
+  `status` tinyint(4) NOT NULL DEFAULT 1,
+  `user_type` tinyint(1) NOT NULL DEFAULT 1 COMMENT '0-master, 1-user',
   `firm_name` varchar(255) DEFAULT NULL,
   `slogan` varchar(255) DEFAULT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `cemail` varchar(255) DEFAULT NULL,
   `contactno` varchar(255) DEFAULT NULL,
   `facebook` varchar(255) DEFAULT NULL,
@@ -52,7 +51,7 @@ CREATE TABLE `admin` (
   `youtube` varchar(255) DEFAULT NULL,
   `pinterest` varchar(255) DEFAULT NULL,
   `create_at` datetime DEFAULT NULL,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -71,9 +70,9 @@ INSERT INTO `admin` (`id`, `name`, `username`, `email`, `password`, `org_passwor
 CREATE TABLE `ads_category` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -102,9 +101,9 @@ CREATE TABLE `advertisement` (
   `category` varchar(255) NOT NULL,
   `weblink` varchar(255) DEFAULT NULL,
   `image` varchar(255) NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '1' COMMENT '1 - active , 0 - deactive',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(1) NOT NULL DEFAULT 1 COMMENT '1 - active , 0 - deactive',
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3105,13 +3104,13 @@ CREATE TABLE `billing_customer` (
   `id` int(11) UNSIGNED NOT NULL,
   `name` varchar(100) DEFAULT NULL,
   `mobileno` varchar(20) NOT NULL,
-  `address` text,
+  `address` text DEFAULT NULL,
   `country` varchar(55) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `city` varchar(100) DEFAULT NULL,
   `pincode` varchar(10) DEFAULT NULL,
   `email` varchar(200) DEFAULT NULL,
-  `password` text,
+  `password` text DEFAULT NULL,
   `status` tinyint(4) DEFAULT NULL,
   `created_datetime` datetime DEFAULT NULL,
   `modified_datetime` datetime DEFAULT NULL,
@@ -3137,7 +3136,7 @@ INSERT INTO `billing_customer` (`id`, `name`, `mobileno`, `address`, `country`, 
 CREATE TABLE `billing_state` (
   `id` int(11) NOT NULL,
   `name` varchar(30) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3227,13 +3226,13 @@ INSERT INTO `category` (`id`, `name`, `slug`, `shortname`, `image`, `description
 CREATE TABLE `committee_master` (
   `id` int(11) NOT NULL,
   `photo` varchar(255) DEFAULT NULL,
-  `city` text CHARACTER SET utf8,
-  `fullname` text CHARACTER SET utf8,
+  `city` text CHARACTER SET utf8 DEFAULT NULL,
+  `fullname` text CHARACTER SET utf8 DEFAULT NULL,
   `designation` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `contact` text CHARACTER SET utf8,
+  `contact` text CHARACTER SET utf8 DEFAULT NULL,
   `gender` varchar(10) DEFAULT NULL,
-  `status` int(5) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(5) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -3296,13 +3295,13 @@ INSERT INTO `dailyratechanger` (`id`, `name`, `status`, `isdelete`, `created_dat
 
 CREATE TABLE `gallery_details` (
   `id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT 0,
   `event_date` date DEFAULT NULL,
-  `title` text CHARACTER SET utf8,
-  `details` text CHARACTER SET utf8,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `title` text CHARACTER SET utf8 DEFAULT NULL,
+  `details` text CHARACTER SET utf8 DEFAULT NULL,
+  `status` int(11) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT NULL,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -3321,8 +3320,8 @@ INSERT INTO `gallery_details` (`id`, `user_id`, `event_date`, `title`, `details`
 
 CREATE TABLE `gallery_photo` (
   `id` bigint(20) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `event_id` int(11) NOT NULL DEFAULT '0',
+  `user_id` int(11) NOT NULL DEFAULT 0,
+  `event_id` int(11) NOT NULL DEFAULT 0,
   `image` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -3377,9 +3376,9 @@ CREATE TABLE `offerzone` (
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
   `document` varchar(255) DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -3415,7 +3414,7 @@ CREATE TABLE `orders` (
   `BillingCity` varchar(255) NOT NULL,
   `BillingState` varchar(255) NOT NULL,
   `BillingZipCode` varchar(255) NOT NULL,
-  `BillingNote` text,
+  `BillingNote` text DEFAULT NULL,
   `GSTNo` varchar(255) NOT NULL,
   `isDifferentShipping` int(1) NOT NULL,
   `ShippingName` varchar(255) NOT NULL,
@@ -20119,7 +20118,7 @@ CREATE TABLE `own_countries` (
   `id` int(11) NOT NULL,
   `sortname` varchar(3) DEFAULT NULL,
   `name` varchar(150) NOT NULL,
-  `phonecode` int(11) DEFAULT '0'
+  `phonecode` int(11) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=COMPACT;
 
 --
@@ -20384,9 +20383,9 @@ CREATE TABLE `photo_gallery` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20407,8 +20406,8 @@ CREATE TABLE `photo_gallery_detail` (
   `id` int(11) NOT NULL,
   `event_id` int(11) NOT NULL,
   `image_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20437,14 +20436,14 @@ CREATE TABLE `product` (
   `slug` text NOT NULL,
   `productcode` varchar(55) NOT NULL,
   `price` double DEFAULT NULL,
-  `description` text,
-  `gender` text,
-  `size` text,
-  `highlight` text,
-  `displayorder` int(11) DEFAULT '0',
-  `totalrating` int(11) DEFAULT '0',
-  `totalreviews` int(11) DEFAULT '0',
-  `popularity` int(11) NOT NULL DEFAULT '0',
+  `description` text DEFAULT NULL,
+  `gender` text DEFAULT NULL,
+  `size` text DEFAULT NULL,
+  `highlight` text DEFAULT NULL,
+  `displayorder` int(11) DEFAULT 0,
+  `totalrating` int(11) DEFAULT 0,
+  `totalreviews` int(11) DEFAULT 0,
+  `popularity` int(11) NOT NULL DEFAULT 0,
   `status` tinyint(4) NOT NULL,
   `isdelete` int(11) NOT NULL,
   `created_datetime` datetime NOT NULL,
@@ -20457,10 +20456,10 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`id`, `collectiontype`, `categoryid`, `name`, `slug`, `productcode`, `price`, `description`, `gender`, `size`, `highlight`, `displayorder`, `totalrating`, `totalreviews`, `popularity`, `status`, `isdelete`, `created_datetime`, `modified_datetime`, `createdip`) VALUES
-(1, 1, 7, 'gold collection bracelet Helix', 'gold-collection_bracelet_Helix', 'Helix', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 7, 1, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
-(2, 1, 9, 'silver-collection_pendant_Heart Younger', 'silver-collection_pendant_HeartYounger', 'Heart Younger', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'MEN,WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 4, 1, 0, '2022-07-19 11:20:59', '0000-00-00 00:00:00', '::1'),
-(3, 3, 5, 'real-diamonds-collection_nose-pins_Elesh', 'real-diamonds-collection_nose-pins_Elesh', 'Elesh', 562, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 5, 1, 0, '2022-07-19 11:27:10', '0000-00-00 00:00:00', '::1'),
-(4, 4, 6, 'platinum-collection_mangalsutra_Magal', 'platinum-collection_mangalsutra_Magal', 'Magal', 658, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 4, 1, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
+(1, 1, 7, 'gold collection bracelet Helix', 'gold-collection_bracelet_Helix', 'Helix', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 17, 1, 0, '2022-07-19 11:17:45', '0000-00-00 00:00:00', '::1'),
+(2, 1, 9, 'silver-collection_pendant_Heart Younger', 'silver-collection_pendant_HeartYounger', 'Heart Younger', 0, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\r\n\r\nLorem ipsum dolor sit amet\r\nquis nostrud exercitation ullamco\r\nDuis aute irure dolor in reprehenderit', 'MEN,WOMEN', NULL, 'NEW ARRIVAL,TRENDING COLLECTIONS', NULL, 0, 0, 14, 1, 0, '2022-07-19 11:20:59', '0000-00-00 00:00:00', '::1'),
+(3, 3, 5, 'real-diamonds-collection_nose-pins_Elesh', 'real-diamonds-collection_nose-pins_Elesh', 'Elesh', 562, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 10, 1, 0, '2022-07-19 11:27:10', '0000-00-00 00:00:00', '::1'),
+(4, 4, 6, 'platinum-collection_mangalsutra_Magal', 'platinum-collection_mangalsutra_Magal', 'Magal', 658, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut et dolore magna aliqua. Ut enim ad minim veniam,nisi ut aliquip ex ea commodo consequat.Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 'WOMEN', NULL, 'TRENDING COLLECTIONS', NULL, 0, 0, 18, 1, 0, '2022-07-19 11:28:30', '0000-00-00 00:00:00', '::1');
 
 -- --------------------------------------------------------
 
@@ -20474,7 +20473,7 @@ CREATE TABLE `product_extra` (
   `ename` varchar(255) NOT NULL,
   `evalue` varchar(255) NOT NULL,
   `status` int(11) NOT NULL,
-  `displayorder` int(11) NOT NULL DEFAULT '0',
+  `displayorder` int(11) NOT NULL DEFAULT 0,
   `isdelete` int(11) NOT NULL,
   `created_datetime` datetime NOT NULL,
   `modified_datetime` datetime NOT NULL,
@@ -20530,8 +20529,8 @@ CREATE TABLE `product_image` (
   `id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `image_name` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20564,7 +20563,7 @@ CREATE TABLE `product_pricerange` (
   `id` int(11) NOT NULL COMMENT 'pricerange id',
   `name` varchar(55) NOT NULL,
   `slug` varchar(55) NOT NULL,
-  `image` text,
+  `image` text DEFAULT NULL,
   `pricemax` double DEFAULT NULL,
   `pricemin` double DEFAULT NULL,
   `displayorder` int(11) NOT NULL COMMENT 'price range rank for ordering',
@@ -20600,12 +20599,12 @@ CREATE TABLE `product_rating` (
   `email` varchar(50) CHARACTER SET utf8mb4 DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `product_rating` varchar(5) CHARACTER SET utf8mb4 DEFAULT NULL,
-  `product_review` text COLLATE utf8_unicode_ci,
+  `product_review` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `customerid` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `order_no` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `order_id` varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
   `replayby` varchar(55) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `replayremark` text COLLATE utf8_unicode_ci,
+  `replayremark` text COLLATE utf8_unicode_ci DEFAULT NULL,
   `status` tinyint(3) NOT NULL,
   `isdelete` tinyint(3) NOT NULL,
   `created_datetime` datetime NOT NULL,
@@ -20622,10 +20621,10 @@ CREATE TABLE `slider` (
   `id` int(11) NOT NULL,
   `title` varchar(150) DEFAULT NULL,
   `subtitle` varchar(150) DEFAULT NULL,
-  `description` text,
+  `description` text DEFAULT NULL,
   `image` text NOT NULL,
   `linktext` varchar(100) NOT NULL,
-  `linkurl` text,
+  `linkurl` text DEFAULT NULL,
   `displayorder` int(11) NOT NULL,
   `status` tinyint(4) NOT NULL,
   `created_datetime` datetime NOT NULL,
@@ -20654,7 +20653,7 @@ INSERT INTO `slider` (`id`, `title`, `subtitle`, `description`, `image`, `linkte
 CREATE TABLE `subscription` (
   `id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20680,9 +20679,9 @@ CREATE TABLE `sub_category` (
   `category_id` varchar(55) NOT NULL,
   `name` text NOT NULL,
   `slug` varchar(55) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20713,9 +20712,9 @@ CREATE TABLE `testimonial` (
   `desc` text NOT NULL,
   `image` varchar(255) NOT NULL,
   `homepage` int(1) NOT NULL COMMENT '0 Off 1 - ON',
-  `status` int(11) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20737,8 +20736,8 @@ INSERT INTO `testimonial` (`id`, `name`, `city`, `desc`, `image`, `homepage`, `s
 CREATE TABLE `trending` (
   `id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20757,30 +20756,30 @@ INSERT INTO `trending` (`id`, `image`, `created_at`, `updated_at`) VALUES
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `create_at` datetime DEFAULT NULL,
-  `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `name` text CHARACTER SET utf8,
-  `surname` text CHARACTER SET utf8,
-  `en_address_1` text CHARACTER SET utf8,
-  `en_address_2` text CHARACTER SET utf8,
-  `en_address_3` text CHARACTER SET utf8,
+  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `name` text CHARACTER SET utf8 DEFAULT NULL,
+  `surname` text CHARACTER SET utf8 DEFAULT NULL,
+  `en_address_1` text CHARACTER SET utf8 DEFAULT NULL,
+  `en_address_2` text CHARACTER SET utf8 DEFAULT NULL,
+  `en_address_3` text CHARACTER SET utf8 DEFAULT NULL,
   `en_surname` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `en_name` text CHARACTER SET utf8,
+  `en_name` text CHARACTER SET utf8 DEFAULT NULL,
   `email` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `mo_number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `tel_number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `whtsapp_number` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `address_1` text CHARACTER SET utf8,
-  `address_2` text CHARACTER SET utf8,
-  `address_3` text CHARACTER SET utf8,
+  `address_1` text CHARACTER SET utf8 DEFAULT NULL,
+  `address_2` text CHARACTER SET utf8 DEFAULT NULL,
+  `address_3` text CHARACTER SET utf8 DEFAULT NULL,
   `city` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `taluka` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `district` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
   `pincode` varchar(255) CHARACTER SET utf8 DEFAULT NULL,
-  `category` int(11) NOT NULL DEFAULT '0',
-  `sub_category` int(11) NOT NULL DEFAULT '0',
+  `category` int(11) NOT NULL DEFAULT 0,
+  `sub_category` int(11) NOT NULL DEFAULT 0,
   `group_of` varchar(1) DEFAULT NULL,
-  `status` tinyint(1) DEFAULT '0',
-  `user_type` tinyint(1) DEFAULT '0'
+  `status` tinyint(1) DEFAULT 0,
+  `user_type` tinyint(1) DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -20793,7 +20792,7 @@ CREATE TABLE `user_see_profile` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `mem_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -20850,7 +20849,7 @@ INSERT INTO `user_see_profile` (`id`, `user_id`, `mem_id`, `created_at`) VALUES
 CREATE TABLE `websiteinformation` (
   `id` int(11) NOT NULL,
   `websitetitle` varchar(100) NOT NULL,
-  `websiteurl` text,
+  `websiteurl` text DEFAULT NULL,
   `logo` varchar(500) NOT NULL,
   `site_favicon` varchar(500) NOT NULL,
   `applink` varchar(500) NOT NULL,
@@ -20863,9 +20862,9 @@ CREATE TABLE `websiteinformation` (
   `whatsapp_no` varchar(50) NOT NULL,
   `email` varchar(100) NOT NULL,
   `openclosetiming` text NOT NULL,
-  `seokeywords` text,
-  `seotitle` text,
-  `seodescription` text,
+  `seokeywords` text DEFAULT NULL,
+  `seotitle` text DEFAULT NULL,
+  `seodescription` text DEFAULT NULL,
   `status` int(15) NOT NULL,
   `isdelete` int(5) NOT NULL,
   `created_datetime` datetime(6) NOT NULL,
@@ -20890,10 +20889,10 @@ CREATE TABLE `welcomenote` (
   `id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
   `title` varchar(255) DEFAULT NULL,
-  `description` text,
-  `status` int(1) NOT NULL DEFAULT '1',
-  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `description` text DEFAULT NULL,
+  `status` int(1) NOT NULL DEFAULT 1,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --

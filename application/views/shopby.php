@@ -226,8 +226,9 @@
 				                <div class="tab-content" id="myTabContent">
 				                   <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 				                      	<div class="row" id="ProductDetailsShow">
-					                      	<?php
-					                      		foreach ($ProductDetails as $pkey => $pvalue) {
+				                      		<?php
+				                      			if(!empty($ProductDetails)){
+					                      			foreach ($ProductDetails as $pkey => $pvalue) {
 					                      	?>
 					                      		<div class="col-sm-6 col-xl-3 popularityset" data-id="<?php echo $pvalue['id'];?>">
 						                            <div class="sin-product style-two">
@@ -270,6 +271,13 @@
 						                                  </div>
 						                               </div>
 						                            </div>
+						                        </div>
+					                      	<?php
+					                      			}
+					                      		}else{
+					                      	?>
+					                      		<div class="col-sm-12 col-xl-12">
+						                            <center>Product Not Found. </center>
 						                        </div>
 					                      	<?php
 					                      		}

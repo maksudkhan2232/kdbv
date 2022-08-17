@@ -280,12 +280,12 @@ function orderspecialnote(){
       success:function(result){
         var msg = result.msg;
         if(msg=='success'){
-          Swal.fire({
-            icon: 'success',
-            title: result.message,
-            showConfirmButton: false,
-            timer: 500
-          })
+          // Swal.fire({
+          //   icon: 'success',
+          //   title: result.message,
+          //   showConfirmButton: false,
+          //   timer: 500
+          // })
         }else{
           Swal.fire({
             icon: 'error',

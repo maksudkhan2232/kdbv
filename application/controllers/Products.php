@@ -182,36 +182,39 @@ class products extends MY_Controller {
         }
         echo json_encode($ReturnDetails);exit;
 	}
-	public function view($type)
+	public function view()
 	{
 		$pslug = $this->uri->segment(3);
 		$pid = $this->uri->segment(4);
 		$productwise=array('slug'=>$pslug);
 		$ProductDetails = $this->Crud_Model->GetProductSingleDetails($productwise);
-		// echo "<pre>".$pslug;
-		// print_r($ProductDetails);
-		// exit;
-		$CollectionName=$ProductDetails['collectionname'];
-		$ProductImageDetail=$this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$ProductDetails['id']),'ASC');
-		$ProductExtraDetail=$this->Crud_Model->getDatafromtablewhere('product_extra',array('product_id'=>$ProductDetails['id']),'ASC');
-
-		$this->data['ProductDetails'] = $ProductDetails;
-		$this->data['ProductExtraDetail'] = $ProductExtraDetail;
-		$this->data['ProductImageDetail'] = $ProductImageDetail;
-		$this->data['CollectionName'] = $CollectionName;
 		
-		// Related Product // Collection and category
-		$CollectionAndCategory=array('collectiontype'=>$ProductDetails['collectiontype'],'categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
-		$CollectionAndCategoryWise=$this->Crud_Model->GetProductDetails($CollectionAndCategory);
-		$this->data['RelatedProduct'] = $CollectionAndCategoryWise;
-		if(empty($CollectionAndCategoryWise)){
-			// Related category
-			$CategoryGet=array('categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
-			$CategoryWise=$this->Crud_Model->GetProductDetails($CategoryGet);
-			$this->data['RelatedProduct'] = $CategoryWise;
-		}
+		if(!empty($ProductDetails)){
+			$CollectionName=$ProductDetails['collectionname'];
+			$ProductImageDetail=$this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$ProductDetails['id']),'ASC');
+			$ProductExtraDetail=$this->Crud_Model->getDatafromtablewhere('product_extra',array('product_id'=>$ProductDetails['id']),'ASC');
 
-		$this->load->view('product_detail',$this->data);
+			$this->data['ProductDetails'] = $ProductDetails;
+			$this->data['ProductExtraDetail'] = $ProductExtraDetail;
+			$this->data['ProductImageDetail'] = $ProductImageDetail;
+			$this->data['CollectionName'] = $CollectionName;
+			
+			// Related Product // Collection and category
+			$CollectionAndCategory=array('collectiontype'=>$ProductDetails['collectiontype'],'categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
+			$CollectionAndCategoryWise=$this->Crud_Model->GetProductDetails($CollectionAndCategory);
+			$this->data['RelatedProduct'] = $CollectionAndCategoryWise;
+			if(empty($CollectionAndCategoryWise)){
+				// Related category
+				$CategoryGet=array('categoryid'=>$ProductDetails['categoryid'],'CustomWhere'=>'p.id!='.$ProductDetails['id']);
+				$CategoryWise=$this->Crud_Model->GetProductDetails($CategoryGet);
+				$this->data['RelatedProduct'] = $CategoryWise;
+			}
+
+			$this->load->view('product_detail',$this->data);
+		}else{
+			 redirect($this->data['base_url'] . 'collections');
+		}
+		
 	}
 	function SetFavoriteProducts()
     {
