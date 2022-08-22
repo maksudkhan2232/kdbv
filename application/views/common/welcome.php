@@ -14,14 +14,14 @@
             echo '<p>Give me your email and you will be daily updated with the latest product & detail!.</p>';
           }
         ?>
-        <!-- <div class="popup-subscribe">
+        <div class="popup-subscribe">
           <div class="subscribe-wrapper">
-            <input placeholder="Enter your Email" type="text">
-            <button type="submit">SUBSCRIBE</button>
+            <input placeholder="Enter your Email" type="email" id="subscribeemailpopup" >
+            <button type="submit" id="subscribesubmitpopup">SUBSCRIBE</button>
           </div>
         </div>
-        <input type="checkbox" name="vehicle" value="Bike">
-        <span>Don't show this popup again</span>  -->
+        <!-- <input type="checkbox" name="vehicle" value="Bike"> -->
+        <!-- <span>Don't show this popup again</span>  -->
       </div>
     </div>
 </div>

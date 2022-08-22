@@ -4,10 +4,12 @@
         <div class="col-12 col-sm-12 col-md-6 col-lg-3">
           <div class="footer-widget style-two">
             <div class="logo"> <a href="javascript:void(0);"><img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="120" width="200" alt=""></a> </div>
-            <p>Autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat vel illum dolore eu olestie.</p>
-            <div class="time-table">
+            <p style="margin-bottom:0px"><?php echo $WebsiteInformation['address'];?></p>
+            <p style="margin-bottom:0px">Email :<span>   <?php echo $WebsiteInformation['cemail'];?></span></p>
+            <p style="margin-bottom:0px">Phone:<span>  +91 <?php echo $WebsiteInformation['contactno'];?></span></p>
+            <?php /*?><div class="time-table">
               <p>Opening time</p>
-              <span>Monday - Saturday   ( 9.00 to 21.00 )</span> <span>Sunday    ( 9.00 to 14.00 )</span> </div>
+              <span>Monday - Saturday   ( 9.00 to 21.00 )</span> <span>Sunday    ( 9.00 to 14.00 )</span> </div><?php */?>
           </div>
         </div>
         <!-- /.col-xl-3 -->
@@ -42,7 +44,7 @@
                 <?php
                   }
                 ?>
-                <li><a href="javascript:void(0);">Offers</a></li>
+                <li><a href="<?php echo base_url(); ?>offers">Offers</a></li>
               </ul>
             </div>
           </div>
@@ -70,7 +72,7 @@
                 <?php 
                   if(!empty($FooterGalleryDetails)){
                     foreach ($FooterGalleryDetails as $gkey => $gvalue) {
-                     echo '<li><a href="javascript:void(0);"><img src="'.base_url().'uploads/photo/thumb/'.$gvalue['image_name'].'"></a></li>';
+                     echo '<li><a href="'.base_url().'gallery"><img src="'.base_url().'uploads/photo/thumb/'.$gvalue['image_name'].'"></a></li>';
                     }
                   }
                 ?>
@@ -83,7 +85,7 @@
       <div class="footer-bottom">
         <div class="row">
           <div class="col-md-12 col-lg-6 col-xl-6 order-1 order-lg-1">
-            <p>© <span><?php echo date('Y');?></span> All Rights Reserved by <span>KD Bhindi</span></p>
+            <p>© <span><?php echo date('Y');?></span> All Rights Reserved by <span><?php echo $WebsiteInformation['firm_name'];?></span></p>
           </div>
           <!-- /.col-xl-6 -->
           <div class="col-md-12 col-lg-6 col-xl-6 order-2 order-lg-2">

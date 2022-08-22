@@ -28,7 +28,9 @@ class MY_Controller extends CI_Controller
 		$this->data['PriceRangeDetails'] =PriceRangeDetails();
 		$this->data['WelcomeNoteDetails'] =WelcomeNoteDetails();
 		$this->data['FooterGalleryDetails'] =FooterGalleryDetails(6);
-		
+		$this->data['CategoryLimitedDetails'] =CategoryLimitedDetails(5);
+		$this->data['OfferImageSingleDetails'] =OfferImageSingleDetails(1);
+		//print_r($this->data['WelcomeNoteDetails']);exit;
 		
 		if ($this->cart->contents()) { 
 			$this->data['carttotal'] = $this->cart->total();
@@ -48,7 +50,10 @@ class MY_Controller extends CI_Controller
     		$this->data['customer_info']['id']='';
     		$this->data['customer_info']['email']='';
 		}
+		$this->data['frontcurrentmenuname'] =  $this->uri->segment(1);
 		
+		$this->data['menuname'] =  $this->uri->segment(2);
+		$this->data['submenuname'] =  $this->uri->segment(3);
 		//$this->cart->destroy();
 	}
 	public function is_admin_logged_in()

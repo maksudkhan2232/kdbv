@@ -34,9 +34,7 @@
                   <div class="col-xl-12 ">
                      <div class="pro-tab-filter">
                         <div class="grid grid-three">
-                        	<?php
-	                        	foreach ($CollectionDetails as $ckey => $cvalue) {
-	                      	?>
+                        	<?php foreach ($CollectionDetails as $ckey => $cvalue) { ?>
 		                        	<div class="grid-item two col-sm-12 col-md-6">
 		                              <div class="sin-product style-three">
 		                                 <div class="pro-img-three">
@@ -44,7 +42,7 @@
 		                                       <img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>">
 		                                    </div>
 		                                    <div class="img-hover">
-		                                       <img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>">
+		                                       <a href="<?php echo  base_url(); ?>shopby/collections/<?php echo $cvalue['slug'];?>"><img src="<?php echo  base_url(); ?>uploads/collections/<?php echo $cvalue['image'];?>" alt="<?php echo ucwords($cvalue['name']);?>"></a>
 		                                    </div>
 		                                 </div>
 		                                 <div class="mid-wrapper">
@@ -56,9 +54,7 @@
 		                                 </div>
 		                              </div>
 		                            </div>
-	                      	<?php
-	                        	}
-	                      	?>
+	                      	<?php } ?>
                         </div>
                      </div>
                   </div>
@@ -73,15 +69,9 @@
          <?php $this->load->view('common/subscribe');?> 
          <?php $this->load->view('common/footer');?> 
          <!-- footer-widget-area -->
-         <!-- Back to top
-            ============================================= -->
+
          <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-         <!--=========================-->
-         <!--=   Popup 2 area      =-->
-         <!--=========================-->
-         <!-- Popup area
-            ============================================= -->
-         <!--=========================-->
+         
          <?php $this->load->view('common/quick-view');?> 
       </div>
       <?php $this->load->view('common/main-search');?> 

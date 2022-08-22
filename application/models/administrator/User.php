@@ -52,6 +52,15 @@ Class user extends CI_Model
      {
      return false;
      }
-   } 
+   }
+   
+   public function checkUser($email){ //echo 'aaa'; exit;
+			$this->db->select('id,username,email');
+			$this->db->from('admin');
+			$this->db->where('email',$email);
+			$query = $this->db->get();
+				//echo $this->db->last_query(); exit;
+			return $query->result_array();
+	} 
   
 } 

@@ -281,35 +281,35 @@ function slugify($text)
 
 function send_mail($email="vinayakwebinfotech@gmail.com",$message,$subject,$attachment="")
 {
-   //  $ci = &get_instance();
-   //  $ci->load->library('phpmailer_lib');
-   //  $mail = $ci->phpmailer_lib->load();
-   //  $mail->isSMTP();
-   //  $mail->Host = 'smtp.gmail.com';
-   //  $mail->SMTPAuth = true;
-   //  $mail->Username = 'YOUREMAIL@gmail.com';
-   //  $mail->Password = 'YOURPASS';				
-   //  $mail->SMTPSecure = 'tls';
-   //  $mail->Port = 587;
-   //  $mail->setFrom('vinayakinfotechjnd@gmail.com', $subject);
-   //  if($attachment !=""){           
-   //      $mail->addAttachment($attachment); 
-   //  }
-   // // $mail->addAddress($email);
-   //  $mail->addAddress('vinayakwebinfotech@gmail.com'); 
-   //  $mail->Subject = $subject;
-   //  $mail->IsHTML(true);
-   //  $mail->Body = $message; 
-   //  if(!$mail->send())
-   //  {
-   //      echo 'Error';
-   //      echo  'Mailer Error: '. $mail->ErrorInfo; exit;
-   //      return false;
-   //  }
-   //  else
-   //  {                
-   //      return true;
-   //  } 
+    $ci = &get_instance();
+    $ci->load->library('phpmailer_lib');
+    $mail = $ci->phpmailer_lib->load();
+    $mail->isSMTP();
+    $mail->Host = 'smtp.gmail.com';
+    $mail->SMTPAuth = true;
+    $mail->Username = 'livingwoods.morbi@gmail.com';
+    $mail->Password = 'edqeiyetsthfwvzd';				
+    $mail->SMTPSecure = 'tls';
+    $mail->Port = 587;
+    $mail->setFrom('vinayakinfotechjnd@gmail.com', $subject);
+    if($attachment !=""){           
+        $mail->addAttachment($attachment); 
+    }
+   // $mail->addAddress($email);
+    $mail->addAddress('vinayakwebinfotech@gmail.com'); 
+    $mail->Subject = $subject;
+    $mail->IsHTML(true);
+    $mail->Body = $message; 
+    if(!$mail->send())
+    {
+        echo 'Error';
+        echo  'Mailer Error: '. $mail->ErrorInfo; exit;
+        return false;
+    }
+    else
+    {                
+        return true;
+    }
 }
 
 function common_testimonials()
@@ -335,7 +335,8 @@ function WebsiteInformation()
     $ci = &get_instance();
     $ci->db->select('*');
     $ci->db->where("status",1);
-    $res = $ci->db->from('websiteinformation')->get()->row_array();
+	$ci->db->where("id",1);
+    $res = $ci->db->from('admin')->get()->row_array();
     return  $res;
 }
 function CollectionDetails()
@@ -383,6 +384,7 @@ function WelcomeNoteDetails()
     $ci = &get_instance();
     $ci->db->select('*');
     $ci->db->where("status",1);
+    $ci->db->limit(1);
     $res = $ci->db->from('welcomenote')->get()->row_array();
     return  $res;
 }
@@ -397,8 +399,29 @@ function FooterGalleryDetails($limit=0)
     $res = $ci->db->from('photo_gallery_detail')->get()->result_array();
     return  $res;
 }
+function CategoryLimitedDetails($limit=0)
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->order_by('rand()');
+    $ci->db->where("status",1);
+    if($limit!=0){
+        $ci->db->limit($limit);    
+    }  
+    $res = $ci->db->from('sub_category')->get()->result_array();
+    return  $res;
+}
 
-
+function OfferImageSingleDetails()
+{
+    $ci = &get_instance();
+    $ci->db->select('*');
+    $ci->db->where("status",1);
+    $ci->db->order_by('id','DESC');
+    $ci->db->limit(1);
+    $res = $ci->db->from('offerzone')->get()->row_array();
+    return  $res;
+}
 
 
 
@@ -411,6 +434,5 @@ function get_admin($uid)
     return $u;
 }
 
-f
 
 ?>

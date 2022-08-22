@@ -7,6 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Registration |  KD Bhindi Jewellers</title>
 <?php $this->load->view('common/common_css');?> 
+ <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/css/font-awesome.min.css"> 
 <style type="text/css">
 
 .list-group-item.active {
@@ -65,7 +66,7 @@
                         <?php 
                             if($message!=''){
                         ?>
-                            <div class="alert alert-danger" role="alert">
+                            <div class="alert alert-success" role="alert">
                                 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
                                   <?php echo $message;?>
                             </div>
@@ -122,8 +123,17 @@
                                                                             </div>
                                                                             <div class="col-lg-6 col-md-12 col-12">
                                                                                 <label for="country">Country <span class="text-danger">*</span></label>
-                                                                                <select name="data[country]" id="country" class="form-control">
-                                                                                   <option value="India" selected>India</option>
+                                                                                <select name="data[country]" id="country" class="form-control" onchange="return getcountrywisestate(this.value);">
+                                                                                    <?php
+                                                                                        foreach ($CountryDetails as $skey => $svalue) {
+                                                                                          if($svalue['id']==$CustomerDetails['country']){
+                                                                                            $sel='selected';
+                                                                                          }else{
+                                                                                            $sel='';
+                                                                                          }
+                                                                                          echo '<option value="'.$svalue['id'].'" '.$sel.'>'.ucwords($svalue['name']).'</option>';
+                                                                                        }
+                                                                                   ?>
                                                                                 </select>
                                                                             </div>
                                                                             <div class="col-lg-6 col-md-12 col-12">
@@ -136,9 +146,11 @@
                                                                                         if(isset($CustomerDetails['state']) && $CustomerDetails['state']!=''){
                                                                                             if($svalue['id']==$CustomerDetails['state']){
                                                                                                 $sele="selected";
-                                                                                            }
+                                                                                            }else{
+                                                                                                $sele='';
+                                                                                              }
                                                                                         }
-                                                                                      echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
+                                                                                        echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
                                                                                     }
                                                                                    ?>
                                                                                 </select>
@@ -184,14 +196,9 @@
                 </div>
             </div>
         </section>
-    <section class="login-now">
-        <div class="container-fluid custom-container">
-            <div class="col-12">
-                <span>If you have any query. Please Contact Us</span>
-                <a href="tel:<?php echo $WebsiteInformation['mobileno'];?>" class="btn-two">+91 <?php echo $WebsiteInformation['mobileno'];?></a>
-            </div>
-        </div>
-    </section>
+    
+    
+    <?php $this->load->view('common/inner_contact');?> 
     <?php $this->load->view('common/footer');?> 
   <!-- footer-widget-area -->
   <!-- Back to top

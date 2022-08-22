@@ -37,7 +37,7 @@
                         <div class="col-md-6">                   
     	                    <div class="form-group">
                             <label for="collectiontype">Colletion Type <span class="text-danger">*</span></label>
-                            <select name='collectiontype' id="collectiontype" class="form-control" onchange="GetCollectionWiseCategory(this.value);">
+                            <select name='collectiontype' id="collectiontype" class="form-control" onChange="GetCollectionWiseCategory(this.value);">
                               <option value=''>Select Colletion Type</option>
                               <?php foreach ($colletion as $key => $value) { ?>
                                 
@@ -81,27 +81,12 @@
                         <div class="col-md-6">                   
                           <div class="form-group">
                             <label for="price">Price </label>
-                            <input type="text" class="form-control" id="price" name="price" value="<?php echo $price; ?>" placeholder="Enter Price">
+                            <input type="number" class="form-control" id="price" name="price" value="<?php echo $price; ?>" placeholder="Enter Price">
                             <?php echo '<div class="text-danger">'.form_error('price').'</div>' ?>
                           </div>
                         </div>
                       </div>
-                      <div class="row">
-                        <!-- <div class="col-md-6">                   
-                          <div class="form-group">
-                            <label for="price">Price </label>
-                            <input type="text" class="form-control" id="price" name="price" value="<?php echo $price; ?>" placeholder="Enter Price">
-                            <?php echo '<div class="text-danger">'.form_error('price').'</div>' ?>
-                          </div>
-                        </div> -->
-                       <!--  <div class="col-md-6">                   
-                          <div class="form-group">
-                            <label for="displayorder">Display Squence </label>
-                            <input type="text" class="form-control" id="displayorder" name="displayorder" value="<?php echo $displayorder; ?>" placeholder="Enter Produt Show Squence">
-                            <?php echo '<div class="text-danger">'.form_error('displayorder').'</div>' ?>
-                          </div>
-                        </div> -->
-                      </div>
+                      
                       <div class="row">
                         <div class="col-md-6">  
                           <h4 class="card-title">Gender <span class="text-danger">*</span></h4>
@@ -152,7 +137,7 @@
                           <div class="form-group mb-5">
                             <div class="row">
                               <div class="col-md-6">
-                                <input type="file" name="image_name[]" class="file-upload-default" multiple="" accept="image/*">
+                                <input type="file" accept="image/x-png,image/gif,image/jpeg" name="image_name[]" class="file-upload-default" multiple="" >
                                 <div class="input-group col-xs-12">
                                   <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                   <span class="input-group-append">
@@ -216,7 +201,7 @@
                       <div class="row" id="addmoreextrafield">
                         <div class="col-md-12">   
                           <center>
-                            <button type="button" class="btn btn-info mr-2" onclick="AddMoreExtraField();">
+                            <button type="button" class="btn btn-info mr-2 btn-sm" onClick="AddMoreExtraField();">
                               <i class="fa fa-plus"></i> Add More
                             </button>
                           </center>
@@ -253,8 +238,12 @@
                             }
                           }
                       ?>
+                      <div class="row mt-4"> 
+                      <div class="col-md-12">
                       <a href="<?php echo base_url('administrator/product');?>" class="btn btn-outline-danger">Cancel</a>
-                      <button type="submit" class="btn btn-success mr-2 pull-right"><?php echo $button_value;?></button>
+                      <button type="submit" class="btn btn-success mr-2  pull-right"><?php echo $button_value;?></button>
+                      </div>
+                      </div>
                     </form>
                   </div>
                 </div>

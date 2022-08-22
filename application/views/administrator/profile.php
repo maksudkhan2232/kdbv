@@ -13,10 +13,10 @@
         <div class="content-wrapper">
           <?php $this->load->view('administrator/common/errors');?> 
           <div class="row">
-            <div class="col-md-6 stretch-card">
+            <div class="col-md-6 stretch-card mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Profile</h4>
+                  <h4 class="card-title">Profile Details</h4>
                   <hr>
                   <?php $action=base_url().'administrator/profile/edit';?>
                   <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
@@ -34,7 +34,13 @@
                       <label for="exampleInputName1">Image</label>
                       <div class="row">
                       <div class="col-md-9">
-                      <input type="file" name="file" class="form-control"/>
+                      <input type="file" accept="image/x-png,image/gif,image/jpeg" name="file" class="file-upload-default" />
+                      <div class="input-group col-xs-12">
+                              <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                              <span class="input-group-append">
+                                <button class="file-upload-browse btn btn-info" type="button">Upload Photo</button>
+                              </span>
+                            </div>
                       </div>
                       <div class="col-md-3">
                       <?php if(isset($image) && $image != ''){ 
@@ -55,10 +61,10 @@
                 </div>
               </div>
             </div>
-            <div class="col-md-6 stretch-card">
+            <div class="col-md-6 stretch-card mb-4">
               <div class="card">
                 <div class="card-body">
-                  <h4 class="card-title">Logins</h4>
+                  <h4 class="card-title">Login Details</h4>
                   <hr>
                   <?php $action=base_url().'administrator/profile/password';?>
                   <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
@@ -134,25 +140,27 @@
                   <?php $action=base_url().'administrator/profile/social';?>
                   <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
                     <div class="form-group">
-                      <label for="exampleInputName1">Facebook</label>
-                      <input type="text" class="form-control" id="facebook" name="facebook" value="<?php echo $firm['facebook']; ?>" placeholder="Facebook">
+                      <label for="exampleInputName1">Website</label>
+                      <input type="text" class="form-control" id="website" name="website" value="<?php echo $firm['website']; ?>" placeholder="Website">
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputName1">Twitter</label>
-                      <input type="text" class="form-control" id="twitter" name="twitter" value="<?php echo $firm['twitter']; ?>" placeholder="Twitter">
+                      <label for="exampleInputName1">Facebook</label>
+                      <input type="text" class="form-control" id="facebook" name="facebook" value="<?php echo $firm['facebook']; ?>" placeholder="Facebook">
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName1">Instagram</label>
                       <input type="text" class="form-control" id="instagram" name="instagram" value="<?php echo $firm['instagram']; ?>" placeholder="Instagram">
                     </div>
                     <div class="form-group">
+                      <label for="exampleInputName1">Twitter</label>
+                      <input type="text" class="form-control" id="twitter" name="twitter" value="<?php echo $firm['twitter']; ?>" placeholder="Twitter">
+                    </div>
+                    
+                    <div class="form-group">
                       <label for="exampleInputName1">Linkedin</label>
                       <input type="text" class="form-control" id="linkedin" name="linkedin" value="<?php echo $firm['linkedin']; ?>" placeholder="Linkedin">
                     </div>  
-                    <div class="form-group">
-                      <label for="exampleInputName1">Website</label>
-                      <input type="text" class="form-control" id="website" name="website" value="<?php echo $firm['website']; ?>" placeholder="Website">
-                    </div>  
+                      
                     <div class="form-group">
                       <label for="exampleInputName1">Youtube</label>
                       <input type="text" class="form-control" id="youtube" name="youtube" value="<?php echo $firm['youtube']; ?>" placeholder="Youtube">
@@ -178,5 +186,6 @@
     </div>
   </div>
 <?php $this->load->view('administrator/common/footer-js');?> 
+<script src="<?php echo  base_url(); ?>assest/administrator/js/file-upload.js"></script>
 </body>
 </html>

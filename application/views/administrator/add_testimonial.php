@@ -34,7 +34,7 @@
                         <label for="exampleInputName1">Image</label>
                         <div class="row">
                             <div class="col-md-6">
-                              <input type="file" id="prodImage1" data-num="1" name="prodImage1" class="file-upload-default allbannerimg">
+                              <input type="file" accept="image/x-png,image/gif,image/jpeg" id="prodImage1" data-num="1" name="prodImage1" class="file-upload-default allbannerimg">
                               <div class="input-group col-xs-12">
                                 <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                 <span class="input-group-append">

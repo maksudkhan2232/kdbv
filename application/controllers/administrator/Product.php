@@ -297,9 +297,13 @@ class Product extends MY_Controller  {
 	public function delete_product_photo($row_id)
 	{
 		$editdata=$this->Crud_Model->getById($row_id,'id','product_image');
-		unlink('uploads/product/'.$editdata['image_name']);
-		unlink('uploads/product/thumbnails/'.$editdata['image_name']);
-		$delete = $this->Crud_Model->DeletData($row_id,'id','product_image');
+			unlink('uploads/product/'.$editdata['image_name']);
+			unlink('uploads/product/thumbnails/'.$editdata['image_name']);
+		  $delete = $this->Crud_Model->DeletData($row_id,'id','product_image');
+		
+	//	$udata['image_name'] = 'default.jpg';	
+	//	$this->Crud_Model->Updatedata($row_id,'id','product_image',$udata);
+		
 	}
 	public function delete_product_filed($row_id)
 	{

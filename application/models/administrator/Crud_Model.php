@@ -58,8 +58,11 @@ class crud_model extends CI_Model{
   		$query = $this->db->get($table);
     	return $query->num_rows();
 	}
-	public function get_count($table) {
-        return $this->db->count_all($table);
+	public function get_count($table,$status=1) {
+       // return $this->db->count_all($table);
+			$this->db->where('status', $status);
+			$query = $this->db->get($table);
+			return $query->num_rows();
     }
     public function get_count_where($table,$where) {
         $this->db->where($where);
@@ -67,15 +70,18 @@ class crud_model extends CI_Model{
         return count($query->result_array());
     }
 
-    public function get_limit_data($limit, $start,$table) {
-        $this->db->limit($limit, $start);
+    public function get_limit_data($limit, $start,$table,$column_name="id") {
+        $this->db->order_by($column_name,'DESC');
+		$this->db->limit($limit, $start);		
         $query = $this->db->get($table);
         return $query->result_array();
     }
-    public function get_limit_data_where($limit, $start,$table,$where) {
+    public function get_limit_data_where($limit,$start,$table,$where,$column_name="id",$order_by="DESC") {
     	$this->db->where($where);
-        $this->db->limit($limit, $start);
-        $query = $this->db->get($table);
+		$this->db->order_by($column_name,$order_by); 
+		$this->db->limit($limit, $start);
+		$query = $this->db->get($table);
+//		echo $this->db->last_query(); exit;    		
         return $query->result_array();
     }
 	public function is_email_available($email)  
@@ -238,7 +244,7 @@ class crud_model extends CI_Model{
             $this->db->limit($data['Limit']);
         }
         $query=$this->db->get();
-        //echo $this->db->last_query();    exit;
+        //echo $this->db->last_query(); exit;
         return $query->result_array();
     } 
     function GetProductSingleDetails($data=''){ 
@@ -393,6 +399,9 @@ class crud_model extends CI_Model{
     function GetOrderDetails($data=''){
         $this->db->select('*');
         $this->db->from('orders');
+        if(isset($data['OrderID']) and $data['OrderID']!=''){
+            $this->db->where('OrderID',$data['OrderID']);    
+        }
         if(isset($data['CustomerID']) and $data['CustomerID']!=''){
             $this->db->where('CustomerID',$data['CustomerID']);    
         }
@@ -404,9 +413,74 @@ class crud_model extends CI_Model{
         }
         $this->db->where('status','1');
         $this->db->where('isdelete','0');
+		$this->db->order_by("OrderID", "DESC");
         $query = $this->db->get();        
         return $query->result_array();
+    }
+    function GetOrderSingleDetails($data=''){
+        $this->db->select('o.*,s.name as statename');
+        $this->db->from('orders as o');
+        $this->db->join('billing_state as s','s.id=o.BillingState','LEFT');
+        if(isset($data['OrderID']) and $data['OrderID']!=''){
+            $this->db->where('o.OrderID',$data['OrderID']);    
+        }
+        if(isset($data['CustomerID']) and $data['CustomerID']!=''){
+            $this->db->where('o.CustomerID',$data['CustomerID']);    
+        }
+        if(isset($data['OrderNo']) and $data['OrderNo']!=''){
+            $this->db->where('o.OrderNo',$data['OrderNo']);    
+        }
+        if(isset($data['OrderDate']) and $data['OrderDate']!=''){
+            $this->db->where('o.OrderDate',$data['OrderDate']);    
+        }
+        $this->db->where('o.status','1');
+        $this->db->where('o.isdelete','0');
+        $this->db->order_by("o.OrderID", "DESC");
+        $query = $this->db->get();        
+        return $query->row_array();
     } 
+    function GetOrderProductDetails($data=''){ 
+        $this->db->select('op.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name,count(op.customer_id) as totalcustomer,c.name as collectionname,c.shortname as collectionshortname,sc.name as categoryname,pi.image_name');
+        $this->db->from('order_products as op');
+        $this->db->join('product as p','op.products_id=p.id','LEFT');
+        $this->db->join('category as c','c.id=p.collectiontype','LEFT');
+        $this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
+        $this->db->join('product_image as pi','pi.product_id=op.products_id','LEFT');
+
+        if(isset($data['order_id']) and $data['order_id']!=''){
+            $this->db->where('op.order_id',$data['order_id']);    
+        }
+        if(isset($data['order_no']) and $data['order_no']!=''){
+            $this->db->where('op.order_no',$data['order_no']);    
+        }
+        if(isset($data['order_id']) and $data['order_id']!=''){
+            $this->db->where('op.order_id',$data['order_id']);    
+        }
+        if(isset($data['customer_id']) and $data['customer_id']!=''){
+            $this->db->where('op.customer_id',$data['customer_id']);    
+        }
+        if(isset($data['products_id']) and $data['products_id']!=''){
+            $this->db->where('op.products_id',$data['products_id']);    
+        }
+        
+        if(isset($data['status']) and $data['status']!=''){
+            $this->db->where('op.status',$data['status']);    
+        }else{
+            $this->db->where('op.status','1');    
+        }
+        $this->db->where('op.isdelete','0');
+        if(isset($data['OrderBy']) and $data['OrderBy']!=''){
+            $this->db->order_by($data['OrderBy'], $data['order']);
+        }else{
+             $this->db->order_by('op.order_products_id','DESC');
+        }
+        $this->db->group_by('op.order_products_id');        
+        if(isset($data['Limit']) and $data['Limit']!=''){
+            $this->db->limit($data['Limit']);
+        }
+        $query=$this->db->get();
+        return $query->result_array();
+    }
     function GetFavoriteProductDetails($data=''){ 
         $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name');
         $this->db->from('customer_favorite_products as f');
@@ -462,13 +536,15 @@ class crud_model extends CI_Model{
         if(isset($data['OrderBy']) and $data['OrderBy']!=''){
             $this->db->order_by($data['OrderBy'], $data['order']);
         }else{
-             $this->db->order_by('f.id','DESC');
+           //$this->db->order_by('f.id','DESC');
         }
         $this->db->group_by('f.products_id');        
         if(isset($data['Limit']) and $data['Limit']!=''){
             $this->db->limit($data['Limit']);
         }
+        $this->db->order_by('totalcustomer','DESC');
         $query=$this->db->get();
+        //echo $this->db->last_query();    
         return $query->result_array();
     } 
     function GetProductCollectionDetails($data=''){ 
@@ -687,6 +763,21 @@ class crud_model extends CI_Model{
         }
         $query=$this->db->get();
         //echo $this->db->last_query();    exit;
+        return $query->result_array();
+    }
+    function GetStateDetails($data=''){
+        $this->db->select('*');
+        $this->db->from('billing_state');
+        if(isset($data['name']) and $data['name']!=''){
+            $this->db->where('name',$data['name']);    
+        }
+        if(isset($data['country_id']) and $data['country_id']!=''){
+            $this->db->where('country_id',$data['country_id']);    
+        }
+        $this->db->where('status','1');
+        $this->db->order_by("name", "ASC");
+        $query = $this->db->get();  
+        //echo $this->db->last_query();          
         return $query->result_array();
     } 
 }

@@ -14,24 +14,33 @@ class Gallery extends MY_Controller {
 		$data['page_title']='Photo Gallery';
 		$data['active_menu'] = 'gallery';
 		$data['sub_active_menu'] = 'photo';
-		$data['viewdata']=$this->Crud_Model->getDatafromtable('photo_gallery');
+		//$data['viewdata']=$this->Crud_Model->getDatafromtable('photo_gallery');
+		$gallery=$this->Crud_Model->getDatafromtable('photo_gallery');
+		foreach ($gallery as $key => $v)
+		{
+			$v['sub_images'] =  $this->Crud_Model->getDatafromtablewhere('photo_gallery_detail',array('event_id'=>$v['id']));
+			$pg[] = $v;
+		}
+
+		$data['viewdata']=$pg;
+		
 		$this->load->view('administrator/gallery/photo',$data);
 	}
 	public function add_photo()
-	{	
+	{
 		if(count($this->input->post()) > 0 )
-		{
-
-			$this->form_validation->set_rules('name', 'Title', 'required');
+		{			
+			$this->form_validation->set_rules('name', 'Gallery Title', 'trim|required');			
 			if ($this->form_validation->run() == FALSE) {
+			
 				$data["id"] = "";
-				$data["name"] =$this->input->post('name');
+				$data["name"] = trim($this->input->post('name'));
 				$data['image']='';
 				$data["button_value"]="Add";
-				$this->load->view('administrator/gallery/add_photo',$data);
+				$this->load->view('administrator/gallery/add_photo_gallery',$data);
 			}else{		
 				$data["name"] =trim($this->input->post('name'));
-				$data['image'] = $this->input->post('cover_image');
+				$data['image'] = "";  //$this->input->post('cover_image');
 				$table='photo_gallery';
 				$ins_id = $this->Crud_Model->InsertData($table,$data);
 				if(!empty($_FILES['image_name']['name'][0]))
@@ -77,24 +86,25 @@ class Gallery extends MY_Controller {
 	{
 		if(count($this->input->post()) > 0 )
 		{
-			$this->form_validation->set_rules('name', 'Title', 'required');
-			if (empty($_FILES['cover_image']['name']))
+			$this->form_validation->set_rules('name', 'Gallery Title', 'trim|required');	
+			/*if (empty($_FILES['cover_image']['name']))
 			{
 			    $this->form_validation->set_rules('cover_image', 'Cover Image', 'required');
-			}
+			}*/
 			if ($this->form_validation->run() == FALSE) {
 				$data["id"] = "";
-				$data["name"] =$this->input->post('name');
-				$data['image']=$this->input->post('cover_image');
+				$data["name"] = trim($this->input->post('name'));
+				$data['image']= "" ; //$this->input->post('cover_image');
 				$data['event_detail'] = $this->Crud_Model->getDatafromtablewhere('photo_gallery_detail',array('event_id'=>$id));
 				$data["button_value"]="Update";
 				$this->load->view('administrator/gallery/add_photo_gallery',$data);
 			}else{		 
-				$data["name"] =trim($this->input->post('name'));
-				$data['image'] = $this->input->post('cover_image');
+				$data["name"] = trim($this->input->post('name'));
+				$data['image'] = "" ; //$this->input->post('cover_image');
 				if($this->input->post('bannnerno') != '' && $this->input->post('old_image') != '')
 				{
 					unlink('uploads/photo/'.$this->input->post('old_image'));
+					unlink('uploads/photo/thumb/'.$this->input->post('old_image'));
 				}
 				$ins_id = $this->Crud_Model->Updatedata($id,'id','photo_gallery',$data);
 				if(!empty($_FILES['image_name']['name'][0]))

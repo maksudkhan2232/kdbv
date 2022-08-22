@@ -15,9 +15,72 @@ class order extends MY_Controller {
 		$data['page_title']='order';
 		$data['active_menu'] = 'order';
 		$data['sub_active_menu'] = '';
-		$data['viewdata']=$this->Crud_Model->GetOrderDetails('');
 		$this->load->view('administrator/view_order',$data);
 	}
+
+	public function view_order_ajax_data()
+	{
+		$requestData= $_REQUEST;
+		
+		$tot_rec=$this->db->select("OrderID")->from('orders')->where('status',1)->get()->result_array();
+		$totalData = count($tot_rec);
+       	$totalFiltered = $totalData; 	
+		$this->db->select("orders.*,billing_customer.name");
+        $this->db->from('orders');                
+        if(!empty($requestData['search']['value'])) {
+        	$this->db->group_start();
+            $this->db->or_like('orders.OrderNo',$requestData['search']['value']);
+            $this->db->or_like('orders.BillingCity',$requestData['search']['value']);
+            $this->db->or_like('billing_customer.name',$requestData['search']['value']);
+            $this->db->group_end();
+        }
+        $this->db->join('billing_customer', 'orders.CustomerID = billing_customer.id','LEFT');
+        $this->db->where('orders.status',1);
+		$this->db->order_by('orders.OrderID','DESC');
+        $this->db->limit($requestData['length'], $requestData['start']);
+        $query1 = $this->db->get();
+        $row=$query1->result_array();	
+        //echo $this->db->last_query();			
+		$k=$requestData['start'] + 1;
+        $data = array();
+        foreach ($row as $key => $val) 
+        { 
+			$mylink = base_url()."administrator/order/view/".$val['OrderID']; 
+            $nestedData = array();
+            $nestedData[] = $k;
+            $nestedData[] = $val['OrderNo'];
+
+            $nestedData[] = date('d-M,Y',strtotime($val['OrderDate']))." ".date('H:i A',strtotime($val['OrderTime']));;
+            $nestedData[] = $val['TotalProducts'];
+            $nestedData[] = $val['name'];
+            $nestedData[] = $val['BillingCity'];
+			$nestedData[] = $val['OrderStatus'];
+			$nestedData[] = '<a  href="'.$mylink.'" target="_blank" class="btn btn-outline-primary" >View</a>';            
+            $data[] = $nestedData;
+            $k++  ; 			
+        }
+        $json_data = array(
+            "draw"            =>intval($requestData['draw']),  
+            "recordsTotal"    => intval( $totalData ),  
+            "recordsFiltered" => intval( $totalFiltered ), 
+            "data"            => $data   
+            );
+        echo json_encode($json_data);  // send data as json format 
+	} 
+	public function view($OrderID)
+	{
+		$orderfe=array('OrderID'=>$OrderID);
+		$OrderData=$this->Crud_Model->GetOrderSingleDetails($orderfe);
+		$dataf=array('order_id'=>$OrderID);
+        $GetOrderProductDetails=$this->Crud_Model->GetOrderProductDetails($dataf);
+		$data["OrderData"] = $OrderData;
+		$data["OrderProductDetails"] = $GetOrderProductDetails;
+		$data['page_title']='Order View';
+		$data['active_menu'] = 'order';
+		$data['sub_active_menu'] = '';
+		$this->load->view('administrator/view_order_details',$data);
+	}
+
 	public function add()
 	{	
 		if(count($this->input->post()) > 0 )

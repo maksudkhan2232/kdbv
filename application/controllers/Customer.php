@@ -6,12 +6,14 @@ class Customer extends MY_Controller {
     {
         parent::__construct();	
         $this->load->model('administrator/Crud_Model');	
+		$this->load->library('pagination');
     }
 
 	public function index()
 	{
-		
-		$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+		$StateF=array('country_id'=>101);
+		$this->data['StateDetails']=$this->Crud_Model->GetStateDetails($StateF);
+		$this->data['CountryDetails']=$this->Crud_Model->getDatafromtablewhere('billing_country',array('status'=>1),'ASC');
         $this->data['message'] = $this->session->flashdata('message');
         
         if($this->data['customer_info']['id']==''){
@@ -83,8 +85,7 @@ class Customer extends MY_Controller {
 	            	$message = '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
 					   <tbody>
 					      <tr>
-					         <td valign="top" align="center">
-					            <u></u>
+					         <td valign="top" align="center">					            
 					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fff;max-width:600px">
 					               <tbody>
 					                  <tr>
@@ -225,6 +226,7 @@ class Customer extends MY_Controller {
             $this->data['title'] = "Registration";
             $this->load->view('registration',$this->data);
         }else{
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
         	$fpd=array('customer_id'=>$this->data['customer_info']['id']);
         	$this->data['FavoriteProductDetails']=$this->Crud_Model->GetFavoriteProductDetails($fpd);
         	$this->data['title'] = "Favorite Product List";
@@ -249,8 +251,11 @@ class Customer extends MY_Controller {
             $this->data['title'] = "Registration";
             $this->load->view('registration',$this->data);
         }else{
-        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
-        	 $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id'])); 
+        	$this->data['CountryDetails']=$this->Crud_Model->getDatafromtablewhere('billing_country',array('status'=>1),'ASC');
+        	$StateF=array('country_id'=>$this->data['CustomerDetails']['country']);
+        	$this->data['StateDetails']=$this->Crud_Model->GetStateDetails($StateF);
+        	//$this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
         	//echo "<pre>";print_r($this->data['CustomerDetails']);exit;
             $this->data['title'] = "Order Details";
             $this->load->view('customer_profile',$this->data);
@@ -265,12 +270,45 @@ class Customer extends MY_Controller {
     }
     public function review()
 	{
-		$data['title'] = "Customer Reviews";
-		$this->load->view('testimonials',$data);
+		
+		$config["base_url"] = base_url()."customer/review";
+		$config['total_rows'] = $this->Crud_Model->get_count("testimonial");
+		$config['per_page'] = 6;
+		$config['uri_segment'] = 3;
+		$config['use_page_numbers'] = TRUE;
+		$config['full_tag_open'] = '<ul class="styled-pagination">';
+		$config['full_tag_close'] = '</ul>';
+		$config['first_tag_open'] = '<li>';
+		$config['first_tag_close'] = '</li>';
+		$config['last_tag_open'] = '<li>';
+		$config['last_tag_close'] = '</li>';
+		$config['next_link'] = '&gt;';
+		$config['next_tag_open'] = '<li>';
+		$config['next_tag_close'] = '</li>';
+		$config['prev_link'] = '&lt;';
+		$config['prev_tag_open'] = '<li>';
+		$config['prev_tag_close'] = '</li>';
+		$config['cur_tag_open'] = "<li><a href='javascript:;' class='active'>";
+		$config['cur_tag_close'] = '</a></li>';
+		$config['num_tag_open'] = '<li>';
+		$config['num_tag_close'] = '</li>';
+		$config['num_links'] = 2;
+		$this->pagination->initialize($config);
+		$start = ($this->uri->segment(2)) ? $this->uri->segment(3) : 0;
+		if($start)
+		{
+			$start = ($start - 1) * $config['per_page'];
+		}
+        $this->data["links"] = $this->pagination->create_links();
+        $this->data['reviews'] = $this->Crud_Model->get_limit_data_where($config["per_page"],$start,"testimonial",array("status"=>1),"homepage","DESC");
+
+		
+		$this->data['title'] = "Customer Reviews";
+		$this->load->view('testimonials',$this->data);
 	}
 	public function newslettersubscribe()
 	{
-		$subscribeemail   = $this->input->post('subscribeemail'); // Subscribe Email
+		$subscribeemail   = trim($this->input->post('subscribeemail')); // Subscribe Email
 		$returnarray = array();     
 		if(isset($subscribeemail) AND $subscribeemail!=''){ 
 			$SubscribeDetails=$this->Crud_Model->getDatafromtablewheresingle('subscription',array('email'=>$subscribeemail));   
@@ -329,6 +367,48 @@ class Customer extends MY_Controller {
 	    }
 		echo json_encode($returnarray);exit;       
 	}
+	function orderview($id){		
+        if($id!=''){
+			$dataf=array('OrderID'=>$id);
+        	$GetOrderDetails=$this->Crud_Model->GetOrderSingleDetails($dataf);
+        	if(!empty($GetOrderDetails)){
+        		$dataf=array('order_id'=>$id);
+        		$GetOrderProductDetails=$this->Crud_Model->GetOrderProductDetails($dataf);
+        		$this->data['OrderDetails'] = $GetOrderDetails;
+        		$this->data['OrderProductDetails'] = $GetOrderProductDetails;
+        		$this->data['message'] = $this->session->flashdata('message');
+		        $this->data['title'] = "Cart";
+		        $this->load->view('order_view',$this->data);		
+        	}else{
+        		redirect($this->data['base_url'] . 'customer/');	
+        	}	        
+        }else{        	
+        	redirect($this->data['base_url'] . 'customer/');
+        }
+    }
+    function getcountrywisestate(){
+        
+        $countryid = $this->input->post('countryid');
+
+        $returnarray = array();        
+        if($countryid!=''){  
+        	$StateF=array('country_id'=>$countryid);
+        	$StateDetails=$this->Crud_Model->GetStateDetails($StateF);  
+			if (!empty($StateDetails)) {
+            	$shtml='';
+                foreach ($StateDetails as $skey => $svalue) {
+                	$shtml .='<option value="'.$svalue['id'].'">'.ucwords($svalue['name']).'</option>';
+                }   
+                $returnarray['msg'] = 'success';
+                $returnarray['data'] = $shtml;          
+            }else{
+                $returnarray['msg'] = 'error';
+            }          
+        }else{
+            $returnarray['msg'] = 'error';
+        } 
+        echo json_encode($returnarray);exit;      
+    }
 	
     
 }

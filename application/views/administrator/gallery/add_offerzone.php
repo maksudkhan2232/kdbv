@@ -42,7 +42,7 @@
                       <label for="exampleInputName1">Cover Image</label>
                       <div class="row">
                           <div class="col-md-6">
-                            <input type="file" id="prodImage1" data-num="1" name="prodImage1" class="file-upload-default allbannerimg">
+                            <input type="file" accept="image/x-png,image/gif,image/jpeg" id="prodImage1" data-num="1" name="prodImage1" class="file-upload-default allbannerimg">
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
@@ -63,7 +63,7 @@
                             <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
                               <img id="previewbanner1" src="<?php echo  $img; ?>" width="70">
                             </a>
-                            <div style="color:#000099;font-size:14px;">Image Size  = Width : 370 px &nbsp;&nbsp;&nbsp;&nbsp; Height : 375 px</div>
+                            <div style="color:#000099;font-size:14px;">Image Size  = Width : 900 px &nbsp;&nbsp;&nbsp;&nbsp; Height : 500 px</div>
                           </div>
                       </div>
                       </div>
@@ -90,7 +90,7 @@
                       $edit_image = "";
                     } ?>
                     <input type="hidden" name="cover_image" id="cover_image" value="<?php echo $edit_image; ?>">
-                    <div class="form-group mb-5">
+                    <div class="form-group mb-5 mt-4">
                       <label for="exampleInputName1">Document</label>
                       <div class="row">
                       <div class="col-md-6">
@@ -160,8 +160,8 @@
       $("#banner-preview-profile-pic").html('');
       $('#bannerx').val(1);
       $('#bannery').val(1);
-      $('#bannerw').val(370);
-      $('#bannerh').val(375);
+      $('#bannerw').val(900);
+      $('#bannerh').val(500);
       $('#banner_pic_modal').modal({show:true});
       $("#frmShopBanner").ajaxForm(
       {
@@ -170,8 +170,8 @@
             var $image = $('#bannerphoto');
             var $dataX = 1;//$('#dataX');
             var $dataY = 1;//$('#dataY');
-            var $dataHeight = 375;//$('#dataHeight');
-            var $dataWidth = 370;//$('#dataWidth');
+            var $dataHeight = 500;//$('#dataHeight');
+            var $dataWidth = 900;//$('#dataWidth');
             var $dataRotate = 0;//$('#dataRotate');
             var $dataScaleX = 1;//$('#dataScaleX');
             var $dataScaleY = 1;//$('#dataScaleY');
@@ -183,8 +183,8 @@
                 data: {
                   x: 1,
                   y: 1,
-                  width: 370,
-                  height: 375,
+                  width: 900,
+                  height: 500,
               },
                 crop: function (e) {
                   $('#bannerx').val(Math.round(e.detail.x));
@@ -324,7 +324,7 @@ function CropBanner(params) {
         <input type="hidden" name="bannerimage_name" value="" id="bannerimage_name" />
         <div class="col-12 product-loading">
           <div class="lds-ellipsis">
-            <div><img src="<?php echo base_url()."uploads/loader.gif"; ?>" height="375" width="370"></div>
+            <div><img src="<?php echo base_url()."uploads/loader.gif"; ?>" height="500" width="900"></div>
             <div></div>
             <div></div>
             <div></div>

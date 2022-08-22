@@ -40,7 +40,7 @@
                                   <label for="exampleInputName1">Gender Photo</label>
                                   <div class="row">
                                       <div class="col-md-6">
-                                        <input type="file" class="file-upload-default" name="image" class="" >
+                                        <input type="file" accept="image/x-png,image/gif,image/jpeg" class="file-upload-default" name="image">
                                         <div class="input-group col-xs-12">
                                           <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                                           <span class="input-group-append">

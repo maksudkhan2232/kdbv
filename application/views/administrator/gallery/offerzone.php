@@ -29,8 +29,8 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center">
-                    <h4 class="card-title">View Offer Zone</h4>
-                    <a href="<?php echo base_url(); ?>administrator/offerzone/add_offerzone" class="btn btn-success mr-2 ">Add Offer</a>
+                    <h4 class="card-title">Offers List</h4>
+                    <a href="<?php echo base_url(); ?>administrator/offerzone/add_offerzone" class="btn btn-success mr-2 ">Add New Offer</a>
                   </div>
                   <hr>
                    <div class="table-responsive">
@@ -52,7 +52,7 @@
                       ?>
                         <tr>
                           <td><?php echo $i; ?></td>
-                          <td><img src="<?php echo base_url(); ?>uploads/offer/<?php echo $val['image']; ?>" height="50" width="50"></td>
+                          <td><img src="<?php echo base_url(); ?>uploads/offer/<?php echo $val['image']; ?>" style="border-radius:0;width:90px;height:auto;" ></td>
                           <td style="line-height:22px;"><?php echo $val['name']; ?></td>
                           <td><?php if($val['status'] == 1){ ?>
                             <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="offerzone" data-field="status" data-id-name="id" data-id="<?php echo $val['id'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">

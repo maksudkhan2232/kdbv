@@ -816,6 +816,65 @@ $(function() {
   });
 });
 $(function() {
+  $('#subscribesubmitpopup').click(function(){
+    var email = $('#subscribeemailpopup').val();
+    var emailRegex=/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+  
+    if (email=='') { 
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Email Id.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+    if(!emailRegex.test(email)){
+      Swal.fire({
+        icon: 'error',
+        title: 'Please Enter Your Valid Email Id.',
+        showConfirmButton: false,
+        timer: 500
+      })
+      return false;
+    }
+    var data = 'subscribeemail='+email;
+    $.ajax({
+      type:'POST',
+      url:base_url+'customer/newslettersubscribe/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          Swal.fire({
+            icon: 'success',
+            title: 'Join our newsletter successfully.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+          $("#subscribeemailpopup").val('');
+        }else if(msg=='already'){
+          Swal.fire({
+            icon: 'error',
+            title: 'Newsletter subscription already join.',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Something went wrong',
+            showConfirmButton: false,
+            timer: 1500
+          })
+        }    
+        return false;
+      }
+    });
+  });
+});
+$(function() {
   $('#review_submit').click(function(){
     var reviewname = $('#reviewname').val();
     var review = $('#review').val();
@@ -962,9 +1021,46 @@ function cartminusbutton(productid){
 
   }else{
     $('#qty'+productid).val(newVal);  
+  }  
+}
+function getcountrywisestate(countryid){
+  //var countryid = $('#countryid').val();
+  if (countryid=='') { 
+    Swal.fire({
+      icon: 'error',
+      title: 'Please Select Country.',
+      showConfirmButton: false,
+      timer: 500
+    })
+    return false;
   }
-  
+  var data = 'countryid='+countryid;
+  if(countryid!=''){
+    $.ajax({
+      type:'POST',
+      url:base_url+'customer/getcountrywisestate/',
+      data:data,
+      dataType: "json",
+      success:function(result){
+        var msg = result.msg;
+        if(msg=='success'){
+          $("#state").html(result.data);
+        }else{
+          $("#state").html('');
+        }    
+        return false;
+      }
+    });
+  }else{
+    Swal.fire({
+      icon: 'error',
+      title: 'Something went wrong',
+      showConfirmButton: false,
+      timer: 500
+    })
+  }  
   
 }
+
 
 

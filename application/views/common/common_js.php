@@ -17,10 +17,13 @@
 <script src="<?php echo  base_url(); ?>assest/frontend/js/main.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/sweetalert2@10.js"></script>
 <script src="<?php echo  base_url(); ?>assest/frontend/js/general.js"></script>
-<!--<script src="assets/js/right.js"></script>-->
-<!-- <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<?php /*?><script src="assets/js/right.js"></script>
+ <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script> <?php */?>
+
+<?php /*?><script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script><?php */?>
+<script src="<?php echo  base_url(); ?>assest/frontend/js/bootstrap3-typeahead.min.js"></script>
+
 <script type="text/javascript">
 	// $(document).ready(function(){
 	// 	$( "#SearchTypeAhead" ).autocomplete({

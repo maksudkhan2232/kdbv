@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class customer extends MY_Controller {
+class Customer extends MY_Controller {
 	
 	function __construct()
 	{
@@ -18,6 +18,62 @@ class customer extends MY_Controller {
 		$data['viewdata']=$this->Crud_Model->GetCustomerDetails('');
 		$this->load->view('administrator/view_customer',$data);
 	}
+	public function view_customer_ajax_data()
+	{
+		$requestData= $_REQUEST;
+		
+		$tot_rec=$this->db->select("id")->from('billing_customer')->where('status',1)->get()->result_array();
+		$totalData = count($tot_rec);
+       	$totalFiltered = $totalData; 	
+		$this->db->select("c.*,co.name as countryname,s.name as statename");
+        $this->db->from('billing_customer as c');                
+        if(!empty($requestData['search']['value'])) {
+        	$this->db->group_start();
+            $this->db->or_like('c.name',$requestData['search']['value']);
+            $this->db->or_like('c.mobileno',$requestData['search']['value']);
+            $this->db->or_like('c.address',$requestData['search']['value']);
+            $this->db->or_like('c.email',$requestData['search']['value']);
+            $this->db->group_end();
+        }
+        $this->db->join('billing_country as co', 'co.id = c.country','LEFT');
+        $this->db->join('billing_state as s', 's.id = c.state','LEFT');
+        $this->db->where('c.status',1);
+		$this->db->order_by('c.id','DESC');
+        $this->db->limit($requestData['length'], $requestData['start']);
+        $query1 = $this->db->get();
+        $row=$query1->result_array();	
+        //echo $this->db->last_query();			
+		$k=$requestData['start'] + 1;
+        $data = array();
+        foreach ($row as $key => $val) 
+        { 
+			$mylink = base_url()."administrator/order/view/".md5($val['OrderID']); 
+            $nestedData = array();
+            $nestedData[] = $k;
+            $nestedData[] = $val['name'];
+            $nestedData[] = $val['mobileno'];
+            $nestedData[] = $val['email'];
+            $nestedData[] = $val['city'].' - '.$val['pincode'];
+            $nestedData[] = $val['name'];
+			if($val['status'] == 1){ 
+                $nestedData[] = '<button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="billing_customer" data-field="status" data-id-name="id" data-id="'.$val['id'].'" data-toggle="button" aria-pressed="1" autocomplete="off"><div class="handle"></div></button>';
+            } else { 
+                $nestedData[] ='<button type="button" class="btn btn-sm btn-toggle changestatus" data-table="billing_customer" data-field="status" data-id-name="id" data-id="'.$val['id'].'" data-toggle="button" aria-pressed="0" autocomplete="off"><div class="handle"></div></button>';
+            }
+            $nestedData[] = date('d M Y',strtotime($val['created_datetime']));
+            //$nestedData[] = '<a  href="'.$mylink.'" target="_blank" class="btn btn-outline-primary" >View</a>';            
+            $data[] = $nestedData;
+            $k++  ; 			
+        }
+        $json_data = array(
+            "draw"            =>intval($requestData['draw']),  
+            "recordsTotal"    => intval( $totalData ),  
+            "recordsFiltered" => intval( $totalFiltered ), 
+            "data"            => $data   
+            );
+        echo json_encode($json_data);  // send data as json format 
+	} 
+
 	public function add()
 	{	
 		if(count($this->input->post()) > 0 )
@@ -179,5 +235,6 @@ class customer extends MY_Controller {
 			redirect('administrator/customer'); exit;
 		}
 	}
+
 }
 ?>

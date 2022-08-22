@@ -193,19 +193,7 @@ class order extends MY_Controller{
                     $carthtml .=');"><i class="fa fa-times"></i></a>'; 
                 $carthtml .='</div>';
             }
-            $carthtml .='<div class="cart-bottom">';
-                 // <div class="cart-sub-total">
-                 //      <p>Sub-Total <span>$700</span></p>
-                 //    </div>
-                 //    <div class="cart-sub-total">
-                 //      <p>Eco Tax (-2.00)<span>$7.00</span></p>
-                 //    </div>
-                 //    <div class="cart-sub-total">
-                 //      <p>VAT (20%) <span>$40.00</span></p>
-                 //    </div>
-                 //    <div class="cart-sub-total">
-                 //      <p>Total <span>$244.00</span></p>
-                 //    </div>
+            $carthtml .='<div class="cart-bottom">';                
                 $carthtml .='<div class="cart-checkout">';
                     $carthtml .='<a href="'.base_url().'/order"><i class="fa fa-shopping-cart"></i>View Cart</a>';
                 $carthtml .='</div>';
@@ -216,7 +204,7 @@ class order extends MY_Controller{
         }else{
             $carthtml .='<div class="single-cart">';
                 $carthtml .='<div class="cart-title">';
-                    $carthtml .='<p>Cart Empty</p>';
+                    $carthtml .='<p align="center"><img src="'.base_url().'assest/frontend/media/images/cart.png" /></p>';
                 $carthtml .='</div>';
             $carthtml .='</div>';
         }
@@ -506,7 +494,7 @@ class order extends MY_Controller{
             redirect($this->data['base_url'] . 'order/');
         }
     }
-
+    
     function RemoveSpecialChar($str) { 
         // Using str_replace() function  
         // to replace the word  

@@ -162,7 +162,7 @@ class Ajax_banner extends MY_Controller {
 		file_put_contents(SHPBANRIMG. $filename, $data);
 		$imagePath = SHPBANRIMG.$filename;
 		chmod(SHPBANRIMG. $filename, 0777);
-		$uploaded = resizeImageNew($imagePath,370,375,1,"jpg");
+		$uploaded = resizeImageNew($imagePath,900,500,1,"jpg");
 		@unlink("uploads/".$filename);
 		echo json_encode(array("img_path"=>base_url().$imagePath,"up_image"=>$filename));
 		exit(0);

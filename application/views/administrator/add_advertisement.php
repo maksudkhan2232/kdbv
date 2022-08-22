@@ -51,7 +51,7 @@
                       <label for="exampleInputName1">Image</label>
                       <div class="row">
                         <div class="col-md-6">
-                          <input type="file" name="file" class="file-upload-default">
+                          <input type="file" accept="image/x-png,image/gif,image/jpeg" name="file" class="file-upload-default">
                           <div class="input-group col-xs-12">
                             <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Home Logo">
                             <span class="input-group-append">

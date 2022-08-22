@@ -9,8 +9,6 @@ class Dashboard extends MY_Controller  {
 	}
 	public function index()
 	{ 	
-
-
 		if(count($this->input->post()) > 0 )
 		{
 			$data["name"] =$this->input->post('name');
@@ -22,29 +20,35 @@ class Dashboard extends MY_Controller  {
 			$fieldName='id';
 			$table='dailyratechanger';
 			$this->Crud_Model->Updatedata($id,$fieldName,$table,$data);
-
 			$this->session->set_flashdata('success', 'Daily Rate Update Successfully.');
 			redirect('administrator/dashboard');
 			exit;
 		}
-
 		$data = array();
-		$data['page_title']='Dashboard';
-		$data['total_gold_jewellery'] = 500; //	$this->Crud_Model->getCount('product',array('status'=>1,'type'=>'Gold'));
-		$data['total_silver_jewellery'] = 400; //	$this->Crud_Model->getCount('product',array('status'=>1,'type'=>'silver'));
-		$data['total_diamonds_jewellery'] = 350; //	$this->Crud_Model->getCount('product',array('status'=>1,'type'=>'silver'));
-		$data['total_platinum_jewellery'] = 150; //	$this->Crud_Model->getCount('product',array('status'=>1,'type'=>'silver'));
 		
-		$data['gold_Bracelet'] = 100;	//$this->Crud_Model->getCount('product',array('status'=>0));
-		$data['gold_Rings'] = 200;	//$this->Crud_Model->getCount('product',array('status'=>0));
-		$data['gold_Earrings'] = 300;	//$this->Crud_Model->getCount('product',array('status'=>0));
-		$data['gold_Pendants'] = 400;	//$this->Crud_Model->getCount('product',array('status'=>0));
-		$data['gold_NosePin'] = 500;	//$this->Crud_Model->getCount('product',array('status'=>0));
-
 		$data['DailyRateChangerDetails']=$this->Crud_Model->getDatafromtablewheresingle('dailyratechanger',array('id'=>1));
 		
-
-		//echo "<pre>"; print_r($data); exit;		
+		$category=$this->Crud_Model->getDatafromtablewhere('category',array('status'=>1));
+		$sub_product = array();
+		foreach ($category as $k => $v)
+		{
+			$arr['id'] = $v['id'];
+			$arr['category'] = $v['name'];
+			$sub_ctaegory= $this->db->select('id,name')->from('sub_category')->where("find_in_set(".$v['id'].", category_id)")->get()->result_array();
+			$sc = array();
+			foreach ($sub_ctaegory as $sk => $sv)
+			{
+				$sv['product'] = $this->Crud_Model->getCount('product',array('categoryid'=>$sv['id'],'collectiontype'=>$v['id']));
+				$sc[] = $sv;
+			}
+			$arr['sub_category'] = $sc;
+			$sub_product[] = $arr;
+		}
+		$orderfe=array('OrderDate'=>date('Y-m-d'));
+		$OrderData=$this->Crud_Model->GetOrderDetails($orderfe);
+		$data['OrderData'] = $OrderData;
+		$data['sub_product'] = $sub_product;
+		//echo "<pre>"; print_r($sub_product); exit;		
 		$this->load->view('administrator/dashboard',$data);
 	}
 }

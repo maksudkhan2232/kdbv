@@ -38,8 +38,9 @@
                     <thead>
                       <tr>
                         <th>No</th>
-                        <th>Cover</th>
+                        <?php /*?><th>Cover</th><?php */?>
                         <th>Title</th>
+                        <th>Images</th>
                         <th>Status</th>
                         <th>Actions</th>
                       </tr>
@@ -52,8 +53,9 @@
                       ?>
                         <tr>
                           <td><?php echo $i; ?></td>
-                          <td><img src="<?php echo base_url(); ?>uploads/photo/<?php echo $val['image']; ?>" height="50" width="50"></td>
+                         <?php /*?> <td><img src="<?php echo base_url(); ?>uploads/photo/<?php echo $val['image']; ?>" height="50" width="50"></td><?php */?>
                           <td style="line-height:22px;"><?php echo $val['name']; ?></td>
+                          <td><?php echo count($val['sub_images']); ?></td>
                           <td><?php if($val['status'] == 1){ ?>
                             <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="photo_gallery" data-field="status" data-id-name="id" data-id="<?php echo $val['id'];?>" data-toggle="button" aria-pressed="1" autocomplete="off">
                             <div class="handle"></div>

@@ -297,9 +297,11 @@ class Shopby extends MY_Controller {
 				$PriceMin = $CollectionSingleDetails['pricemin'];
 				$PriceMax = $CollectionSingleDetails['pricemax'];
 				$PriceWise=array('pricemin'=>$PriceMin,'pricemax'=>$PriceMax);
-				//$this->data['ProductDetails']=$this->Crud_Model->GetProductDetails($collectionwise);
+				$ProductDetails=$this->Crud_Model->GetProductDetails($PriceWise);
+				//print_r($ProductDetails);
+				//exit;
 				$product_details=array();
-				foreach ($this->Crud_Model->GetProductDetails($GenderWise) as $key => $v) {
+				foreach ($this->Crud_Model->GetProductDetails($PriceWise) as $key => $v) {
 
 					$ProductImageDetail=$this->Crud_Model->getDatafromtablewhere('product_image',array('product_id'=>$v['id']),'ASC');
 					$ProductExtraDetail=$this->Crud_Model->getDatafromtablewhere('product_extra',array('product_id'=>$v['id']),'ASC');

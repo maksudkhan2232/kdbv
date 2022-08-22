@@ -9,10 +9,22 @@
             <?php
               if(!empty($TestimonialDetails)){
                 foreach($TestimonialDetails as $tkey=>$tval){
+				if($tval['image']!='')
+				{
+					$im='uploads/testimonial/'.$tval['image'];
+					if(file_exists($im))
+					{
+						$img=base_url().'uploads/testimonial/'.$tval['image'];
+					}else{
+						$img=base_url().'uploads/default.jpg';
+					}
+				}else{
+					$img=base_url().'uploads/default.jpg';
+				}
             ?>
             <div class="single-testimonial">
               <div class="tes-img"> 
-                <img src="<?php echo  base_url(); ?>uploads/testimonial/<?php echo $tval['image'];?>" alt="<?php echo ucwords($tval['name']);?>"> 
+                <img src="<?php echo $img; ?>" alt="<?php echo $tval['name'];?>"> 
               </div>
               <div class="tes-content">
                 <p><?php echo $tval['desc'];?></p>

@@ -36,7 +36,7 @@
                         <label for="exampleInputName1">Photo <span class="text-danger">*</span></label>
                         <div class="row">
                           <div class="col-md-8">
-                            <input type="file" id="image" name="image" class="file-upload-default" >
+                            <input type="file" accept="image/x-png,image/gif,image/jpeg" id="image" name="image" class="file-upload-default" >
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">

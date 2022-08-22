@@ -8018,3 +8018,17 @@ p.sub-title {
 .checkout-area .submit-btn-area .theme-btn {
   text-transform: capitalize;
 }
+
+
+
+.img-hover-zoom {
+  overflow: hidden; 
+}
+
+.img-hover-zoom img {
+  transition: transform .5s ease;
+}
+
+.img-hover-zoom:hover img {
+  transform: scale(1.5);
+}

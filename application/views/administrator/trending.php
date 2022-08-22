@@ -25,7 +25,7 @@
               <div class="col-md-6 ">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Update Trending</h4>
+                    <h4 class="card-title">Update Trending Photo</h4>
                     <hr>
                     <?php 
                     $action=base_url().'administrator/master/uptrending';
@@ -33,10 +33,11 @@
                     <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
                     
                     <div class="form-group">
-                        <label for="exampleInputName1">Trending Photo <span class="text-danger">*</span></label>
+                        <label for="exampleInputName1">Trending Photo <span class="text-danger">*</span>                        
+                        </label>
                         <div class="row">
                           <div class="col-md-12">
-                            <input type="file" id="image" name="image" class="file-upload-default" >
+                            <input type="file" accept="image/x-png,image/gif,image/jpeg" id="image" name="image" class="file-upload-default" >
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
@@ -57,6 +58,9 @@
                           </div>
                           <div style="color:#000099;font-size:14px;text-align:center;">
                             Image Size  = Width : <font color="#FF0000">966 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">1457 px</font>
+                           <br> <span style="float:right">TRENDING COLLECTIONS Image</span>	
+                             
+
                         </div>
                       </div>
                     </div>

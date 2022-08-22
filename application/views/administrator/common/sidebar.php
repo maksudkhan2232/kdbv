@@ -42,22 +42,22 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
       </div>
     </li>
     
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/product"> <i class="fa fa-user-circle menu-icon"></i> <span class="menu-title">Product Master</span> </a> </li>
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/gallery/photo"> <i class="icon-image menu-icon"></i> <span class="menu-title">Photo Gallery</span> </a> </li>
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-paper menu-icon"></i> <span class="menu-title">Advertisement</span> </a> </li>
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/product"> <i class="fa fa-th  menu-icon"></i> <span class="menu-title">Product Master</span> </a> </li>
+    
+    <?php /*?><li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-paper menu-icon"></i> <span class="menu-title">Advertisement</span> </a> </li><?php */?>
 
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone"> <i class="icon-image menu-icon"></i> <span class="menu-title">Offer Zone</span> </a> </li>
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/customer"> <i class="icon-record menu-icon"></i> <span class="menu-title">Customer</span> </a> </li>
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone"> <i class="fa fa-star menu-icon"></i> <span class="menu-title">Offer Zone</span> </a> </li>
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/customer"> <i class="fa fa-users menu-icon"></i> <span class="menu-title">Customer</span> </a> </li>
 
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/order"> <i class="icon-circle-check menu-icon"></i> <span class="menu-title">Order</span> </a> </li>
+    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/order"> <i class="fa fa-shopping-cart menu-icon"></i> <span class="menu-title">Orders</span> </a> </li>
 
     <li class="nav-item"> 
       <a class="nav-link" href="<?php echo base_url(); ?>administrator/favorite"> 
-        <i class="icon-heart menu-icon"></i> <span class="menu-title">Favourite Product</span> 
+        <i class="icon-heart menu-icon"></i> <span class="menu-title">Favourite Products</span> 
       </a> 
     </li>
 
-
+	<li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/gallery/photo"> <i class="icon-image menu-icon"></i> <span class="menu-title">Photo Gallery</span> </a> </li>
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/testimonial"> <i class="icon-speech-bubble menu-icon"></i> <span class="menu-title">Testimonoial</span> </a> </li>
     <li class="nav-item">
       <a class="nav-link" href="<?php echo base_url(); ?>administrator/subscription">

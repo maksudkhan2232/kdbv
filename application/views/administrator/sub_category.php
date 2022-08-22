@@ -42,7 +42,7 @@
                       <label for="exampleInputName1">Category Photo</label>
                       <div class="row">
                           <div class="col-md-6">
-                            <input type="file" class="file-upload-default" name="image" class="" >
+                            <input type="file" accept="image/x-png,image/gif,image/jpeg" class="file-upload-default" name="image">
                             <div class="input-group col-xs-12">
                               <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
                               <span class="input-group-append">
@@ -89,9 +89,9 @@
                           ?>
                           <div class="col-md-6">
                              
-                            <div class="chiller_cb">
+                            <div class="chiller_cb mb-3">
                               <input <?php echo $chk; ?> id="myCheckbox<?php echo $value['id']; ?>" type="checkbox" name="brand_id[]" value="<?php echo $value['id']; ?>">
-                              <label for="myCheckbox<?php echo $value['id']; ?>"><?php echo $value['name']; ?></label>
+                              <label for="myCheckbox<?php echo $value['id']; ?>" style="line-height:20px;"><?php echo $value['name']; ?></label>
                               <span></span> 
                             </div>
                           </div>
