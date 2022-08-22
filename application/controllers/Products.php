@@ -182,7 +182,7 @@ class products extends MY_Controller {
         }
         echo json_encode($ReturnDetails);exit;
 	}
-	public function view($type)
+	public function view()
 	{
 		$pslug = $this->uri->segment(3);
 		$pid = $this->uri->segment(4);
@@ -210,9 +210,12 @@ class products extends MY_Controller {
 				$this->data['RelatedProduct'] = $CategoryWise;
 			}
 
-			$this->load->view('product_detail',$this->data);	
+
+			$this->load->view('product_detail',$this->data);
 		}else{
-			redirect($this->data['base_url'] . 'collections');
+			 redirect($this->data['base_url'] . 'collections');
+
+		
 		}
 		
 	}
