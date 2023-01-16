@@ -31,17 +31,17 @@
                     <div class="form-group">
                       <label for="exampleInputName1">Old Password <span class="text-danger">*</span></label>
                       <input type="password" class="form-control" name="opassword" id="opassword"  placeholder="Old Password">
-                      <?php echo '<div id="error_message">'.form_error('opassword').'</div>' ?>
+                      <?php echo '<div id="error_message" class="text-danger">'.form_error('opassword').'</div>' ?>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName1">New Password <span class="text-danger">*</span></label>
                       <input type="password" class="form-control" name="npassword" id="npassword"  placeholder="New Password">
-                      <?php echo '<div id="error_message">'.form_error('npassword').'</div>' ?>
+                      <?php echo '<div id="error_message" class="text-danger">'.form_error('npassword').'</div>' ?>
                     </div>
                     <div class="form-group">
                       <label for="exampleInputName1">Confirm Password <span class="text-danger">*</span></label>
                       <input type="password" class="form-control" name="cpassword" id="cpassword"   placeholder="Confirm Password">
-                      <?php echo '<div id="error_message">'.form_error('cpassword').'</div>' ?>
+                      <?php echo '<div id="error_message" class="text-danger">'.form_error('cpassword').'</div>' ?>
                     </div>
 					<hr>
                     <button type="submit" class="btn btn-success mr-2 pull-right"><?php echo $button_value;?></button>

@@ -5,7 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Contact Us |  KD Bhindi Jewellers</title>
+<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
+<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
+<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
+<meta name="author" content="KD Bhindi Jewellers">
+<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
+<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
 <?php $this->load->view('common/common_css');?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
@@ -48,12 +53,10 @@
     </div>
     <!-- /.row -->
   </section>
-
   <?php $this->load->view('common/testimonials');?>
   <?php $this->load->view('common/subscribe');?>
   <?php $this->load->view('common/footer');?>
   <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-
   <?php $this->load->view('common/quick-view');?>
 </div>
 <?php $this->load->view('common/main-search');?>

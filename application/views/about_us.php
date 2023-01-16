@@ -5,7 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About Us |  KD Bhindi Jewellers</title>
+<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
+<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
+<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
+<meta name="author" content="KD Bhindi Jewellers">
+<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
+<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
 <?php $this->load->view('common/common_css');?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
@@ -38,7 +43,7 @@
             <div class="section-heading">
               <h3>About <span> Us</span></h3>
             </div>
-            <figure class="blog-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/blog/1.jpg" alt=""> </figure>
+            <figure class="blog-img"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/about.jpg" alt="KD Bhindi Jewellers Junagadh"> </figure>
             <div class="blog-content">
               <div class="blog-meta"> <a href="javascript:void(0);">KD Bhindi Jewellers</a> </div>
               <h5>About KD Bhindi Jewellers</h5>

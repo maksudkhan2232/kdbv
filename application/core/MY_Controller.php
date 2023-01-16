@@ -12,9 +12,6 @@ class MY_Controller extends CI_Controller
 		$this->data['base_url'] 		= $this->config->item('base_url');
 		$this->data['base_assets'] 		= $this->config->item('base_assets');
 		$this->data['base_uploads'] 		= $this->config->item('base_uploads');
-
-
-		
 		$DailyRateChangerDetails = DailyRateChangerDetails();
 		$this->data['DailyRateChangerDetails'] = $DailyRateChangerDetails['name'];
 		$this->data['WebsiteInformation'] =WebsiteInformation();
@@ -31,7 +28,6 @@ class MY_Controller extends CI_Controller
 		$this->data['CategoryLimitedDetails'] =CategoryLimitedDetails(5);
 		$this->data['OfferImageSingleDetails'] =OfferImageSingleDetails(1);
 		//print_r($this->data['WelcomeNoteDetails']);exit;
-		
 		if ($this->cart->contents()) { 
 			$this->data['carttotal'] = $this->cart->total();
 	        $this->data['carttotalqty'] = $this->cart->total_items();
@@ -41,7 +37,6 @@ class MY_Controller extends CI_Controller
 	        $this->data['carttotalqty'] = 0;
 	        $this->data['carttotalproduct'] = 0;	
 		}
-		
 		if(!empty($this->session->userdata('customer_info'))){
 			$this->data['customer_info']=$this->session->userdata('customer_info');
 		}else{
@@ -51,7 +46,11 @@ class MY_Controller extends CI_Controller
     		$this->data['customer_info']['email']='';
 		}
 		$this->data['frontcurrentmenuname'] =  $this->uri->segment(1);
-		
+		if($this->data['frontcurrentmenuname']==''){
+			$this->data['SeoDetails'] =getSeoDetails('home');
+		}else{
+			$this->data['SeoDetails'] =getSeoDetails($this->data['frontcurrentmenuname']);
+		}
 		$this->data['menuname'] =  $this->uri->segment(2);
 		$this->data['submenuname'] =  $this->uri->segment(3);
 		//$this->cart->destroy();

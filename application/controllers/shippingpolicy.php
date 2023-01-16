@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class shippingpolicy extends MY_Controller {
+class Shippingpolicy extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		

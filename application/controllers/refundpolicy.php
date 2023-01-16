@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class refundpolicy extends MY_Controller {
+class Refundpolicy extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		

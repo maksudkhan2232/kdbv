@@ -194,8 +194,9 @@ class Shopby extends MY_Controller {
 				// print_r($this->data['ProductDetails']);
 				// exit;
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+			    redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}
 		}else if(isset($type) && $type!='' && $type=='gender'){
 			$CollectionSingleDetails=$this->Crud_Model->getDatafromtablewheresingle('gender',array('status'=>1,'slug'=>$typevalue));
@@ -286,8 +287,9 @@ class Shopby extends MY_Controller {
 				// print_r($this->data['ProductDetails']);
 				// exit;
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+			    redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}			
 		}else if(isset($type) && $type!='' && $type=='price'){
 			$CollectionSingleDetails=$this->Crud_Model->getDatafromtablewheresingle('product_pricerange',array('status'=>1,'slug'=>$typevalue));
@@ -380,8 +382,9 @@ class Shopby extends MY_Controller {
 				// print_r($this->data['ProductDetails']);
 				// exit;
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+			    redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}	
 			
 		}else if(isset($type) && $type!='' && $type=='trending'){
@@ -468,8 +471,9 @@ class Shopby extends MY_Controller {
 				$this->data['ProductDetails']=$product_details;
 				$this->data['filedvalue'] = "trending";
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+			    redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}	
 			
 		}else if(isset($type) && $type!='' && $type=='newarrival'){
@@ -556,14 +560,13 @@ class Shopby extends MY_Controller {
 				$this->data['ProductDetails']=$product_details;
 				$this->data['filedvalue'] = "newarrival";
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+				redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}	
 			
 		}else if(isset($type) && $type!='' && $type=='search'){
-			
-			
-			$searcharea=array('productcode'=>$typevalue,'name'=>$typevalue,'description'=>$typevalue,'gender'=>$typevalue,'highlight'=>$typevalue);
+			$searcharea=array('productcode'=>$typevalue,'name'=>$typevalue,'description'=>$typevalue,'gender'=>$typevalue,'highlight'=>$typevalue,'type'=>'search');
 			$this->data['filedvalue'] = $typevalue;
 			$SearchDetails=$this->Crud_Model->GetSearchProductDetails($searcharea);
 			//print_r($SearchDetails);exit;
@@ -645,8 +648,9 @@ class Shopby extends MY_Controller {
 
 				$this->data['ProductDetails']=$product_details;
 			}else{
-				$this->data['title'] = "Collections";
-				$this->load->view('collections',$this->data);
+			    redirect($this->data['base_url'].'collections/');
+				// $this->data['title'] = "Collections";
+				// $this->load->view('collections',$this->data);
 			}	
 			
 		}else{

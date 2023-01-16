@@ -34,10 +34,10 @@ class crud_model extends CI_Model{
 		return $query->result_array();
     	
 	}
-    public function getDatafromtablelike($table,$where,$order_by='ASC'){
+    public function getDatafromtablelike($table,$where,$order_by='ASC',$column_name='id'){
         
         $this->db->like($where);
-        $this->db->order_by('id',$order_by);
+        $this->db->order_by($column_name,$order_by);
         $query = $this->db->get($table);
         return $query->result_array();
         
@@ -211,7 +211,15 @@ class crud_model extends CI_Model{
             $this->db->like('p.description',$data['description']);    
         }
         if(isset($data['gender']) and $data['gender']!=''){
-            $this->db->like('p.gender',$data['gender']);    
+            if($data['gender']=='MEN' || $data['gender']=='KIDS'){
+                $this->db->like('p.gender',$data['gender'],'after');        
+            }else if($data['gender']=='WOMEN'){
+                $this->db->like('p.gender',$data['gender'],'before');        
+            }else{
+                $this->db->like('p.gender',$data['gender'],'after');        
+            }
+            
+            
         }
         if(isset($data['pricemin']) and $data['pricemin']!='' and $data['pricemax']!=''){
             if($data['pricemin']!='' and $data['pricemax']!=''  and $data['pricemax']!='0'){
@@ -418,9 +426,11 @@ class crud_model extends CI_Model{
         return $query->result_array();
     }
     function GetOrderSingleDetails($data=''){
-        $this->db->select('o.*,s.name as statename');
+        $this->db->select('o.*,s.name as statename,bs.name as Shippingstatename,bc.name as ShippingcountryName');
         $this->db->from('orders as o');
         $this->db->join('billing_state as s','s.id=o.BillingState','LEFT');
+		$this->db->join('billing_state as bs','bs.id=o.ShippingState','LEFT');
+		$this->db->join('billing_country as bc','bc.id=o.ShippingCountry','LEFT');
         if(isset($data['OrderID']) and $data['OrderID']!=''){
             $this->db->where('o.OrderID',$data['OrderID']);    
         }
@@ -482,9 +492,11 @@ class crud_model extends CI_Model{
         return $query->result_array();
     }
     function GetFavoriteProductDetails($data=''){ 
-        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name');
+        $this->db->select('f.*,p.name as pname,p.slug as pslug,p.productcode,pi.image_name,c.name as collectionname,sc.name as categoryname');
         $this->db->from('customer_favorite_products as f');
         $this->db->join('product as p','f.products_id=p.id','LEFT');
+		$this->db->join('category c','c.id = p.collectiontype','LEFT');
+		$this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
         $this->db->join('product_image as pi','pi.product_id=f.products_id','LEFT');
         if(isset($data['customer_id']) and $data['customer_id']!=''){
             $this->db->where('f.customer_id',$data['customer_id']);    
@@ -664,6 +676,14 @@ class crud_model extends CI_Model{
             $this->db->or_like('p.description',$data['description']);    
         }
         if(isset($data['gender']) and $data['gender']!=''){
+            
+            // if($data['gender']=='MEN' || $data['gender']=='KIDS'){
+            //     $this->db->or_like('p.gender',$data['gender'],'after');        
+            // }else if($data['gender']=='MEN' || $data['gender']=='KIDS'){
+            //     $this->db->or_like('p.gender',$data['gender'],'before');        
+            // }else{
+            //     $this->db->or_like('p.gender',$data['gender'],'after');        
+            // }
             $this->db->or_like('p.gender',$data['gender']);    
         }
         if(isset($data['highlight']) and $data['highlight']!=''){
@@ -711,47 +731,205 @@ class crud_model extends CI_Model{
                 $this->db->where('price >=', $data['pricemin']);
             }
         }
-        $this->db->group_start();
+        //$this->db->group_start();
         
-        if(isset($data['collection']) and $data['collection']!=''){
-            $excollection = explode(',',$data['collection']);
-            if(!empty($excollection)){
-                foreach ($excollection as $key => $value) {
-                    if($value!=''){
-                        $this->db->like('p.collectiontype',$value);    
-                    }
-                }
-            }            
-        }
-
-        if(isset($data['name']) and $data['name']!=''){
-            $this->db->like('p.name',$data['name']);    
-        }
-        if(isset($data['productcode']) and $data['productcode']!=''){
-            $this->db->or_like('p.productcode',$data['productcode']);    
-        }
+        // if(isset($data['name']) and $data['name']!=''){
+        //     $this->db->like('p.name',$data['name']);    
+        // }
+        // if(isset($data['collection']) and $data['collection']!=''){
+        //     $excollection = explode(',',$data['collection']);
+        //     if(!empty($excollection)){
+        //         foreach ($excollection as $key => $value) {
+        //             if($value!=''){
+        //                 $this->db->or_like('p.collectiontype',$value);    
+        //             }
+        //         }
+        //     }            
+        // }
+        // if(isset($data['productcode']) and $data['productcode']!=''){
+        //     $this->db->or_like('p.productcode',$data['productcode']);    
+        // }
         
-        if(isset($data['description']) and $data['description']!=''){
-            $this->db->or_like('p.description',$data['description']);    
-        }
-        if(isset($data['genders']) and $data['genders']!=''){
-            $exgenders = explode(',',$data['genders']);
-            if(!empty($exgenders)){
-                foreach ($exgenders as $key => $value) {
-                    if($value!=''){
-                        $this->db->or_like('p.gender',$value);    
-                    }
+        // if(isset($data['description']) and $data['description']!=''){
+        //     $this->db->or_like('p.description',$data['description']);    
+        // }
+        // if(isset($data['genders']) and $data['genders']!=''){
+        //     $exgenders = explode(',',$data['genders']);
+        //     if(!empty($exgenders)){
+        //         foreach ($exgenders as $key => $value) {
+        //             if($value!=''){
+        //                 $this->db->or_like('p.gender',$value,'after');    
+        //             }
+        //         }
+        //     } 
+        // }else{
+        //     if(isset($data['gender']) and $data['gender']!=''){
+        //         $this->db->or_like('p.gender',$data['gender']);    
+        //     }
+        // }
+        
+        // if(isset($data['highlight']) and $data['highlight']!=''){
+        //     $this->db->or_like('p.highlight',$data['highlight']);    
+        // }
+        // $this->db->group_end();   
+        // Search
+        if(isset($data['type']) and $data['type']!='' and $data['type']=='search'){
+           $this->db->group_start();
+                if(isset($data['name']) and $data['name']!=''){
+                    $this->db->like('p.name',$data['name']);    
                 }
-            } 
-        }
-        if(isset($data['gender']) and $data['gender']!=''){
+                if(isset($data['productcode']) and $data['productcode']!=''){
+                    $this->db->or_like('p.productcode',$data['productcode']);    
+                }        
+                if(isset($data['description']) and $data['description']!=''){
+                    $this->db->or_like('p.description',$data['description']);    
+                }
+                if(isset($data['highlight']) and $data['highlight']!=''){
+                    $this->db->or_like('p.highlight',$data['highlight']);    
+                }
+            $this->db->group_end();  
 
-            $this->db->or_like('p.gender',$data['gender']);    
+            
+            if(isset($data['collection']) and $data['collection']!=''){
+                $this->db->group_start();
+                $excollection = explode(',',$data['collection']);
+                if(!empty($excollection)){
+                    $c=1;
+                    foreach ($excollection as $key => $value) {
+                        if($value!=''){
+                            if($c==1){
+                                $this->db->like('p.collectiontype',$value);      
+                            }else{
+                                $this->db->or_like('p.collectiontype',$value);  
+                            }                                
+                            $c++;  
+                        }
+                    }
+                }            
+                $this->db->group_end();  
+            }
+            
+            if(isset($data['genders']) and $data['genders']!=''){
+                $this->db->group_start();
+                    $exgenders = explode(',',$data['genders']);
+                    if(!empty($exgenders)){
+                        $c=1;
+                        foreach ($exgenders as $key => $value) {
+                            if($value!=''){
+                                if($c==1){
+                                    if($value=='MEN' || $value=='KIDS'){
+                                        $this->db->like('p.gender',$value,'after');           
+                                    }else if($value=='WOMEN'){
+                                        $this->db->like('p.gender',$value,'before');      
+                                    }else{
+                                        $this->db->like('p.gender',$value,'after');           
+                                    }
+                                    //$this->db->like('p.gender',$value,'after');       
+                                }else{
+                                    if($value=='MEN' || $value=='KIDS'){
+                                        $this->db->or_like('p.gender',$value,'after');           
+                                    }else if($value=='WOMEN'){
+                                        $this->db->or_like('p.gender',$value,'before');      
+                                    }else{
+                                        $this->db->or_like('p.gender',$value,'after');           
+                                    }
+                                    //$this->db->or_like('p.gender',$value,'after');    
+                                }                                
+                                $c++; 
+                                
+                            }
+                        }
+                    } 
+                $this->db->group_end();  
+            }else{
+                if(isset($data['gender']) and $data['gender']!=''){
+                    $this->db->like('p.gender',$data['gender']);    
+                }
+            }
+            
+
+        }else{
+
+             if(isset($data['name']) and $data['name']!=''){
+                $this->db->group_start();
+                if(isset($data['name']) and $data['name']!=''){
+                    $this->db->like('p.name',$data['name']);    
+                }
+                if(isset($data['productcode']) and $data['productcode']!=''){
+                    $this->db->or_like('p.productcode',$data['productcode']);    
+                }        
+                if(isset($data['description']) and $data['description']!=''){
+                    $this->db->or_like('p.description',$data['description']);    
+                }
+                if(isset($data['highlight']) and $data['highlight']!=''){
+                    $this->db->or_like('p.highlight',$data['highlight']);    
+                }
+                $this->db->group_end(); 
+            }
+
+            if(isset($data['collection']) and $data['collection']!=''){
+                $this->db->group_start();
+                $excollection = explode(',',$data['collection']);
+                if(!empty($excollection)){
+                    $c=1;
+                    foreach ($excollection as $key => $value) {
+                        if($value!=''){
+                            if($c==1){
+                                $this->db->like('p.collectiontype',$value);      
+                            }else{
+                                $this->db->or_like('p.collectiontype',$value);  
+                            }                                
+                            $c++;  
+                        }
+                    }
+                }            
+                $this->db->group_end();  
+            }
+            
+            if(isset($data['genders']) and $data['genders']!=''){
+                $this->db->group_start();
+                    $exgenders = explode(',',$data['genders']);
+                    if(!empty($exgenders)){
+                        $c=1;
+                        foreach ($exgenders as $key => $value) {
+                            if($value!=''){
+                                if($c==1){
+                                    if($value=='MEN' || $value=='KIDS'){
+                                        $this->db->like('p.gender',$value,'after');           
+                                    }else if($value=='WOMEN'){
+                                        $this->db->like('p.gender',$value,'before');      
+                                    }else{
+                                        $this->db->like('p.gender',$value,'after');           
+                                    }
+                                    //$this->db->like('p.gender',$value,'after');       
+                                }else{
+                                    if($value=='MEN' || $value=='KIDS'){
+                                        $this->db->or_like('p.gender',$value,'after');           
+                                    }else if($value=='WOMEN'){
+                                        $this->db->or_like('p.gender',$value,'before');      
+                                    }else{
+                                        $this->db->or_like('p.gender',$value,'after');           
+                                    }
+                                    //$this->db->or_like('p.gender',$value,'after');    
+                                }  
+                                
+                                // if($c==1){
+                                //   $this->db->like('p.gender',$value,'after');       
+                                // }else{
+                                //   $this->db->or_like('p.gender',$value,'after');    
+                                // }                                
+                                $c++; 
+                                
+                            }
+                        }
+                    } 
+                $this->db->group_end();  
+            }else{
+                if(isset($data['gender']) and $data['gender']!=''){
+                    $this->db->like('p.gender',$data['gender']);    
+                }
+            }    
         }
-        if(isset($data['highlight']) and $data['highlight']!=''){
-            $this->db->or_like('p.highlight',$data['highlight']);    
-        }
-        $this->db->group_end();        
         if(isset($data['OrderBy']) and $data['OrderBy']!=''){
             $this->db->order_by($data['OrderBy'], $data['order']);
         }else{
@@ -762,7 +940,7 @@ class crud_model extends CI_Model{
             $this->db->limit($data['Limit']);
         }
         $query=$this->db->get();
-        //echo $this->db->last_query();    exit;
+        echo $this->db->last_query();    exit;
         return $query->result_array();
     }
     function GetStateDetails($data=''){
@@ -780,5 +958,25 @@ class crud_model extends CI_Model{
         //echo $this->db->last_query();          
         return $query->result_array();
     } 
+	
+	public function getProductsAdmin($id="")
+	{
+		$this->db->select("p.*,c.name as collectionname,sc.name as categoryname,pi.image_name");
+		$this->db->from('product p');
+		$this->db->join('category c','c.id = p.collectiontype','LEFT');
+		$this->db->join('sub_category as sc','sc.id=p.categoryid','LEFT');
+		$this->db->join('product_image pi','pi.product_id=p.id','LEFT');
+		if($id != ""){
+			$this->db->where('p.id', $id);	
+			$query=$this->db->get();
+			return $query->row_array();
+		} else{
+			$this->db->group_by('p.id');    
+			$query=$this->db->order_by('p.id','desc');
+			$query=$this->db->get();			
+			return $query->result_array();
+		}
+	}
+	
 }
 ?>

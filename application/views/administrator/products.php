@@ -56,19 +56,19 @@
                       	<td><?php echo $i; ?></td>
                         <td>
                           <?php
-            								if($val['image_name']!='')
-            								{
-            									$im='uploads/product/'.$val['image_name'];
-            									if(file_exists($im))
-            									{
-            										$img=base_url().'uploads/product/'.$val['image_name'];
-            									}else{
-            										$img=base_url().'uploads/book.png';
-            									}
-            								}else{
-            									$img=base_url().'uploads/book.png';
-            								}
-            							?>
+							if($val['image_name']!='')
+							{
+								$im='uploads/product/'.$val['image_name'];
+								if(file_exists($im))
+								{
+									$img=base_url().'uploads/product/'.$val['image_name'];
+								}else{
+									$img=base_url().'uploads/book.png';
+								}
+							}else{
+								$img=base_url().'uploads/book.png';
+							}
+						 ?>
                           <img src="<?php echo $img; ?>" alt="<?php echo $val['name']; ?>"></td>
                           <td style="line-height:22px;"><?php echo $val['collectionname']; ?></td>
                           <td><?php echo $val['categoryname']; ?></td>

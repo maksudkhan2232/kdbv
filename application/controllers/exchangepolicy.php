@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class exchangepolicy extends MY_Controller {
+class Exchangepolicy extends MY_Controller {
     public function __construct()
     {
         parent::__construct();		

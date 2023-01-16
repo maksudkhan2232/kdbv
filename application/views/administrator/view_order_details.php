@@ -55,6 +55,7 @@
    <body>
       <page size="A4">
          <div style="margin-bottom:10px;padding:10px;">
+          <?php //echo "<pre>"; print_r($OrderData); exit; ?>
             <table align="center" cellpadding="10" cellspacing="0" border="0" width="100%" id="customers" style="line-height:32px;padding:3px;" frame="box" rules="all">
                <tr>
                   <td colspan="7" style="background-color:#D7D7D7;padding:20px;">
@@ -81,11 +82,13 @@
                                  </tr>
                                  <tr>
                                     <td colspan="2" align="left" style="font-size:12px;line-height:16px;"> 
-                                      <?php echo strtoupper($OrderData['BillingAddress']);?>
+                                      <?php echo ucwords($OrderData['ShippingAddress']);?>
                                       <br>
-                                      <?php echo strtoupper($OrderData['BillingCity']).' '.$OrderData['BillingZipCode'];?>
+                                      <?php echo ucwords($OrderData['ShippingCity']);?> - <?php echo ucwords($OrderData['ShippingZipCode']);?>
                                       <br>
-                                      <?php echo strtoupper($OrderData['statename']);?>
+                                      <?php echo ucwords($OrderData['Shippingstatename']);?> - <?php echo ucwords($OrderData['ShippingcountryName']);?> <br>
+                                      Contact : <?php echo ucwords($OrderData['ShippingMobileNo']);?><br>
+                                      Email : <?php echo $OrderData['BillingEmail'];?>
                                     </td>
                                  </tr>
                               </table>
@@ -95,7 +98,7 @@
                                  <tr>
                                     <td style="border-right:none"><b>Order No.</b></td>
                                     <td style="width:2px;padding:0px;border-left:none;border-right:none;">:</td>
-                                    <td align="left" style="border-left:none"><?php echo strtoupper($OrderData['OrderNo']);?></td>
+                                    <td align="left" style="border-left:none"><?php echo "ORD".$OrderData['OrderNo'];?></td>
                                  </tr>
                                  <tr>
                                     <td style="border-right:none;width:80px;"><b>Order Date.</b></td>
@@ -136,7 +139,7 @@
                 <?php 
                     }
                   }
-                  for($j=1;$j<=15-$i;$j++){
+                  for($j=1;$j<=12-$i;$j++){
                 ?>
                     <tr class=''>
                       <td style='border-bottom:none;border-top:none;'>&nbsp;</td>

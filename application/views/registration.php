@@ -11,6 +11,7 @@
 <?php /*?><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"><?php */?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
+  <div class="loading style-2" style="display: none;"><div class="loading-wheel"></div></div>
 <div class="site-content">
   <?php $this->load->view('common/header');?>
   <!--=========================-->
@@ -39,14 +40,15 @@
             <div class="row">
               <div class="col-lg-12 col-12">
                 <?php 
-                                        if($message!=''){
-                                    ?>
-                <div class="alert alert-success" role="alert">
-                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                  <?php echo $message;?> </div>
-                <?php 
-                                        }
-                                    ?>
+                if($message!=''){
+                  ?>
+                    <div class="alert alert-success" role="alert">
+                    <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <?php echo $message;?> </div>
+                  <?php 
+                  }
+                ?>
+
               </div>
               <?php
                                 if(count($this->cart->contents()) > 0){
@@ -58,6 +60,22 @@
 								}
                                 ?>
               <div class="col-lg-<?php echo $mycolumn ; ?> col-12">
+              
+              <?php if($this->session->flashdata('success')){ ?>
+                      <div class="row justify-content-center mb-2">
+                        <div class="col-lg-12">
+                          <div class="alert alert-icon alert-success text-success alert-dismissible fade show" role="alert"  id="myDiv"> <i class="mdi mdi-check-all mr-2"></i> <strong>Success </strong><?php echo  $this->session->flashdata('success'); ?> </div>
+                        </div>
+                      </div>
+                      <?php } ?>
+                      <?php if($this->session->flashdata('errors')){ ?>
+                      <div class="row justify-content-center mb-2">
+                        <div class="col-lg-12">
+                          <div class="alert alert-icon alert-danger text-danger alert-dismissible fade show" role="alert"  id="myDiv"> <i class="mdi mdi-check-all mr-2"></i> <strong>Error </strong> <?php echo  $this->session->flashdata('errors'); ?> </div>
+                        </div>
+                      </div>
+                      <?php } ?>
+              
                 <div class="caupon-wrap s1 active-border" id="loginpanel">
                   <div class="coupon coupon-active">
                     <label id="toggle1">Already Registered. Login Now</label>
@@ -77,6 +95,7 @@
                               <div class="col-xl-12">
                                 <input type="submit" class="cart-btn" value="LOG IN">
                               </div>
+                              <div class="col-md-12 text-right mb-2"><a href="<?php echo base_url(); ?>customer/reset/"  style="color:#d29e6c">Forgot Password</a></div>
                             </div>
                           </form>
                         </div>
@@ -110,7 +129,7 @@
                             </div>
                             <div class="col-lg-6 col-md-12 col-12">
                               <label for="country">Country <span class="text-danger">*</span></label>
-                              <select name="data[country]" id="country" class="form-control" onchange="return getcountrywisestate(this.value);">
+                              <select name="data[country]" id="country" class="form-control" onChange="return getcountrywisestate(this.value);">
                                 <?php
                                     foreach ($CountryDetails as $skey => $svalue) {
                                       if($svalue['name']=='India'){
@@ -148,7 +167,8 @@
                             </div>
                             <div class="col-lg-6 col-md-12 col-12">
                               <label for="email">Email Id <span class="text-danger">*</span></label>
-                              <input type="email" placeholder="Enter Your Email."  id="remail" name="data[email]">
+                              <input type="email" placeholder="Enter Your Email."  id="remail" name="data[email]" onChange="check_duplicate_email('billing_customer','<?php echo $id ?>','email',this.value)">
+                              <span class="text-danger" id="duplicate_email_errormsg" style="display: none;font-size:12px;line-height:18px;"></span>
                             </div>
                             <div class="col-lg-6 col-md-12 col-12">
                               <label for="password">Password<span class="text-danger">*</span></label>
@@ -158,9 +178,9 @@
                               <label for="repassword">Re-Enter Password<span class="text-danger">*</span></label>
                               <input type="password" placeholder="Enter Re-Enter Password."  id="repassword" name="repassword">
                             </div>
-                            <div class="col-lg-12 col-md-12 col-12">
-                              <div class="col-xl-12">
-                                <input type="submit" class="cart-btn" value="Save & Continue" style="background: #3f3f3f;">
+                            <div class="col-lg-12 col-md-12 col-12 mt-3 mb-2 text-center d-flex justify-content-center">
+                              <div class="col-xl-6">
+                                <input type="submit" id="btn_submit" class="cart-btn btn-sm" value="Save & Continue" style="background: #3f3f3f;">
                               </div>
                             </div>
                           </div>
@@ -243,5 +263,14 @@
 </div>
 <?php $this->load->view('common/main-search');?>
 <?php $this->load->view('common/common_js');?>
+<script type="text/javascript">
+   $(document).ready(function(){    
+      $(".loading").attr('style',"display: none;");
+  });      
+  
+ setTimeout(function(){
+    $('#myDiv').fadeOut(500);
+    }, 5000);  
+</script>
 </body>
 </html>

@@ -5,8 +5,9 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cart |  KD Bhindi Jewellers</title>
+<title>Checkout |  <?php echo $WebsiteInformation['firm_name'];?></title>
 <?php $this->load->view('common/common_css');?>
+<link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/css/font-awesome.min.css">
 <style type="text/css">
 /*	CheckBox CSS Start	*/
          .form-group {
@@ -54,6 +55,7 @@
 </style>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
+  <div class="loading style-2" style="display: none;"><div class="loading-wheel"></div></div>
 <div class="site-content">
   <?php $this->load->view('common/header');?>
   <section class="breadcrumb-area">
@@ -105,26 +107,43 @@
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-12">
                                   <label for="scountry">Country <span class="text-danger">*</span></label>
-                                  <select name="sdata[country]" id="scountry" class="form-control">
+                                  <?php /*?><select name="sdata[country]" id="scountry" class="form-control">
                                     <option value="India" selected>India</option>
-                                  </select>
+                                  </select><?php */?>
+                                  <select name="sdata[country]" id="scountry" class="form-control" onChange="return getcountrywisestate(this.value);">
+									<?php
+                                        foreach ($CountryDetails as $skey => $svalue) {
+                                          if($svalue['id']==$CustomerDetails['country']){
+                                            $sel='selected';
+                                          }else{
+                                            $sel='';
+                                          }
+                                          echo '<option value="'.$svalue['id'].'" '.$sel.'>'.ucwords($svalue['name']).'</option>';
+                                        }
+                                   ?>
+                                </select>
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-12">
                                   <label for="sstate">State <span class="text-danger">*</span></label>
-                                  <select name="sdata[state]" id="sstate" class="form-control">
+                                  
+                                  
+                                  <select name="sdata[state]" id="state" class="form-control">
                                     <option value="">Select State</option>
                                     <?php
-				                                                            	 $sele='';
-																				                foreach ($StateDetails as $skey => $svalue) {
-																				                	if(isset($CustomerDetails['state']) && $CustomerDetails['state']!=''){
-																				                		if($svalue['id']==$CustomerDetails['state']){
-																				                			$sele="selected";
-																				                		}
-																				                	}
-																				                  echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
-																				                }
-																				               ?>
-                                  </select>
+                                    $sele='';
+                                    foreach ($StateDetails as $skey => $svalue) {
+                                        if(isset($CustomerDetails['state']) && $CustomerDetails['state']!=''){
+                                            if($svalue['id']==$CustomerDetails['state']){
+                                                $sele="selected";
+                                            }else{
+                                                $sele='';
+                                              }
+                                        }
+                                        echo '<option value="'.$svalue['id'].'" '.$sele.'>'.ucwords($svalue['name']).'</option>';
+                                    }
+                                   ?>
+                                </select>
+                                  
                                 </div>
                                 <div class="col-lg-6 col-md-12 col-12">
                                   <label for="scity">City <span class="text-danger">*</span></label>
@@ -243,5 +262,14 @@
 </div>
 <?php $this->load->view('common/main-search');?>
 <?php $this->load->view('common/common_js');?>
+
+<script type="text/javascript">
+  $(document).ready(function(){    
+      $(".loading").attr('style',"display: none;");
+  });
+   $("#myForm").on('submit',function(e){
+          $(".loading").attr('style',"display: block;");
+       }) 
+</script>
 </body>
 </html>

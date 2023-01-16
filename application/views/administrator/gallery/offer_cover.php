@@ -25,15 +25,15 @@
               <div class="col-md-6 ">
                 <div class="card">
                   <div class="card-body">
-                    <h4 class="card-title">Update Trending Photo</h4>
+                    <h4 class="card-title">OFFER Cover Photo</h4>
                     <hr>
                     <?php 
-                    $action=base_url().'administrator/master/uptrending';
+                    $action=base_url().'administrator/offerzone/coverupdate';
                     ?>
                     <?php  echo form_open_multipart($action, array('id' => 'myForm'));?>
                     
                     <div class="form-group">
-                        <label for="exampleInputName1">Trending Photo <span class="text-danger">*</span>                        
+                        <label for="exampleInputName1">Home Page Offer Cover Photo <span class="text-danger">*</span>                        
                         </label>
                         <div class="row">
                           <div class="col-md-12">
@@ -46,23 +46,45 @@
                             </div>
                             <?php echo '<div class="text-danger">'.form_error('image').'</div>' ?>
                           </div>
-                          <?php
-                          
-                          $img=base_url().'uploads/trending/'.$photo;
-                           ?>
+                          <?php $img=base_url().'uploads/offer/'.$photo; ?>
                           <div class="form-group mt-3">
                             <label for="exampleInputName1">&nbsp;</label>
                             <a id="previewbanner_link" href="<?php echo  $img; ?>" target="_blank">
-                              <img id="previewbanner1" src="<?php echo  $img; ?>" width="70">
+                              <img id="previewbanner1" src="<?php echo  $img; ?>" width="100">
                             </a>
                           </div>
                           <div style="color:#000099;font-size:14px;text-align:center;">
-                            Image Size  = Width : <font color="#FF0000">966 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">1457 px</font>
-                           <br> <span style="float:right">TRENDING COLLECTIONS Image</span>	
+                            Image Size  = Width : <font color="#FF0000">1920 px</font> &nbsp;&nbsp;&nbsp;&nbsp; Height : <font color="#FF0000">800 px</font>
+                          	
                              
 
                         </div>
-                      </div>
+                        
+                             
+                       	</div>
+                        
+                       
+                        
+                        	<div class="form-group row mt-4 mb-2">
+                          <label for="exampleInputEmail2" class="col-sm-3 col-form-label"><b>Offer Status</b></label>
+                          <div class="col-sm-9">
+                            <div class="form-group">
+                         <?php if($status == 1){ ?>
+                              <button type="button" class="btn btn-sm btn-toggle changestatus active" data-table="offer_cover" data-field="status" data-id-name="id" data-id="1" data-toggle="button" aria-pressed="1" autocomplete="off">
+                              <div class="handle"></div>
+                              </button>
+                              <?php } else { ?>
+                              <button type="button" class="btn btn-sm btn-toggle changestatus" data-table="offer_cover" data-field="status" data-id-name="id" data-id="1" data-toggle="button" aria-pressed="0" autocomplete="off">
+                              <div class="handle"></div>
+                              </button>
+                              <?php } ?>
+                         </div>
+                          </div>
+                        </div>
+                        
+                        
+                       
+                        
                     </div>
                     
                     <hr>

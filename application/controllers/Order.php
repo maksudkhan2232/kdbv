@@ -10,33 +10,28 @@ class order extends MY_Controller{
     }    
     //load home  
     function index(){
-        
         if(!empty($this->session->userdata('ordernote'))){
                 $this->data['ordernote']=$this->session->userdata('ordernote');
         }else{
             $this->data['ordernote']='';
         }
         if(count($this->cart->contents()) > 0) {
-
         }else{
             redirect($this->data['base_url']);
         }
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Cart";
         $this->load->view('order_cart',$this->data);
-        
     }
     function addtocartproduct()
     {
         $returnarray = array();        
         $productid   = $this->input->post('productid'); //productid        
         $product_quantity  = $this->input->post('productquantity'); // quantity
-        
         $flag = TRUE;
         $extra_costs_total = 0;
         $datapass=array('status'=>1,'id'=>$productid);
         $ProductSingleDetails=$this->Crud_Model->GetProductSingleDetails($datapass);
-        
         // Check if our itemid mathch 
         if(!empty($ProductSingleDetails)){        
             // We have a match!
@@ -50,8 +45,6 @@ class order extends MY_Controller{
             $collectionname=$ProductSingleDetails['collectionname'];
             $collectionshortname=$ProductSingleDetails['collectionshortname'];
             $categoryname=$ProductSingleDetails['categoryname'];
-            
-
             // Check if items variation multiple 
             if ($flag) {                    
                 //Check Item already exist in cart
@@ -87,10 +80,6 @@ class order extends MY_Controller{
                      'name'    => $product_name,
                      'options' => array('product_code' => $product_code,'product_collectionid' => $product_collectionid,'product_categoryid' => $product_categoryid,'product_image' => $product_image,'collectionname' => $collectionname,'collectionshortname' => $collectionshortname,'categoryname' => $categoryname)
                     );
-                   
-
-                    
-                    
                     // echo "<pre>";
                     // print_r($data);
                     // //$this->cart->insert($data);
@@ -113,7 +102,6 @@ class order extends MY_Controller{
         echo json_encode($returnarray);exit;        
     }
     function removetocartproduct(){
-        
         $rowid = $this->input->post('rowid');
         $returnarray = array();        
         if($rowid!=''){            
@@ -132,7 +120,6 @@ class order extends MY_Controller{
         echo json_encode($returnarray);exit;      
     }
     function updatetocartproduct(){
-        
         $rowid = $this->input->post('rowid');
         $quantity = $this->input->post('quantity');
         $returnarray = array();        
@@ -164,7 +151,6 @@ class order extends MY_Controller{
         echo json_encode($returnarray);exit;      
     }
     function viewheadercart(){
-        
         $returnarray = array(); 
         $carthtml='';
         if ($this->cart->contents()) { 
@@ -211,7 +197,6 @@ class order extends MY_Controller{
         echo json_encode($carthtml);exit;      
     }
     function viewsubtotalcart(){
-        
         $returnarray = array(); 
         $carthtml='';
         if ($this->cart->contents()) {
@@ -220,10 +205,8 @@ class order extends MY_Controller{
                 $carthtml .='<li><span>Sub-Total:</span>₹ '.number_format($carttotal).'</li>';    
                 $carthtml .='<li><span>TOTAL:</span>₹ '.number_format($carttotal).'</li>';
             }
-            
             //$carthtml .='<li><span>Tax (-4.00):</span>$11.00</li>';
             //$carthtml .='<li><span>Shipping Cost:</span>$00.00</li>';
-            
         }
         echo json_encode($carthtml);exit;      
     }
@@ -241,6 +224,13 @@ class order extends MY_Controller{
         echo json_encode($returnarray);exit;        
     }
     function checkout(){
+    $customer_data = $this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id'])); 
+//  echo "<pre>"; print_r($customer_data) ; 
+//  echo $customer_data['country'];
+//  exit;
+        $this->data['CountryDetails']=$this->Crud_Model->getDatafromtablewhere('billing_country',array('status'=>1),'ASC');
+        $this->data['StateDetails']=$this->Crud_Model->GetStateDetails(array('country_id'=>$customer_data['country']));
+    //  echo $this->db->last_query() ; exit;
         if(!empty($this->session->userdata('ordernote'))){
                 $this->data['ordernote']=$this->session->userdata('ordernote');
         }else{
@@ -250,22 +240,19 @@ class order extends MY_Controller{
             redirect($this->data['base_url'] . 'customer');
         }
         if(count($this->cart->contents()) > 0){
-            
         }else{
             redirect($this->data['base_url'] . 'order');
         }
-        
-
         $this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id '=>$this->data['customer_info']['id']));
-        $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
+//        $this->data['StateDetails']=$this->Crud_Model->getDatafromtablewhere('billing_state',array('status'=>1),'ASC');
         $this->data['message'] = $this->session->flashdata('message');
         $this->data['title'] = "Cart";
         $this->load->view('order_checkout',$this->data);
     }
     function placeorder(){
+        
         $returnarray = array();        
         $sdata  = $this->input->post('sdata'); // Shiping Data
-        
         if ($this->cart->contents()) {
             if($this->data['customer_info']['id']==''){
                 redirect($this->data['base_url'] . 'customer');
@@ -279,7 +266,6 @@ class order extends MY_Controller{
                 $ordernote=$this->session->userdata('ordernote');
                 $customerid=$this->data['customer_info']['id'];
                 $CartTmpDate = $this->cart->contents();
-
                 $GetLastOrderNoDetails=$this->Crud_Model->GetLastOrderNo();
                 if(!empty($GetLastOrderNoDetails)){
                     $LastOrderNo = ($GetLastOrderNoDetails['totalorder']+1);
@@ -293,7 +279,10 @@ class order extends MY_Controller{
                     $cartdetails = '';
                     if(!empty($CartTmpDate)){
                         // Order Details Update Order Table in Etry
+                        $address_id = $this->input->post('address_id');
                         $orderinfo =array();
+                        $orderinfo['address_id']=$address_id;
+
                         $orderinfo['CustomerID']=$customerid;
                         $orderinfo['OrderNo']=$OrderNo;                        
                         $orderinfo['OrderDate']=date('Y-m-d');
@@ -316,19 +305,20 @@ class order extends MY_Controller{
                             $orderinfo['BillingCity']=$AddressDetails['city'];
                             $orderinfo['BillingState']=$AddressDetails['state'];
                             $orderinfo['BillingZipCode']=$AddressDetails['pincode'];
-                            
                         } 
+                        $bill_addr = $this->db->select('*')->from('billing_address')->where('id',$address_id)->get()->row_array();
+                        //echo "<pre>"; print_r($bill_addr); exit;
                         $orderinfo['BillingNote']=$ordernote;   
                         $orderinfo['GSTNo']='';      
                         $orderinfo['isDifferentShipping']='';       
-                        $orderinfo['ShippingName']=$sdata['name'];
-                        $orderinfo['ShippingEmail']=$sdata['email'];
-                        $orderinfo['ShippingAddress']=$sdata['address'];
-                        $orderinfo['ShippingCity']=$sdata['city'];
-                        $orderinfo['ShippingState']=$sdata['state'];
-                        $orderinfo['ShippingCountry']=$sdata['country'];                        
-                        $orderinfo['ShippingZipCode']=$sdata['state'];
-                        $orderinfo['ShippingMobileNo']=$sdata['mobileno'];
+                        $orderinfo['ShippingName']=$AddressDetails['name'];
+                        $orderinfo['ShippingEmail']=$AddressDetails['email'];
+                        $orderinfo['ShippingAddress']=$bill_addr['address'];
+                        $orderinfo['ShippingCity']=$bill_addr['city'];
+                        $orderinfo['ShippingState']=$bill_addr['state'];
+                        $orderinfo['ShippingCountry']=$bill_addr['country'];                        
+                        $orderinfo['ShippingZipCode']=$bill_addr['pincode'];
+                        $orderinfo['ShippingMobileNo']=$bill_addr['mobileno'];
                         $orderinfo['Remark']='';
                         $orderinfo['status']='1';
                         $orderinfo['isdelete']='0';
@@ -360,12 +350,8 @@ class order extends MY_Controller{
                                 $OrderproductssId=$this->Crud_Model->InsertData('order_products',$productss_data);
                             }
                         }
-                       
-                       
-                        
-
                         // Email Send
-                        $subject = "A Thank you for order! Your order #ORD".$OrderNo;
+                        $subject = "KD Bhindi Jewellers | Your order #ORD".$OrderNo;
                         $message ='';
                         $message .= '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
                                <tbody>
@@ -437,13 +423,10 @@ class order extends MY_Controller{
                                                                                            <td>'.$cdvalue['options']['collectionshortname'].'</td>
                                                                                            <td>'.$cdvalue['options']['categoryname'].'</td>
                                                                                            <td>'.$cdvalue['qty'].'</td>
-
                                                                                            <td>'.$price.'</td>
                                                                                            <td>'.($totals).'</td>
                                                                                         </tr>';
-                                                                                
                                                                             }
-
                                                                             $message .= '<tr>
                                                                                <td colspan="5" align="center"><b>Total</b></td>
                                                                                <td  colspan="2" align="right"><b>₹ '.$Ftotal.'</b></td>
@@ -479,8 +462,6 @@ class order extends MY_Controller{
                         </table>';
                         $email=$BillingEmail;
                         send_mail($email,$message,$subject,"");
-                        
-
                         $this->cart->destroy();
                         $this->session->unset_userdata("ordernote");
                         $this->session->set_flashdata('message',"Your Order Successfully Place.");
@@ -494,7 +475,6 @@ class order extends MY_Controller{
             redirect($this->data['base_url'] . 'order/');
         }
     }
-    
     function RemoveSpecialChar($str) { 
         // Using str_replace() function  
         // to replace the word  
@@ -513,13 +493,57 @@ class order extends MY_Controller{
         if (is_object($data)) {
             $data = get_object_vars($data);
         }
-
         if (is_array($data)) {
             return array_map(__FUNCTION__, $data);
         }
         else {
             return $data;
         }
+    }
+
+    function store(){
+        $returnarray = array();        
+        echo $this->data['customer_info']['id'];
+        $sdata  = $this->input->post('sdata'); // Shiping Data
+        if ( $this->input->post('sdata')) {
+           echo "<pre>"; print_r($sdata);
+
+            $ins_data['customer_id'] = $this->data['customer_info']['id'];
+            $ins_data['is_last'] = 1;
+            $ins_data['address'] = $sdata['address'];
+            $ins_data['country'] = $sdata['country'];
+            $ins_data['state'] = $sdata['state'];
+            $ins_data['city'] = $sdata['city'];
+            $ins_data['pincode'] = $sdata['pincod'];
+            $ins_data['mobileno'] = $sdata['mobileno'];
+            $ins_data['alternate_mobileno'] = $sdata['alternatemobileno'];
+
+            $up = $this->db->where('customer_id',$this->data['customer_info']['id'])->update('billing_address',array('is_last'=>0));
+
+            $this->db->insert('billing_address',$ins_data);
+           redirect($this->data['base_url'] . 'order/checkout');
+
+
+
+        }else{
+            redirect($this->data['base_url'] . 'order/checkout');
+        }
+    }
+
+    function upaddress()
+    {
+        $address_id=$this->input->post('address_id');
+        $updata['address']=$this->input->post('saddress');
+        $updata['country']=$this->input->post('scountry');
+        $updata['state']=$this->input->post('sstate');
+        $updata['city']=$this->input->post('scity');
+        $updata['pincode']=$this->input->post('spincode');
+        $updata['mobileno']=$this->input->post('smobileno');
+        $updata['alternate_mobileno']=$this->input->post('alternatemobileno');
+        $updata['modified_datetime']=date("Y-m-d H:i:s");
+        $this->db->where('id',$address_id)->update('billing_address',$updata);
+        redirect($this->data['base_url'] . 'order/checkout');
+        
     }
 }
 ?>

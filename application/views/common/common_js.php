@@ -98,3 +98,34 @@
 		    });
 		}
 </script>
+<script language="javascript">
+function check_duplicate_email(table_name,row_id,field_name,field_value)
+    {
+      if(table_name != '' && field_name != '' && field_value != '')
+      {
+        $.ajax({
+          type:'POST',
+          url:'<?php echo base_url(); ?>customer/check_duplicate',
+          data:{'table_name':table_name,'row_id':row_id,'field_name':field_name,'field_value':field_value},
+          dataType:'JSON',
+          success:function(data)
+          {
+            if(data.error == 1)
+            {
+              console.log("duplicate_"+field_name+"_errormsg");
+              $("#duplicate_email_errormsg").show();
+              $("#duplicate_email_errormsg").text('Error : Email Id Already Registred. Please Try another Email.');
+              $("#btn_submit").prop('disabled',true);
+            }
+            else
+            {
+              $("#duplicate_email_errormsg").hide();
+              $("#duplicate_email_errormsg").text('');
+              $("#btn_submit").prop('disabled',false);
+      
+            }
+          },
+        });
+      }
+    }
+</script>

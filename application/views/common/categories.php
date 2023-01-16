@@ -9,7 +9,9 @@
               foreach($CategoryDetails as $ckey=>$cval){
         ?>
               <div class="sin-category">
-                <img src="<?php echo  base_url(); ?>uploads/category/<?php echo $cval['image'];?>" alt="<?php echo ucwords($cval['name']);?>">
+                 <a href="<?php echo  base_url(); ?>shopby/category/<?php echo $cval['slug'];?>"  class="img-hover-zoom">
+                 	<img src="<?php echo  base_url(); ?>uploads/category/<?php echo $cval['image'];?>" alt="<?php echo ucwords($cval['name']);?>">
+                 </a>   
                 <div class="cat-name"> 
                   <a href="<?php echo  base_url(); ?>shopby/category/<?php echo $cval['slug'];?>">
                     <h5><?php echo ucwords($cval['name']);?></h5>

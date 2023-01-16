@@ -40,7 +40,7 @@
                      </ul>
                   </div>
                   <!--<a href="javascript:void(0);" class="my-account">My Account</a>-->
-                  <a href="tel:<?php echo $WebsiteInformation['contactno'];?>" class="my-account"><i class="fa fa-mobile-alt"></i> <?php echo $WebsiteInformation['contactno'];?></a>
+                  <a href="tel:<?php echo $WebsiteInformation['contactno'];?>" class="my-account"><i class="fa fa-phone"></i> <?php echo $WebsiteInformation['contactno'];?></a>
                   <a href="mailto:<?php echo $WebsiteInformation['cemail'];?>" class="my-account"><i class="far fa-envelope"></i> <?php echo $WebsiteInformation['cemail'];?></a> 
                </div>
                <!--top-bar-right end-->
@@ -164,15 +164,20 @@
                         </div>
                         <div class="mega-catagory mega-img per-20"> 
                            <?php 
+						   $myoffers = isActive_offers();   if($myoffers['status']==1) { 
                               if(isset($OfferImageSingleDetails) && !empty($OfferImageSingleDetails)){
-                                 echo '<a href="javascript:void(0);">';
+                                 echo '<a href="'.base_url().'offers">';
                                     echo '<img src="'.base_url().'uploads/offer/'.$OfferImageSingleDetails['image'].'" alt="'.$OfferImageSingleDetails['name'].'">';
                                  echo '</a>'; 
                               }else{
-                                 echo '<a href="javascript:void(0);">';
+                                 echo '<a href="'.base_url().'gallery">';
                                     echo '<img src="'.base_url().'assest/frontend/media/images/blog/1.jpg">';
                                  echo '</a>'; 
                               }
+							} else { echo '<a href="'.base_url().'gallery">';
+                                    echo '<img src="'.base_url().'assest/frontend/media/images/blog/1.jpg">';
+                                 echo '</a>'; } 
+							  
                            ?>                          
                         </div>
                      </div>
@@ -193,7 +198,7 @@
                   <li><a href="<?php echo base_url(); ?>customer"><i class="fa fa-user"></i></a></li>
                   <li class="top-cart">
                      <a href="javascript:void(0)" onclick="return viewheadercart();">
-                     <i class="flaticon-bag"></i><span id="totalcartproduct"><?php echo $carttotalproduct;?></span>
+                     <i class="flaticon-bag"></i><span id="totalcartproductmbl"><?php echo $carttotalproduct;?></span>
                      </a>
                      <?php 
                         if($carttotalproduct!='' and $carttotalproduct!='0'){
@@ -202,7 +207,7 @@
                         <?php
                            foreach ($this->cart->contents() as $cartkey => $cartvalue) {
                            ?>
-                        <div class="single-cart">
+                        <div class="single-cart" id="cartmbl<?php echo $cartvalue['rowid'];?>">
                            <div class="cart-img"> 
                               <img alt="<?php echo $cartvalue['options']['product_code'];?>" src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $cartvalue['options']['product_image'];?>" height="100" width="100"> 
                            </div>

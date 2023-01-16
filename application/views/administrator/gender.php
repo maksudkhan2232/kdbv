@@ -104,7 +104,7 @@
                         <tr>
                           <td><?php echo $i; ?></td>
                           <td><a href="<?php echo base_url()."uploads/gender/".$val['image']; ?>" target="_blank">
-                              <img src="<?php echo base_url()."uploads/gender/".$val['image']; ?>" class="img-thumbnail">
+                              <img src="<?php echo base_url()."uploads/gender/".$val['image']; ?>" style="width:100px;height:auto;border-radius:0;">
                             </a></td>
                           <td><?php echo $val['name']; ?></td>
                           <td><?php if($val['status'] == 1){ ?>

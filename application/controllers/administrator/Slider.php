@@ -29,7 +29,7 @@ class Slider extends MY_Controller  {
 			if ($this->form_validation->run() == FALSE) {
 				$data["id"] = "";
 				$data["name"] =$this->input->post('name');
-				$data["linkurl"] =$this->input->post('linkurl');
+				//$data["linkurl"] =$this->input->post('linkurl');
 				$data["button_value"]="Add";
 				$data['viewdata']=$this->Crud_Model->getDatafromtablewhere('slider',array('status'=>1),'DESC');
 				$this->load->view('administrator/slider',$data);
@@ -117,7 +117,7 @@ class Slider extends MY_Controller  {
 	public function edit()
 	{
 		$this->form_validation->set_rules('name', 'Name', 'required');
-		$this->form_validation->set_rules('linkurl', 'Link', 'required');
+	//	$this->form_validation->set_rules('linkurl', 'Link', 'required');
 		$this->form_validation->set_rules('image', 'Image', 'callback_file_check_edit');
 		if ($this->form_validation->run() == FALSE) {
 			$data["id"] = $this->input->post('id');

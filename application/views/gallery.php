@@ -5,25 +5,30 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Photo Gallery |  KD Bhindi Jewellers</title>
+<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
+<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
+<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
+<meta name="author" content="KD Bhindi Jewellers">
+<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
+<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
 <?php $this->load->view('common/common_css');?>
 <?php /*?><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.8.2/css/lightbox.min.css"><?php */?>
 <link rel="stylesheet" href="<?php echo  base_url(); ?>assest/frontend/css/lightbox/lightbox.min.css">
 <style type="text/css">
 .lightbox-gallery {
-	background-image: linear-gradient(#4A148C, #E53935);
-	background-repeat: no-repeat;
-	color: #000;
-	overflow-x: hidden
+  background-image: linear-gradient(#4A148C, #E53935);
+  background-repeat: no-repeat;
+  color: #000;
+  overflow-x: hidden
 }
 .lightbox-gallery p {
-	color:#fff
+  color:#fff
 }
 .lightbox-gallery h2 {
-	font-weight:bold;
-	margin-bottom:40px;
-	padding-top:40px;
-	color:#fff
+  font-weight:bold;
+  margin-bottom:40px;
+  padding-top:40px;
+  color:#fff
 }
 @media (max-width:767px) {
 .lightbox-gallery h2 {
@@ -33,20 +38,19 @@ font-size:24px
 }
 }
 .lightbox-gallery .intro {
-	font-size:16px;
-	max-width:500px;
-	margin:0 auto 40px
+  font-size:16px;
+  max-width:500px;
+  margin:0 auto 40px
 }
 .lightbox-gallery .intro p {
-	margin-bottom:0
+  margin-bottom:0
 }
 .lightbox-gallery .photos {
-	padding-bottom:20px
+  padding-bottom:20px
 }
 .lightbox-gallery .item {
-	padding-bottom:30px
+  padding-bottom:30px
 }
-
 </style>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
@@ -136,7 +140,6 @@ font-size:24px
         }
       })
     }
-
     if(action == 'inactive')
     {
       action = 'active';
@@ -145,7 +148,6 @@ font-size:24px
     $("#load_more").on("click",function(){
        if($(window).scrollTop() + $(window).height() > $("#load_data").height() && action == 'inactive')
       {
-        
         action = 'active';
         start = start + limit;
         setTimeout(function(){
@@ -154,7 +156,6 @@ font-size:24px
          load_data(limit, start);
       }
     });
-
   });
 </script>
 </body>

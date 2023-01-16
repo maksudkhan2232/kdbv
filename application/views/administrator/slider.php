@@ -78,16 +78,18 @@
                       </div>
                       </div>
                     
-                    <div class="form-group">
+                    <div class="form-group mb-5">
                       <label for="exampleInputName1">Title <span class="text-danger">*</span></label>
                       <input type="text" class="form-control" id="name" name="name" value="<?php echo $name; ?>" placeholder="Name">
                       <?php echo '<div class="text-danger">'.form_error('name').'</div>' ?>
                     </div>
-                    <div class="form-group">
+                    <?php /*?><div class="form-group">
                       <label for="exampleInputName1">Link <span class="text-danger">*</span></label>
                       <input type="text" class="form-control" id="linkurl" name="linkurl" value="<?php echo $linkurl; ?>" placeholder="link url">
                       <?php echo '<div class="text-danger">'.form_error('linkurl').'</div>' ?>
-                    </div>
+                    </div><?php */?>
+                    <input type="hidden" name="linkurl" id="linkurl" value="">
+                    
 					          <hr>
                     <a href="<?php echo base_url('administrator/dashboard');?>" class="btn btn-outline-danger">Cancel</a>
                     <button type="submit" class="btn btn-success mr-2 pull-right"><?php echo $button_value;?></button>

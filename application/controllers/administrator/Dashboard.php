@@ -34,7 +34,7 @@ class Dashboard extends MY_Controller  {
 		{
 			$arr['id'] = $v['id'];
 			$arr['category'] = $v['name'];
-			$sub_ctaegory= $this->db->select('id,name')->from('sub_category')->where("find_in_set(".$v['id'].", category_id)")->get()->result_array();
+			$sub_ctaegory= $this->db->select('id,name')->from('sub_category')->where("find_in_set(".$v['id'].", category_id)")->order_by("name", "asc")->get()->result_array();
 			$sc = array();
 			foreach ($sub_ctaegory as $sk => $sv)
 			{

@@ -5,7 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Offers |  KD Bhindi Jewellers</title>
+<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
+<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
+<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
+<meta name="author" content="KD Bhindi Jewellers">
+<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
+<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
 <?php $this->load->view('common/common_css');?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
@@ -37,7 +42,10 @@
           <div class="section-heading">
             <h3>KD Bhindi <span> Offers</span></h3>
           </div>
-          <?php foreach ($offers as $key => $v) {   ?>
+          <?php 
+      if(!empty($offers))
+      {
+      foreach ($offers as $key => $v) {   ?>
           <div class="grid row">
             <div class=" grid-item two col-sm-12 col-md-12 col-lg-12 col-xl-12">
               <article class="sin-blog">
@@ -53,6 +61,15 @@
           <div class="load-more-wrapper">
             <div class="pagination-box"> <?php echo $links; ?> </div>
           </div>
+          <?php } else { ?>
+           <div class="grid row mb-5">
+            <div class=" grid-item two col-sm-12 col-md-12 col-lg-12 col-xl-12">
+            <figure class="blog-img img-hover-zoom text-center">
+              <img src="<?php echo base_url(); ?>assest/frontend/media/images/no.webp" alt="KD Bhindi Offers"><h5 class="title">No Data Found.</h5>
+            </figure>
+            </div>
+           </div> 
+          <?php } ?>
         </div>
         <div class="col-lg-4 col-xl-4">
           <?php $this->load->view('common/sidebar');?>
@@ -63,14 +80,11 @@
     </div>
     <!-- Container  -->
   </section>
-
   <?php $this->load->view('common/gender-collections');?>
   <?php $this->load->view('common/testimonials');?>
   <?php $this->load->view('common/subscribe');?>
   <?php $this->load->view('common/footer');?>
-
   <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-
   <?php $this->load->view('common/quick-view');?>
 </div>
 <?php $this->load->view('common/main-search');?>

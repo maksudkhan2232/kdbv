@@ -24,6 +24,7 @@ class Search extends MY_Controller {
 		$collection =$this->input->post('collection');
 		$filedvalue =$this->input->post('filedvalue');
 		$GetProduct=array();
+		$GetProduct['type']=$type;
 		if(isset($PriceMin) and $PriceMin!=''){
 			$GetProduct['pricemin']=$PriceMin;
 			$GetProduct['pricemax']=$PriceMax;	

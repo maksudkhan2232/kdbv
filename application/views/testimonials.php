@@ -5,13 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>About Us |  KD Bhindi Jewellers</title>
+<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
 <?php $this->load->view('common/common_css');?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
 <div class="site-content">
   <?php $this->load->view('common/header');?>
-
   <section class="breadcrumb-area">
     <div class="container-fluid custom-container">
       <div class="row">
@@ -26,7 +25,6 @@
     </div>
     <!-- /.container -->
   </section>
-
   <section class="main-product pad-45">
     <div class="container">
       <div class="row">
@@ -40,19 +38,19 @@
               <div class="commentlists-div">
                 <ol class="commentlists">
                   <?php foreach ($reviews as $key => $v) {  
-										if($v['image']!='')
-										{
-											$im='uploads/testimonial/'.$v['image'];
-											if(file_exists($im))
-											{
-												$img=base_url().'uploads/testimonial/'.$v['image'];
-											}else{
-												$img=base_url().'uploads/default.jpg';
-											}
-										}else{
-											$img=base_url().'uploads/default.jpg';
-										}
-										?>
+                    if($v['image']!='')
+                    {
+                      $im='uploads/testimonial/'.$v['image'];
+                      if(file_exists($im))
+                      {
+                        $img=base_url().'uploads/testimonial/'.$v['image'];
+                      }else{
+                        $img=base_url().'uploads/default.jpg';
+                      }
+                    }else{
+                      $img=base_url().'uploads/default.jpg';
+                    }
+                    ?>
                   <li class="sin-comment  depth-1">
                     <div class="the-comment">
                       <div class="avatar"> <img src="<?php echo $img; ?>" style="width:80px;height:auto;"> </div>
@@ -88,14 +86,11 @@
     <!-- Container  -->
   </section>
   <?php $this->load->view('common/free_shipping.php');?>
-
   <?php $this->load->view('common/gender-collections');?>
   <?php // $this->load->view('common/testimonials');?>
   <?php $this->load->view('common/subscribe');?>
   <?php $this->load->view('common/footer');?>
-
   <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
-
   <?php $this->load->view('common/quick-view');?>
 </div>
 <?php $this->load->view('common/main-search');?>

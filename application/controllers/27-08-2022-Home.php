@@ -95,7 +95,7 @@ class Home extends MY_Controller {
 		$this->data['TrendingCollectionSideImage']=$this->Crud_Model->getDatafromtablewheresingle('trending',array('id'=>1));
 
 		// NEW ARRIVAL
-		$newarrival=array('highlight'=>"NEW ARRIVAL",'Limit'=>8);
+		$newarrival=array('highlight'=>"NEW ARRIVAL");
 		$product_details=array();
 		foreach ($this->Crud_Model->GetProductDetails($newarrival) as $key => $v) 
 		{

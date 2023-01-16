@@ -5,12 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title><?php if($SeoDetails['seotitle']!=""){ echo $SeoDetails['seotitle']." | ".FIRM_NAME; }else { echo FIRM_NAME; } ?></title>
-<meta name="description" content="<?php echo $SeoDetails['seodescription'];?>">
-<meta name="keywords" content="<?php echo $SeoDetails['seokeywords'];?>">
-<meta name="author" content="KD Bhindi Jewellers">
-<meta property="og:title" content="<?php echo $SeoDetails['seotitle'];?> |  KD Bhindi Jewellers" />
-<meta property="og:description" content="<?php echo $SeoDetails['seodescription'];?>" />
+<title>KD Bhindi Jewellers Junagadh</title>
 <?php $this->load->view('common/common_css');?>
 </head>
 <body id="home-version-1" class="home-version-1" data-style="default">
@@ -34,8 +29,8 @@
       ?>
       <div class="item"> <img src="<?php echo  base_url(); ?>uploads/slider/<?php echo $sval['image'];?>" alt="<?php echo $sval['title'];?>">
         <div class="container-fluid custom-container slider-content">
-          <?php /*?><div class="row align-items-center">              
-              <div class="col-12 col-sm-8 col-md-8 col-lg-6 ml-auto">
+          <div class="row align-items-center">
+            <!--  <div class="col-12 col-sm-8 col-md-8 col-lg-6 ml-auto">
               <div class="slider-text style-two">
                 <h1 class="animated fadeIn"><span><?php echo $sval['title'];?></span> <?php echo $sval['subtitle'];?></h1>
                 <p class="animated fadeIn"><?php echo $sval['description'];?></p>
@@ -46,9 +41,9 @@
                 <?php 
                   }
                 ?>                
-            </div>             
+            </div> -->
             <!-- Col End -->
-          </div><?php */?>
+          </div>
           <!-- Row End -->
         </div>
       </div>
@@ -60,7 +55,10 @@
   <?php 
     }
   ?>
+  
+  
   <?php $this->load->view('common/categories');?>
+  
   <?php if(!empty($TrendingCollectionDetails)){ ?>
   <section class="banner-product mybg">
     <div class="container-fluid custom-container">
@@ -139,9 +137,9 @@
             <ul class="pro-tab-button">
               <li class="filter active" data-filter="*">ALL</li>
               <?php
-       // echo "<pre>"; print_r($CollectionDetails);
+			 // echo "<pre>"; print_r($CollectionDetails);
                 foreach ($CollectionDetails as $ckey => $cvalue) {
-        $temp_slug = str_replace(' ', '', $cvalue['shortname']);
+				$temp_slug = str_replace(' ', '', $cvalue['shortname']);
                   echo '<li class="filter" data-filter=".'.$temp_slug.'">'.ucwords($cvalue['shortname']).'</li>';
                 }
               ?>
@@ -149,7 +147,7 @@
             <div class="grid row">
               <?php 
                 foreach ($NewArrivalCollectionDetails as $nakey => $navalue) {
-        $temp_img_slug = str_replace(' ', '', $navalue['collectionshortname']);
+				$temp_img_slug = str_replace(' ', '', $navalue['collectionshortname']);
               ?>
               <div class="grid-item <?php echo $temp_img_slug;?> col-6 col-md-6  col-lg-4 col-xl-3 popularityset"  data-id="<?php echo $navalue['id'];?>">
                 <div class="sin-product style-two">
@@ -173,8 +171,12 @@
                       </ul>
                     </div>
                     <div class="add-to-cart"> <a href="javascript:void(0);" onClick="return addtocart(<?php echo $navalue['id'];?>);">add to cart</a>
+                    
                     <a href="<?php echo base_url().'products/view/'.$navalue['slug'];?>" type="button" class="btn-outline-dark">View</a></div>
+                    
+
                   </div>
+                  
                 </div>
               </div>
               <?php
@@ -185,25 +187,39 @@
         </div>
       </div>
       <?php
-        //if(count($NewArrivalCollectionDetails) > 8){
+        if(count($NewArrivalCollectionDetails) > 8){
       ?>
       <div class="load-more-wrapper"> <a href="<?php echo base_url().'shopby/newarrival/';?>" class="btn-two">View All</a> </div>
       <?php    
-        //}
+        }
       ?>
     </div>
   </section>
   <?php  } ?>
-<?php $myoffers = isActive_offers();   if($myoffers['status']==1) { ?>  
+
+
+<?php $myoffers = isActive_offers();   if($myoffers['status']==1) { ?>	
   <!--=   OFFER ZONE     =-->
   <section class="add-area"> <a href="<?php echo  base_url(); ?>offers"> <img src="<?php echo  base_url(); ?>uploads/offer/<?php echo $myoffers['image'] ; ?>" alt="KD Bhindi Jewellers Junagadh"> </a> </section>
   <?php } ?>
+
+
   <?php $this->load->view('common/gender-collections');?>
   <?php $this->load->view('common/testimonials');?>
+  
+  
   <?php $this->load->view('common/subscribe');?>
+  
+  
   <?php $this->load->view('common/footer');?>
+  
+  
   <div class="backtotop"> <i class="fa fa-angle-up backtotop_btn"></i> </div>
+  
+  
   <?php $this->load->view('common/welcome');?>
+  
+  
   <?php $this->load->view('common/quick-view');?>
 </div>
 <!-- /#site -->
@@ -213,7 +229,7 @@
   // Trednig Modal
   if(!empty($TrendingCollectionDetails)){
       foreach ($TrendingCollectionDetails as $pkey => $pvalue) { ?>
-    <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
+		<div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
   <div class="quickview">
     <div class="row">
       <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
@@ -227,7 +243,7 @@
     </div>
   </div>
 </div>
-    <script type="text/javascript">
+		<script type="text/javascript">
      $('.slider-for<?php echo $pvalue['id'];?>').slick({
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -236,6 +252,7 @@
           asNavFor: '.slider-nav',
           swipe: false,
         });
+
         $('.slider-nav<?php echo $pvalue['id'];?>').slick({
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -246,13 +263,14 @@
           arrows: true,
         });
   </script>
-  <?php  } 
-  } ?>
+	<?php  } 
+	} ?>
 <script type="text/javascript">
     function TrendingQuickView(productid){
       var mask = '<div class="mask-overlay">';
       $('#pmodel'+productid).toggleClass('open');
       $(mask).hide().appendTo('body').fadeIn('fast');
+      
       $('.mask-overlay, .close-qv').on('click', function() {
         $('.quickview-wrapper').removeClass('open');
         $('.mask-overlay').remove();
@@ -263,7 +281,7 @@
   // Trednig Modal
   if(!empty($NewArrivalCollectionDetails)){
       foreach ($NewArrivalCollectionDetails as $pkey => $pvalue) { ?>
-    <div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
+		<div class="modal quickview-wrapper" id="pmodel<?php echo $pvalue['id'];?>">
   <div class="quickview">
     <div class="row">
       <div class="col-12"> <span class="close-qv"><i class="flaticon-close"></i> </span> </div>
@@ -277,7 +295,7 @@
     </div>
   </div>
 </div>
-    <script type="text/javascript">
+		<script type="text/javascript">
      $('.slider-for<?php echo $pvalue['id'];?>').slick({
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -286,6 +304,7 @@
           asNavFor: '.slider-nav',
           swipe: false,
         });
+
         $('.slider-nav<?php echo $pvalue['id'];?>').slick({
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -296,13 +315,14 @@
           arrows: true,
         });
   </script>
-  <?php  }
+	<?php  }
 } ?>
 <script type="text/javascript">
     function NewQuickView(productid){
       var mask = '<div class="mask-overlay">';
       $('#pmodel'+productid).toggleClass('open');
       $(mask).hide().appendTo('body').fadeIn('fast');
+      
       $('.mask-overlay, .close-qv').on('click', function() {
         $('.quickview-wrapper').removeClass('open');
         $('.mask-overlay').remove();

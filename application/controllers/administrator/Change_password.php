@@ -20,6 +20,7 @@ class Change_password extends MY_Controller {
 			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|matches[npassword]');
 			if($this->form_validation->run() == FALSE) {
 			
+			
 			}else{
 				$fieldName = 'id';
 				$table = "admin";

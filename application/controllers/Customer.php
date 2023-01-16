@@ -32,21 +32,23 @@ class Customer extends MY_Controller {
 	public function login()
 	{
 		if($this->input->post()){  
-            $email = $this->input->post('email');
-            $password = $this->input->post('password'); 
+            $email = trim($this->input->post('email'));
+            $password = trim($this->input->post('password')); 
             $customer_info = $this->Crud_Model->CheckAuth(stripslashes($email),md5($password));
+
             if($customer_info['logged_in'] == TRUE){                
                 $this->session->set_userdata('customer_info', $customer_info);
-                if(count($this->cart->contents() > 0)) {	
+                if(count($this->cart->contents()) > 0) {	
                 	//echo  count($this->cart->contents());exit;
 		            redirect($this->data['base_url'] . 'order/checkout');
 		        }else{
-		        	redirect($this->data['base_url'] . 'customer');
+		        	redirect($this->data['base_url'] . 'customer/');
 		        }
                 exit;
             }
             else{
-                $this->session->set_flashdata('message',$customer_info['msg']);
+                //$this->session->set_flashdata('message',$customer_info['msg']);
+				$this->session->set_flashdata('errors','Invalid Username or Password');				
                 redirect($this->data['base_url'] . 'customer/');
                 exit;
             }
@@ -62,6 +64,8 @@ class Customer extends MY_Controller {
 	{
 		$returnarray = array();        
         $rdata   = $this->input->post('data'); // Registration Data
+
+        //echo "<pre>"; print_r($rdata); exit;
       	
       	if (!empty($rdata)) {
             $email=$rdata['email'];
@@ -77,31 +81,63 @@ class Customer extends MY_Controller {
 		            $rdata['isdelete']='0';
 		            $rdata['created_datetime']=date('Y-m-d H:i:s');
 		            $rdata['createdip']=$_SERVER['REMOTE_ADDR'];
+
+		            
+
 	            	$AddCustomerId = $this->Crud_Model->InsertData('billing_customer',$rdata);
+
+
+   					$rdata['customer_id']=$AddCustomerId;
+   					$rdata['mobileno']=$rdata['mobileno'];
+   					$rdata['address']=$rdata['address'];
+   					$rdata['country']=$rdata['country'];
+   					$rdata['state']=$rdata['state'];
+   					$rdata['city']=$rdata['city'];
+   					$rdata['pincode']=$rdata['pincode'];
+   					$rdata['email']=$rdata['email'];
+   					$rdata['customer_id']=$AddCustomerId;            
+		            $rdata['isdelete']='0';
+		            $rdata['created_datetime']=date('Y-m-d H:i:s');
+		            $rdata['modified_datetime']=date('Y-m-d H:i:s');
+		            $rdata['createdip']=$_SERVER['REMOTE_ADDR'];
+
+
+		            $add_data['customer_id']=$AddCustomerId;
+   					$add_data['mobileno']=$rdata['mobileno'];
+   					$add_data['address']=$rdata['address'];
+   					$add_data['country']=$rdata['country'];
+   					$add_data['state']=$rdata['state'];
+   					$add_data['city']=$rdata['city'];
+   					$add_data['pincode']=$rdata['pincode'];
+   					$add_data['email']=$rdata['email'];
+   					$add_data['customer_id']=$AddCustomerId;            
+		            $add_data['isdelete']='0';
+		            $add_data['created_datetime']=date('Y-m-d H:i:s');
+		            $add_data['modified_datetime']=date('Y-m-d H:i:s');
+		            $add_data['createdip']=$_SERVER['REMOTE_ADDR'];
+	            	$AddBillId = $this->Crud_Model->InsertData('billing_address',$add_data);
+
+	            	//echo $AddCustomerId; exit;
 
 	            	// Email Send
 
-	            	$subject = "Welcome KD Bhindi Jewellers Junagadh";
+	            	$subject = "Welcome to KD Bhindi Jewellers Junagadh";
 	            	$message = '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
 					   <tbody>
 					      <tr>
 					         <td valign="top" align="center">					            
 					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fff;max-width:600px">
-					               <tbody>
 					                  <tr>
 					                     <td style="padding-top:18px;padding-bottom:18px;padding-left:15px" valign="top" align="center">
 					                        <img src="'.base_url().'assest/frontend/media/images/logo.svg" width="200" height="auto"> 
 					                        <div style="color:#666666">Zanzarda Road, opp. Saibaba Temple, Junagadh, Gujarat 362001 India<br />Phone: +91 9825085001</div>
 					                     </td>
 					                  </tr>
-					               </tbody>
 					            </table>
-					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;border:1px solid #e2e2e2;background:#fff;border-bottom:1px solid #ef4e46">
-					               <tbody>
+					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;border:1px solid #e2e2e2;background:#fff;border-bottom:1px solid #ef4e46">					              
 					                  <tr>
 					                     <td style="padding-top:0;padding-right:14px;padding-bottom:14px;padding-left:14px">
 					                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
-					                           <tbody>
 					                              <tr>
 					                                 <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;padding-top:40px;padding-bottom:24px">
 					                                    Hi '.ucwords($rdata['name']).',
@@ -111,20 +147,16 @@ class Customer extends MY_Controller {
 					                                 </td>
 					                              </tr>
 					                              <tr>
-					                                 <td valign="top" colspan="2" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;word-wrap:nornal">
+					                                 <td valign="top" colspan="3" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;word-wrap:nornal">
 					                                    <table cellpadding="10" cellspacing="0" align="center" width="100%" style="font-family:Calibri;"  frame="box" rules="groups">
 					                                       <tr>
-					                                          <td colspan="2" style="font-size:20px;font-weight:bold;color:#990000;background-color:#ffe9be">
+					                                          <td colspan="3" style="font-size:20px;font-weight:bold;color:#990000;background-color:#ffe9be">
 					                                             Welcome
-					                                             <p style="font-size:14px;line-height:18px;font-weight:normal;color:#000000;">Hey '.ucwords($rdata['name']).'! Welcome to our store!
-					                                                Thank you for creating a account. We are more than happy to have you on board.
-					                                                Please make yourself at home and enjoy shopping with us.
-					                                                The Customer Experience Team at KD Bhindi Jewellers.
-					                                             </p>
+					                                             <p style="font-size:14px;line-height:18px;font-weight:normal;color:#000000;">Hey '.ucwords($rdata['name']).' !   Welcome to our store. Thank you for creating a account. We are more than happy to have you on board. Please make yourself at home and enjoy shopping with us. The Customer Experience Team at KD Bhindi Jewellers. </p>
 					                                          </td>
 					                                       </tr>
 					                                       <tr>
-					                                          <td colspan="2">
+					                                          <td colspan="3">
 					                                             <table border="0" cellpadding="10" cellspacing="0" align="center" width="100%" style="font-size:18px;"  frame="void" rules="none">
 					                                                <tr>
 					                                                   <td><b>Name : </b></td>
@@ -134,8 +166,7 @@ class Customer extends MY_Controller {
 					                                                <tr>
 					                                                   <td><b>Address : </b></td>
 					                                                   <td style="width:5px">:</td>
-					                                                   <td>'.nl2br($rdata['address']).'<br>'.$rdata['city'].'<br>'.$rdata['pincode'].'</td>
-					                                                   </td>
+					                                                   <td>'.nl2br($rdata['address']).'<br>'.$rdata['city'].'   '.$rdata['pincode'].'</td>
 					                                                </tr>
 					                                                <tr>
 					                                                   <td><b>Mobile No</b></td>
@@ -162,42 +193,37 @@ class Customer extends MY_Controller {
 					                                       </tr>
 					                                    </table>
 					                                 </td>
-					                              </tr>
-					                           </tbody>
+					                              </tr>					                         
 					                        </table>
 					                     </td>
 					                  </tr>
 					                  <tr>
 					                     <td valign="top" style="padding-top:10px;padding-right:14px;padding-bottom:36px;padding-left:14px;text-align:center;">
 					                        <table cellspacing="0" cellpadding="0" width="50%" border="0" style="margin-top:20px;" align="center">
-					                           <tbody>
 					                              <tr>
 					                                 <td style="font:normal 15px arial;color:#fff;line-height:18px;background:#00bcd5;border-radius:3px;border:1px solid #00bcd5;text-align:center;padding:12px;">
-					                                    <a href="'.base_url().'customer/" title="Connect"  style="outline:none;text-decoration:none;color:#fff" target="_blank">Login Now</a> 
+					                                    <a href="'.base_url().'customer/" title="Connect"  style="outline:none;text-decoration:none;color:#fff;" target="_blank">Login Now</a> 
 					                                 </td>
 					                              </tr>
-					                           </tbody>
 					                        </table>
 					                     </td>
-					                  </tr>
-					               </tbody>
+					                  </tr>					               
 					            </table>
 					         </td>
 					      </tr>
 					   </tbody>
 					</table>';
+					//echo $message ; exit;
 	            	$email=$rdata['email'];
-	            	send_mail($email,$message,$subject,"");
-
-	            	
-	            	$this->session->set_flashdata('message',"Your Registration Successfully Complete."); 
+	            	send_mail($email,$message,$subject,"");	            	
+	            	$this->session->set_flashdata('message',"Your Registration has been Successfully Completed."); 
 
 	            	// Session Set
 	            	$rdata["id"] = $AddCustomerId;	                
 	                $rdata['verifystatus'] ='done';
 	                $rdata['logged_in'] = TRUE;
+	                
 	                $this->session->set_userdata('customer_info', $rdata);
-	            	
 	            	if(count($this->cart->contents()) > 0) {	            		
 			            redirect($this->data['base_url'] . 'order/checkout');
 			        }else{
@@ -236,10 +262,8 @@ class Customer extends MY_Controller {
 	}
 	public function profile()
 	{
-		$rdata   = $this->input->post('data'); // Registration Data
-		
-		if(isset($rdata) AND $rdata['name']!='' AND $rdata['mobileno']!=''){               
-           
+		$rdata   = $this->input->post('data'); // Registration Data		
+		if(isset($rdata) AND $rdata['name']!='' AND $rdata['mobileno']!=''){                          
             $rdata['modified_datetime']=date('Y-m-d H:i:s');
             $rdata['createdip']=$_SERVER['REMOTE_ADDR'];
             $UpdateCustomerId = $this->Crud_Model->Updatedata($this->data['customer_info']['id'],'id','billing_customer',$rdata);
@@ -262,6 +286,45 @@ class Customer extends MY_Controller {
         }
        
 	}
+	
+	
+	public function password()
+	{
+		if(count($this->input->post()) > 0 )
+		{
+			$this->form_validation->set_rules('npassword', 'Password', 'required');
+			$this->form_validation->set_rules('cpassword', 'Confirm Password', 'required|matches[npassword]');
+			if($this->form_validation->run() == FALSE) {
+	
+			$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));
+			$this->data['title'] = "Order Details";
+			$this->load->view('customer_profile_password',$this->data);
+	
+			}else{
+			
+						
+				if($this->input->post('cpassword')==$this->input->post('npassword')){
+					$fixed_pw = md5($this->input->post('npassword'));
+					$data1['password']=$fixed_pw;
+					//$data1['org_password']=$this->input->post('npassword');
+					$id = $this->data['customer_info']['id'];
+					$fieldName = 'id';
+					$table = "billing_customer";
+					$this->Crud_Model->Updatedata($id,$fieldName,$table,$data1);					
+					$this->session->set_flashdata('success', 'Password Update Successfully!');
+					redirect('customer/password');
+					exit;
+				}						
+			}
+		}else{
+        	$this->data['CustomerDetails']=$this->Crud_Model->getDatafromtablewheresingle('billing_customer',array('id'=>$this->data['customer_info']['id']));         	
+        	//echo "<pre>";print_r($this->data['CustomerDetails']);exit;
+            $this->data['title'] = "Order Details";
+            $this->load->view('customer_profile_password',$this->data);
+        }
+       
+	}
+	
 	public function logout()
     {
    		$this->session->unset_userdata('customer_info');
@@ -389,7 +452,6 @@ class Customer extends MY_Controller {
     function getcountrywisestate(){
         
         $countryid = $this->input->post('countryid');
-
         $returnarray = array();        
         if($countryid!=''){  
         	$StateF=array('country_id'=>$countryid);
@@ -409,6 +471,158 @@ class Customer extends MY_Controller {
         } 
         echo json_encode($returnarray);exit;      
     }
+
+    public function reset()
+	{
+
+		if($this->input->post()){  
+
+           $email = trim($this->input->post('email'));
+           $CheckAlreadyExist = $this->Crud_Model->CheckAlreadyCustomer($email);
+
+		  	//echo "<pre>"; print_r($CheckAlreadyExist); exit;
+            if(count($CheckAlreadyExist)=='0')
+            {
+                $this->session->set_flashdata('errors','Invalid Email ID.');
+                redirect($this->data['base_url'] . 'customer/reset');
+            }
+            else
+            {
+				//echo $CheckAlreadyExist['id']; exit;
+				$pass = rand(1,9).random_int(100000, 999999);
+				// Email Send
+					$id = $CheckAlreadyExist['id'];
+					$udata['password']= md5($pass);
+					$this->Crud_Model->Updatedata($id,'id','billing_customer',$udata);
+					$subject = " KD Bhindi Jewellers - Reset Password";
+	            	$message = '<table cellspacing="0" cellpadding="0" border="0" style="background:#f2f2f2;width:100%;border-top:10px solid #f2f2f2">
+					   <tbody>
+					      <tr>
+					         <td valign="top" align="center">					            
+					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="background:#fff;max-width:600px">
+					                  <tr>
+					                     <td style="padding-top:18px;padding-bottom:18px;padding-left:15px" valign="top" align="center">
+					                        <img src="'.base_url().'assest/frontend/media/images/logo.svg" width="200" height="auto"> 
+					                        <div style="color:#666666">Zanzarda Road, opp. Saibaba Temple, Junagadh, Gujarat 362001 India<br />Phone: +91 9825085001</div>
+					                     </td>
+					                  </tr>
+					            </table>
+					            <table width="100%" cellspacing="0" cellpadding="0" border="0" style="max-width:600px;border:1px solid #e2e2e2;background:#fff;border-bottom:1px solid #ef4e46">					              
+					                  <tr>
+					                     <td style="padding-top:0;padding-right:14px;padding-bottom:14px;padding-left:14px">
+										<br><center><h3 style="font-family:Verdana, Arial, Helvetica, sans-serif">Password Reset</h3></center>
+					                        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+					                              <tr>
+					                                 <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;padding-top:40px;padding-bottom:24px">
+					                                    Hi '.ucwords($CheckAlreadyExist['name']).',
+					                                 </td>
+					                                 <td valign="top" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:right;padding-top:30px;padding-bottom:24px">
+					                                    '.date('d M Y').'
+					                                 </td>
+					                              </tr>
+					                              <tr>
+					                                 <td valign="top" colspan="2" style="font:normal 16px arial;line-height:19px;color:#51505d;text-align:left;word-wrap:nornal">
+					                                    <table cellpadding="10" cellspacing="0" align="center" width="100%" style="font-family:Calibri;"  frame="box" rules="groups">
+					                                       <tr>
+					                                          <td colspan="2">
+					                                             <table border="0" cellpadding="10" cellspacing="0" align="center" width="100%" style="font-size:18px;"  frame="void" rules="none">
+					                                                <tr>
+					                                                   <td><b>Name : </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td>'.ucwords($CheckAlreadyExist['name']).'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>Email Id : </b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                    <td>'.$email.'</td>
+					                                                </tr>
+					                                                <tr>
+					                                                   <td><b>New Password</b></td>
+					                                                   <td style="width:5px">:</td>
+					                                                   <td>'.$pass.'</td>
+					                                                </tr>					                                                
+					                                             </table>
+					                                          </td>
+					                                       </tr>
+					                                    </table>
+					                                 </td>
+					                              </tr>					                         
+					                        </table>
+					                     </td>
+					                  </tr>
+					                  <tr>
+					                     <td valign="top" style="padding-top:10px;padding-right:14px;padding-bottom:36px;padding-left:14px;text-align:center;">
+					                        <table cellspacing="0" cellpadding="0" width="50%" border="0" style="margin-top:20px;" align="center">
+					                              <tr>
+					                                 <td style="font:normal 15px arial;color:#fff;line-height:18px;background:#00bcd5;border-radius:3px;border:1px solid #00bcd5;text-align:center;padding:12px;">
+					                                    <a href="'.base_url().'customer/" title="Connect"  style="outline:none;text-decoration:none;color:#fff" target="_blank">Login Now</a> 
+					                                 </td>
+					                              </tr>
+					                        </table>
+					                     </td>
+					                  </tr>					               
+					            </table>
+					         </td>
+					      </tr>
+					   </tbody>
+					</table>';
+					
+				//	echo $message ; exit;
+					send_mail($email,$message,$subject,"");	 
+	            	$this->session->set_flashdata('success',"Check your Email. Password Reset successfully."); 
+		            redirect($this->data['base_url'] . 'customer/reset'); exit;
+            }
+           
+        }elseif($this->session->userdata('customer_info')!=""){
+            redirect($this->data['base_url'] . 'customer/');
+            exit;
+        }
+        else{
+            $this->data['title'] = "Reset Password ";
+            $this->load->view('reset',$this->data);
+        }
+    }
 	
+	
+	public function check_duplicate()
+	{
+		$row_id = $this->input->post('row_id');
+		$table_name = trim($this->input->post('table_name'));
+		$field_name = trim($this->input->post('field_name'));
+		$field_value = trim($this->input->post('field_value'));
+		$this->db->select("id");
+		$this->db->from($table_name);
+		$this->db->where($field_name,$field_value);
+		if($row_id != 0 && $row_id != '')
+		{
+			$this->db->where('id !=',$row_id);
+		}
+		$query=$this->db->get();
+		$query->row_array();
+		if($query->num_rows() > 0)
+		{
+			echo json_encode(array('error'=>1,'msg'=>'Email Id Already Registred. Please Try another Email.')); exit;
+		}else{
+			echo json_encode(array('error'=>0,'msg'=>'')); exit;
+
+		}
+	}
+
+	function upaddress()
+    {
+        $address_id=$this->input->post('address_id');
+        $updata['address']=$this->input->post('saddress');
+        $updata['country']=$this->input->post('scountry');
+        $updata['state']=$this->input->post('sstate');
+        $updata['city']=$this->input->post('scity');
+        $updata['pincode']=$this->input->post('spincode');
+        $updata['mobileno']=$this->input->post('smobileno');
+        $updata['alternate_mobileno']=$this->input->post('alternatemobileno');
+        $updata['modified_datetime']=date("Y-m-d H:i:s");
+        $this->db->where('id',$address_id)->update('billing_address',$updata);
+        $this->session->set_flashdata('success', 'Address Updated Successfully!');
+        redirect($this->data['base_url'].'customer/profile');
+        
+    }
     
 }

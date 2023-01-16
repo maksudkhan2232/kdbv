@@ -53,7 +53,7 @@ class order extends MY_Controller {
             $nestedData[] = date('d-M,Y',strtotime($val['OrderDate']))." ".date('H:i A',strtotime($val['OrderTime']));;
             $nestedData[] = $val['TotalProducts'];
             $nestedData[] = $val['name'];
-            $nestedData[] = $val['BillingCity'];
+            $nestedData[] = $val['ShippingCity'];
 			$nestedData[] = $val['OrderStatus'];
 			$nestedData[] = '<a  href="'.$mylink.'" target="_blank" class="btn btn-outline-primary" >View</a>';            
             $data[] = $nestedData;
@@ -71,14 +71,23 @@ class order extends MY_Controller {
 	{
 		$orderfe=array('OrderID'=>$OrderID);
 		$OrderData=$this->Crud_Model->GetOrderSingleDetails($orderfe);
-		$dataf=array('order_id'=>$OrderID);
-        $GetOrderProductDetails=$this->Crud_Model->GetOrderProductDetails($dataf);
-		$data["OrderData"] = $OrderData;
-		$data["OrderProductDetails"] = $GetOrderProductDetails;
-		$data['page_title']='Order View';
-		$data['active_menu'] = 'order';
-		$data['sub_active_menu'] = '';
-		$this->load->view('administrator/view_order_details',$data);
+		if(!empty($OrderData))
+		{
+			$dataf=array('order_id'=>$OrderID);
+			$GetOrderProductDetails=$this->Crud_Model->GetOrderProductDetails($dataf);			
+			$data["OrderData"] = $OrderData;
+			$data["OrderProductDetails"] = $GetOrderProductDetails;
+			$data['page_title']='Order View';
+			$data['active_menu'] = 'order';
+			$data['sub_active_menu'] = '';
+			$this->load->view('administrator/view_order_details',$data);
+		}
+		else
+		{
+			redirect('administrator/dashboard');
+			exit;
+			
+		}
 	}
 
 	public function add()

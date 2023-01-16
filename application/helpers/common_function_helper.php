@@ -116,32 +116,23 @@ function compress($source, $destination, $quality)
     return $destination;
 }
 function make_thumb($src, $dest, $desired_width) {
-
     /* read the source image */
     $source_image = imagecreatefromjpeg($src);
     $width = imagesx($source_image);
     $height = imagesy($source_image);
-
     /* find the "desired height" of this thumbnail, relative to the desired width  */
     $desired_height = floor($height * ($desired_width / $width));
-
     /* create a new, "virtual" image */
     $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
-
     /* copy source image at a resized size */
     imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
-
     /* create the physical thumbnail image to its destination */
     imagejpeg($virtual_image, $dest);
 }
-
 function create_thumbAll($image1_path, $dest, $box=300){
     list($width1, $height1, $image1_type) = getimagesize($image1_path);
- 
   //  $image2_path = dirname($image1_path) . '/tn_' .basename($image1_path);
-    
-	$image2_path =$dest;
-     
+    $image2_path =$dest;
     // make image smaller if doesn't fit to the box 
     if ($width1 > $box || $height1 > $box){
         // set the largest dimension
@@ -149,7 +140,6 @@ function create_thumbAll($image1_path, $dest, $box=300){
         // calculate smaller thumb dimension (proportional)
         if ($width1 < $height1) $width2  = round(($box / $height1) * $width1);
         else                    $height2 = round(($box / $width1) * $height1);
-         
         // set image type, blending and set functions for gif, jpeg and png
         switch($image1_type){
             case IMAGETYPE_PNG:  $img = 'png';  $blending = false; break;
@@ -158,13 +148,10 @@ function create_thumbAll($image1_path, $dest, $box=300){
         }
         $imagecreate = "imagecreatefrom$img";
         $imagesave   = "image$img";
-     
         // initialize image from the file
         $image1 = $imagecreate($image1_path);
- 
         // create a new true color image with dimensions $width2 and $height2
         $image2 = imagecreatetruecolor($width2, $height2);
- 
         // preserve transparency for PNG and GIF images
         if ($img == 'png' || $img == 'gif'){
           // allocate a color for thumbnail
@@ -176,7 +163,6 @@ function create_thumbAll($image1_path, $dest, $box=300){
             // set the flag to save alpha channel  
             imagesavealpha($image2, true); 
         }
-     
         // save thumbnail image to the file
         imagecopyresampled($image2, $image1, 0, 0, 0, 0, $width2, $height2, $width1, $height1);
         $imagesave($image2, $image2_path);
@@ -184,7 +170,6 @@ function create_thumbAll($image1_path, $dest, $box=300){
     // else just copy the image
     else copy($image1_path, $image2_path);
 }
-
 function square_crop($src_image, $dest_image, $thumb_size = 64, $jpg_quality = 90)
 {
     // Get dimensions of existing image
@@ -278,7 +263,6 @@ function slugify($text)
   }
   return $text;
 }
-
 function send_mail($email="vinayakwebinfotech@gmail.com",$message,$subject,$attachment="")
 {
     $ci = &get_instance();
@@ -288,7 +272,7 @@ function send_mail($email="vinayakwebinfotech@gmail.com",$message,$subject,$atta
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'livingwoods.morbi@gmail.com';
-    $mail->Password = 'edqeiyetsthfwvzd';				
+    $mail->Password = 'edqeiyetsthfwvzd';               
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587;
     $mail->setFrom('vinayakinfotechjnd@gmail.com', $subject);
@@ -309,9 +293,8 @@ function send_mail($email="vinayakwebinfotech@gmail.com",$message,$subject,$atta
     else
     {                
         return true;
-    }
+    }  
 }
-
 function common_testimonials()
 {
     $ci = &get_instance();
@@ -321,7 +304,6 @@ function common_testimonials()
     $res = $ci->db->from('testimonial')->get()->result_array();
     return  $res;
 }
-
 function DailyRateChangerDetails()
 {
     $ci = &get_instance();
@@ -335,7 +317,7 @@ function WebsiteInformation()
     $ci = &get_instance();
     $ci->db->select('*');
     $ci->db->where("status",1);
-	$ci->db->where("id",1);
+    $ci->db->where("id",1);
     $res = $ci->db->from('admin')->get()->row_array();
     return  $res;
 }
@@ -411,7 +393,6 @@ function CategoryLimitedDetails($limit=0)
     $res = $ci->db->from('sub_category')->get()->result_array();
     return  $res;
 }
-
 function OfferImageSingleDetails()
 {
     $ci = &get_instance();
@@ -422,10 +403,6 @@ function OfferImageSingleDetails()
     $res = $ci->db->from('offerzone')->get()->row_array();
     return  $res;
 }
-
-
-
-
 function get_admin($uid)
 {
     $ci = &get_instance();
@@ -433,6 +410,103 @@ function get_admin($uid)
     $u = $query->row_array();
     return $u;
 }
-
-
+function create_slug($string){
+   $slug=preg_replace('/[^A-Za-z0-9-]+/', '-', strtolower($string));
+   return $slug;
+}
+function isActive_offers()
+{
+    $ci = &get_instance();
+    $query = $ci->db->query("SELECT u.* FROM offer_cover u WHERE u.id = 1");
+    $u = $query->row_array();
+    return $u;
+}
+    function moneyFormatIndia($amount)
+    {
+        $amount = round($amount,2);
+        $amountArray =  explode('.', $amount);
+        if(count($amountArray)==1)
+        {
+            $int = $amountArray[0];
+            $des=00;
+        }
+        else {
+            $int = $amountArray[0];
+            $des=$amountArray[1];
+        }
+        if(strlen($des)==1)
+        {
+            $des=$des."0";
+        }
+        if($int>=0)
+        {
+            $int = numFormatIndia( $int );
+            $themoney = $int.".".$des;
+        }
+        else
+        {
+            $int=abs($int);
+            $int = numFormatIndia( $int );
+            $themoney= "-".$int.".".$des;
+        }   
+        return $themoney;
+    }
+    function numFormatIndia($num)
+    {
+        $explrestunits = "";
+        if(strlen($num)>3)
+        {
+            $lastthree = substr($num, strlen($num)-3, strlen($num));
+            $restunits = substr($num, 0, strlen($num)-3); // extracts the last three digits
+            $restunits = (strlen($restunits)%2 == 1)?"0".$restunits:$restunits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+            $expunit = str_split($restunits, 2);
+            for($i=0; $i<sizeof($expunit); $i++) {
+                // creates each of the 2's group and adds a comma to the end
+                if($i==0) {
+                    $explrestunits .= (int)$expunit[$i].","; // if is first value , convert into integer
+                } else {
+                    $explrestunits .= $expunit[$i].",";
+                }
+            }
+            $thecash = $explrestunits.$lastthree;
+        } else {
+            $thecash = $num;
+        }
+        return $thecash; // writes the final format where $currency is the currency symbol.
+    }
+    //29-08-2022 by Hiren
+    function getCustomerAddress($uid)
+    {    
+          $ci = &get_instance();
+          $ci->db->select("d.*,c.name as country_name,s.name as state_name");
+          $ci->db->from('billing_address d');
+          $ci->db->join('billing_country c', 'd.country = c.id');
+          $ci->db->join('billing_state s', 'd.state = s.id');
+          $ci->db->where("d.customer_id",$uid);
+          $query = $ci->db->get();
+          $res = $query->result_array();
+          return  $res;
+    }
+    function getSeoDetails($page)
+    {    
+        $ci = &get_instance();
+        $ci->db->select("*");
+        $ci->db->from('seo');
+        $ci->db->where("page",$page);
+        $ci->db->where("status",1);
+        $query = $ci->db->get();
+        $res = $query->row_array();
+       /* if(isset($res) && !empty($res)){
+            return  $res;
+        }else{
+            $ci = &get_instance();
+            $ci->db->select("*");
+            $ci->db->from('seo');
+            $ci->db->where("page",'generalcommon');
+            $query = $ci->db->get();
+            $res = $query->row_array();
+            return  $res;
+        }*/
+        return  $res;
+    }
 ?>

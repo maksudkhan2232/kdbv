@@ -37,7 +37,7 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/gender">Gender</a></li>
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/price">Price Range</a></li>
           <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/trending">Trending Product</a></li>
-          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/welcomenote">Welcome Note</a></li>
+          <?php /*?><li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/master/welcomenote">Welcome Note</a></li><?php */?>
         </ul>
       </div>
     </li>
@@ -46,7 +46,16 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
     
     <?php /*?><li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/advertisement"> <i class="icon-paper menu-icon"></i> <span class="menu-title">Advertisement</span> </a> </li><?php */?>
 
-    <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone"> <i class="fa fa-star menu-icon"></i> <span class="menu-title">Offer Zone</span> </a> </li>
+	<li class="nav-item"> <a class="nav-link" data-toggle="collapse" href="#offer-layouts" aria-expanded="false" aria-controls="page-layouts"> <i class="fa fa-star menu-icon"></i> <span class="menu-title">Offer Zone</span> <i class="menu-arrow"></i> </a>
+      <div class="collapse" id="offer-layouts">
+        <ul class="nav flex-column sub-menu">
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone/cover">Offer Setting</a></li>
+          <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/offerzone">Offers</a></li>
+        </ul>
+      </div>
+    </li>
+
+   	
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/customer"> <i class="fa fa-users menu-icon"></i> <span class="menu-title">Customer</span> </a> </li>
 
     <li class="nav-item"> <a class="nav-link" href="<?php echo base_url(); ?>administrator/order"> <i class="fa fa-shopping-cart menu-icon"></i> <span class="menu-title">Orders</span> </a> </li>
@@ -64,6 +73,11 @@ $ad = get_admin($this->session->userdata('KDBhindiAdminSession')->id);
         <i class="mdi mdi-email menu-icon"></i>
         <span class="menu-title">Subscription</span>
       </a>
+    </li>
+    <li class="nav-item"> 
+      <a class="nav-link" href="<?php echo base_url(); ?>administrator/seo"> 
+        <i class="icon-search menu-icon"></i> <span class="menu-title">SEO</span> 
+      </a> 
     </li>
     <li class="nav-item nav-doc"> <a class="nav-link bg-primary" href="javascript:void(0)" onclick="check_confirm();"> <i class="icon-book menu-icon"></i> <span class="menu-title">Signout</span> </a> </li>
   </ul>

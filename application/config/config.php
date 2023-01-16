@@ -24,7 +24,7 @@ date_default_timezone_set("Asia/Kolkata");
 |
 */
 if((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on")){$htpsvar="https"; }else{ $htpsvar="http"; }
-$config['base_url'] = $htpsvar.'://'.$_SERVER['HTTP_HOST'].'/kdbv/';
+$config['base_url'] = $htpsvar.'://'.$_SERVER['HTTP_HOST'].'/kdbhindi/';
 $config['base_assets']		= $config['base_url']."assets/";
 $config['base_uploads']		= $config['base_url']."uploads/";
 /*

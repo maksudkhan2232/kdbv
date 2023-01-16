@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cart |  KD Bhindi Jewellers</title>
+<title>#ORD<?php echo $OrderDetails['OrderNo'];?> Order Details |  <?php echo $WebsiteInformation['firm_name'];?></title>
 <?php $this->load->view('common/common_css');?>
 
 </head>
@@ -37,14 +37,13 @@
                      </div>
                      <div class="container">
                         <div class="col-md-12">
-                           <div class="text-center">
-                              <!-- <i class="far fa-building fa-4x ms-0" style="color:#8f8061 ;"></i> -->
-                              <p class="pt-2"><a href="<?php echo base_url(); ?>"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="100" width="400" alt=""> </a></p>
+                           <div class="text-center">                              
+                              <p class="pt-2"><a href="<?php echo base_url(); ?>"> <img src="<?php echo  base_url(); ?>assest/frontend/media/images/logo.svg" height="120" width="400" alt=""> </a></p>
                            </div>
                         </div>
                         <div class="row">
                            <div class="col-xl-8">
-                              <ul class="list-unstyled">
+                              <ul class="list-unstyled" style="line-height:28px;">
                                  <li class="text-muted">To: <span style="color:#8f8061 ;"><?php echo $OrderDetails['BillingName'];?></span></li>
                                  <li class="text-muted"><?php echo ucwords($OrderDetails['BillingCity']);?></li>
                                  <li class="text-muted"><?php echo ucwords($OrderDetails['statename']);?></li>
@@ -54,13 +53,13 @@
                               </ul>
                            </div>
                            <div class="col-xl-4">
-                              <p class="text-muted">Invoice</p>
+                             <?php /*?> <p class="text-muted">Order Details</p><?php */?>
                               <ul class="list-unstyled">
                                  <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061 ;"></i> <span
-                                    class="fw-bold">ORD No :</span><?php echo $OrderDetails['OrderNo'];?></li>
+                                    class="fw-bold">Order No :</span> #ORD<?php echo $OrderDetails['OrderNo'];?></li>
                                  <li class="text-muted"><i class="fas fa-circle" style="color:#8f8061 ;"></i> <span
-                                    class="fw-bold">Creation Date: </span><?php echo date('M d,Y',strtotime($OrderDetails['OrderDate']));?></li>
-                                 <li class="text-muted">
+                                    class="fw-bold">Date: </span><?php echo date('d M, Y',strtotime($OrderDetails['OrderDate']));?></li>
+                                 <?php /*?><li class="text-muted">
                                     <i class="fas fa-circle" style="color:#8f8061;"></i> 
                                     <span class="me-1 fw-bold">Status:</span>
                                     <?php 
@@ -83,21 +82,20 @@
                                         echo '<span class="badge bg-danger text-white fw-bold">Cancelled</span>';
                                       }
                                     ?>
-                                 </li>
+                                 </li><?php */?>
                               </ul>
                            </div>
                         </div>
                         <div class="row">
                            <div class="col-xl-12">
                               <div class="account-table">
-                                 <h6>Order History</h6>
+                                 <h6>Order Details</h6>
                                  <table class="tables">
                                     <thead>
                                        <tr>
-                                          <th>Sr No</th>
-                                          <th>Date</th>
-                                          <th>Product Code</th>
+                                          <th>Sr No</th>                                          
                                           <th>Product Image</th>
+                                          <th>Product Code</th>                                          
                                           <th>Collection</th>
                                           <th>Category</th>
                                           <th>QTY</th>
@@ -111,11 +109,10 @@
                                           foreach ($OrderProductDetails as $key => $value) {
                                       ?>  
                                             <tr>
-                                              <td><?php echo ($key+1);?></td>
-                                              <td><?php echo date('d-m-Y',strtotime($OrderDetails['OrderDate']));?></td>
-                                              <td><?php echo $value['products_code'];?></td>
+                                              <td><?php echo ($key+1);?></td>                                             
                                               <td><img src="<?php echo base_url(); ?>uploads/product/thumbnails/<?php echo $value['image_name'];?>"
                                                  class="w-50" height="100px" alt="<?php echo ucwords($value['products_name']);?>" /></td>
+                                              <td><?php echo $value['products_code'];?></td>                                              
                                               <td><?php echo ucwords($value['collectionshortname']);?></td>
                                               <td><?php echo ucwords($value['categoryname']);?></td>
                                               <td><?php echo ucwords($value['products_qty']);?></td>
@@ -135,10 +132,11 @@
                         <div class="row">
                            <div class="col-xl-8">
                               <p class="ms-3"><?php echo ucwords($OrderDetails['BillingNote']);?></p>
+                              <a href="<?php echo base_url();?>customer" class="btn btn-outline-secondary"><i class="fa fa-arrow-left"></i> Back</a>
                            </div>
                            <div class="col-xl-3">
                               <ul class="list-unstyled">
-                                 <li class="text-muted ms-3"><span class="text-black me-4">SubTotal : </span>
+                                 <?php /*?><li class="text-muted ms-3"><span class="text-black me-4">SubTotal : </span>
                                     <?php 
                                       if($OrderDetails['SubValue']!='' && $OrderDetails['SubValue']!='0'){
                                         echo '₹ '.$OrderDetails['SubValue'];
@@ -151,14 +149,14 @@
                                     <?php 
                                       echo ' - ';
                                     ?>
-                                 </li>
+                                 </li><?php */?>
                               </ul>
                               <p class="text-black float-start">
-                                <span class="text-black me-3"> Total Amount : </span>
+                                <span class="text-black me-3"> Total Amount :   </span>
                                 <span style="font-size: 25px;">
                                     <?php 
                                       if($OrderDetails['TotalValue']!='' && $OrderDetails['TotalValue']!='0'){
-                                        echo '₹ '.$OrderDetails['TotalValue'];
+                                        echo '₹ '.moneyFormatIndia($OrderDetails['TotalValue']);
                                       }else{
                                          echo ' - ';
                                       }
